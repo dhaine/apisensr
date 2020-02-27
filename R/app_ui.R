@@ -1,4 +1,6 @@
 #' @import shiny
+#' @import shinymaterial
+#' @import episensr
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources

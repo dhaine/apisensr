@@ -13,7 +13,9 @@ Imports:
     attempt,
     DT,
     glue,
-    htmltools
+    htmltools,
+    episensr (>= 0.9.5),
+    shinymaterial
 RoxygenNote: 6.1.0
 URL: https://github.com/dhaine/episensr.app
 BugReports: https://github.com/dhaine/episensr.app/issues
