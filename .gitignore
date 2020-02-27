@@ -1,0 +1,11 @@
+/.projectile
+/planning
+/results
+
+*~
+.#*
+
+# no R history
+.Rhistory
+
+.Rproj.user
