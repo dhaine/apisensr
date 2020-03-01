@@ -3,9 +3,11 @@
 #' @import shinyalert
 #' @import shinyWidgets
 #' @import shinyjs
+#' @import rmarkdown
 #' @import rhandsontable
 #' @import episensr
 source("inst/app/www/pop_up.R")
+
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources
@@ -23,36 +25,14 @@ app_ui <- function() {
         material_tabs(
             tabs = c(
                 "Analysis" = "tab_analysis",
-                "Distributions" = "tab_distribution",
                 "About the analyses" = "tab_about"
             ),
             color = "#ff8a80"
         ),
-        material_tab_content(
-            tab_id = "analysis",
-            material_row(
-                material_column(
-                    width = 3,
-                    material_card(material_dropdown("type",
-                                                    label = NULL,
-                                                    choices = c(
-                                                        "Choose bias analysis:" = "bias_choice",
-                                                        "Selection bias" = "selection",
-                                                        "Misclassification bias" = "misclass"
-                                                    ),
-                                                    selected = "",
-                                                    color = "#ff1744"
-                                                    )
-                                  ),
-                    hidden(div(id = "parms",
-                               material_card("Set data/parameters:",
-                                             rHandsontableOutput('two_by_two')
-                                             )
-                               )
-                           )
-                )
-            )
-        )
+
+        mod_analysis_ui("tab_analysis"),
+
+        mod_about_ui("tab_about")
     )
   )
 }

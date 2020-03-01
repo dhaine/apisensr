@@ -19,6 +19,7 @@ usethis::use_package("shinyjs")
 usethis::use_package("shinyalert")
 usethis::use_package("rhandsontable")
 usethis::use_package("shinyWidgets")
+usethis::use_package("rmarkdown")
 
 ## 2.3 Add tests
 
