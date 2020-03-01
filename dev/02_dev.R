@@ -17,6 +17,8 @@ usethis::use_package( "episensr", min_version = "0.9.5" ) # To call each time yo
 usethis::use_package("shinymaterial")
 usethis::use_package("shinyjs")
 usethis::use_package("shinyalert")
+usethis::use_package("rhandsontable")
+usethis::use_package("shinyWidgets")
 
 ## 2.3 Add tests
 

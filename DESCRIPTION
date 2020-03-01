@@ -17,7 +17,9 @@ Imports:
     episensr (>= 0.9.5),
     shinymaterial,
     shinyjs,
-    shinyalert
+    shinyalert,
+    rhandsontable,
+    shinyWidgets
 RoxygenNote: 7.0.2
 URL: https://github.com/dhaine/episensr.app
 BugReports: https://github.com/dhaine/episensr.app/issues

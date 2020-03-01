@@ -1,6 +1,9 @@
 #' @import shiny
 #' @import shinymaterial
 #' @import shinyalert
+#' @import shinyWidgets
+#' @import shinyjs
+#' @import rhandsontable
 #' @import episensr
 source("inst/app/www/pop_up.R")
 app_ui <- function() {
@@ -20,7 +23,8 @@ app_ui <- function() {
         material_tabs(
             tabs = c(
                 "Analysis" = "tab_analysis",
-                "Distributions" = "tab_distribution"
+                "Distributions" = "tab_distribution",
+                "About the analyses" = "tab_about"
             ),
             color = "#ff8a80"
         ),
@@ -29,27 +33,27 @@ app_ui <- function() {
             material_row(
                 material_column(
                     width = 3,
-                    material_card("Choose bias analysis:",
-                                  material_dropdown("type",
+                    material_card(material_dropdown("type",
                                                     label = NULL,
                                                     choices = c(
+                                                        "Choose bias analysis:" = "bias_choice",
                                                         "Selection bias" = "selection",
                                                         "Misclassification bias" = "misclass"
                                                     ),
+                                                    selected = "",
                                                     color = "#ff1744"
-                                                    ),
-                                  actionButton("type_load", 
-                                               label = "Go!", 
-                                               disabled = "disabled")
+                                                    )
                                   ),
-                    shinyjs::hidden(
-                        material_card("Set bias parameters"                                 
-                        )
-                    )
+                    hidden(div(id = "parms",
+                               material_card("Set data/parameters:",
+                                             rHandsontableOutput('two_by_two')
+                                             )
+                               )
+                           )
                 )
             )
         )
-    ),
+    )
   )
 }
 
