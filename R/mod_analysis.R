@@ -20,7 +20,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
       tab_id = id,
       material_row(
           material_column(
-              width = 3,
+              width = 4,
               material_card(
                   material_dropdown(
                       ns("type"),
@@ -106,7 +106,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
               )
           ),
           material_column(
-              width = 9,
+              width = 8,
               "Text!"
 #              uiOutput(ns("summary"))
           )
@@ -140,7 +140,7 @@ mod_analysis_server <- function(input, output, session){
                                                 input$reset_input # trigger rendering on reset
                                                 rhandsontable(DF(),
                                                               rowHeaderWidth = 200,
-                                                              width = 400,
+                                                              width = 500,
                                                               stretchH = "all")
                                             })
 
