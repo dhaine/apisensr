@@ -8,6 +8,7 @@ app_server <- function(input, output, session) {
             })
 
     callModule(mod_analysis_server, "tab_analysis")
+    callModule(mod_prob_server, "tab_prob")
     callModule(mod_about_server, "tab_about")
 
     ## Observed events

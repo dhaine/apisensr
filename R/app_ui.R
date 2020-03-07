@@ -24,13 +24,16 @@ app_ui <- function() {
         ## tabs
         material_tabs(
             tabs = c(
-                "Analysis" = "tab_analysis",
+                "Simple analysis" = "tab_analysis",
+                "Probabilistic analysis" = "tab_prob",
                 "About the analyses" = "tab_about"
             ),
             color = "#ff8a80"
         ),
 
         mod_analysis_ui("tab_analysis"),
+
+        mod_prob_ui("tab_prob"),
 
         mod_about_ui("tab_about")
     )

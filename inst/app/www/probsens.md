@@ -8,7 +8,7 @@ It performs a probabilistic sensitivity analysis for exposure or outcome
 misclassification, and random error.
 Misclassification can be differential (4 bias parameters) or not (2 bias parameters).
 
-In the **Analysis tab**, provide:
+In the **Probabilistic analysis tab**, provide:
 
 1. The 2-by-2 table of exposure and outcome,
 2. The type of misclassification: exposure misclassification or outcome
