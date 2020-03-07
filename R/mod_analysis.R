@@ -32,10 +32,10 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       color = "#ff1744"
                   ),
                   "Observed data",
+                  rHandsontableOutput(ns('two_by_two')),
+                  br(),
                   div(
                       id = "side-panel",
-                      rHandsontableOutput(ns('two_by_two')),
-                      br(),
                       conditionalPanel(
 #                      condition = paste0('input[\'', ns('type'), "\' == \'selection\'"),
                           condition = 'input.type == "selection"',
@@ -97,8 +97,8 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           color = "#ff1744"
                       ),
                       material_button(
-                          input_id = ns("reset_input"),
-                          label = "Back to example",
+                          input_id = "reset_input",
+                          label = "Parameters back to example",
                           icon = "restore",
                           color = "red accent-3"
                       )
@@ -177,9 +177,6 @@ mod_analysis_server <- function(input, output, session){
     ## Output
 #    output$summary = renderUI({episensrout()})
 
-    observeEvent(input$reset_input, {
-                     shinyjs::reset("side-panel")
-                 })
 }
     
 ## To be copied in the UI

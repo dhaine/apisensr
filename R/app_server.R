@@ -12,13 +12,8 @@ app_server <- function(input, output, session) {
 
     ## Observed events
     observeEvent(input$reset_input, {
-                     shinyjs::reset("parms")
+                     shinyjs::reset("side-panel")
                  })
-
-    observeEvent(input$type_load, {
-                     shinyjs::show("parms")
-                 }
-    )
 
     ## Automatically stop Shiny app when closing browser tab
     session$onSessionEnded(stopApp)
