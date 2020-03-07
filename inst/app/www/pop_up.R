@@ -12,7 +12,7 @@ pop_up <- function(title, html_file, confirm_btn_label = 'OK', className = '') {
         confirmButtonText = confirm_btn_label,
         timer = 0,
         imageUrl = "",
-        confirmButtonCol = "orange", 
+        confirmButtonCol = "#FF6B17", 
         animation = FALSE,
         className = className
     )
