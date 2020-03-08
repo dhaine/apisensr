@@ -49,19 +49,19 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.parms_controller == 0',
                               ns = ns,
-                              mod_parms_ui("parms_sel1",
+                              mod_parms_ui(ns("parms_sel1"),
                                            "Selection probability among cases exposed:", 0.94),
-                              mod_parms_ui("parms_sel2",
+                              mod_parms_ui(ns("parms_sel2"),
                                            "Selection probability among cases unexposed:", 0.85),
-                              mod_parms_ui("parms_sel3",
+                              mod_parms_ui(ns("parms_sel3"),
                                            "Selection probability among noncases exposed:", 0.64),
-                              mod_parms_ui("parms_sel4",
+                              mod_parms_ui(ns("parms_sel4"),
                                            "Selection probability among noncases unexposed:", 0.25)
                           ),
                           conditionalPanel(
                               condition = 'input.parms_controller == 1',
                               ns = ns,
-                              sliderInput("bias_factor",
+                              sliderInput(ns("bias_factor"),
                                           "Selection-bias factor:",
                                           value = 0.43,
                                           min = 0,
@@ -88,7 +88,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       ),
                       ## Alpha level
                       material_slider(
-                          "alpha",
+                          ns("alpha"),
                           HTML("&alpha;-level:"),
                           min_value = 0.01,
                           max_value = 0.2,
@@ -107,8 +107,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
           ),
           material_column(
               width = 8,
-              "Text!"
-#              uiOutput(ns("summary"))
+              material_card(
+                  verbatimTextOutput(ns("summary"))
+              )
           )
       )
   )
@@ -130,10 +131,7 @@ mod_analysis_server <- function(input, output, session){
                       } else if(input$type == "misclass") {
                           data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
                                      row.names = c("Cases", "Noncases"))
-                      }# else if(input$type == "probsens") {
-                       #   data.frame(Exposed = c(45, 257), Unexposed = c(94, 945),
-                       #              row.names = c("Cases", "Noncases"))
-                      #}
+                      }
                   })
 
     output$two_by_two = renderRHandsontable({
@@ -147,35 +145,31 @@ mod_analysis_server <- function(input, output, session){
     episensrout = reactive({
                                mat <- as.matrix(hot_to_r(req({input$two_by_two})))
                                if (input$type == "selection") {
-                                   mod <- selection(mat,
-                                                    bias_parms = if (input$parms_controller == FALSE) {
-                                                                     c(callModule(mod_parms_server, "parms_sel1"),
-                                                                       callModule(mod_parms_server, "parms_sel2"),
-                                                                       callModule(mod_parms_server, "parms_sel3"),
-                                                                       callModule(mod_parms_server, "parms_sel4"))
-                                                                 } else if (input$parms_controller == TRUE) {
-                                                                     input$bias_factor
-                                                                 },
-                                                    alpha = input$alpha)
+                                  selection(mat,
+                                            bias_parms = if (input$parms_controller == 0) {
+                                                             c(callModule(mod_parms_server, "parms_sel1"),
+                                                               callModule(mod_parms_server, "parms_sel2"),
+                                                               callModule(mod_parms_server, "parms_sel3"),
+                                                               callModule(mod_parms_server, "parms_sel4"))
+                                                         } else if (input$parms_controller == 1) {
+                                                             input$bias_factor
+                                                         },
+                                            alpha = input$alpha)
                                } else if (input$type == "misclass") {
-                                   mod <- misclassification(mat,
-                                                            type = input$misclass_type,
-                                                            bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
-                                                                           callModule(mod_parms_server, "parms_mis2"),
-                                                                           callModule(mod_parms_server, "parms_mis3"),
-                                                                           callModule(mod_parms_server, "parms_mis4")),
-                                                            alpha = input$alpha)
-                               }# else if (input$type == "probsens") {
-#                                   mod <- probsens(mat,
-#                                                   type = input$probsens_type,
-#                                                   reps = 20000,
-#                                                   seca.parms = list("trapezoidal", c(.75, .85, .95, 1)),
-#                                                   spca.parms = list("trapezoidal", c(.75, .85, .95, 1)))
-#                               }
+                                   misclassification(mat,
+                                                     type = input$misclass_type,
+                                                     bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
+                                                                    callModule(mod_parms_server, "parms_mis2"),
+                                                                    callModule(mod_parms_server, "parms_mis3"),
+                                                                    callModule(mod_parms_server, "parms_mis4")),
+                                                     alpha = input$alpha)
+                               }
                            })
 
     ## Output
-#    output$summary = renderUI({episensrout()})
+    output$summary = renderPrint({
+                                     episensrout()
+                                 })
 
 }
     
