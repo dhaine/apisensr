@@ -72,18 +72,18 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           condition = 'input.type == "misclass"',
                           ns = ns,
                           material_radio_button(
-                              input_id = "misclass_type",
+                              input_id = ns("misclass_type"),
                               label = "Misclassification of:",
                               choices = c("exposure", "outcome"),
                               selected = "exposure",
                               color = "#ff1744"),
-                          mod_parms_ui("parms_mis1",
+                          mod_parms_ui(ns("parms_mis1"),
                                        "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.78),
-                          mod_parms_ui("parms_mis2",
+                          mod_parms_ui(ns("parms_mis2"),
                                        "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.78),
-                          mod_parms_ui("parms_mis3",
+                          mod_parms_ui(ns("parms_mis3"),
                                        "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
-                          mod_parms_ui("parms_mis4",
+                          mod_parms_ui(ns("parms_mis4"),
                                        "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99)
                       ),
                       ## Alpha level
