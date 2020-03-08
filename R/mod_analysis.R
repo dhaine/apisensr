@@ -32,7 +32,15 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       color = "#ff1744"
                   ),
                   "Observed data",
-                  rHandsontableOutput(ns('two_by_two')),
+                  div(id = "obs-table",
+                      rHandsontableOutput(ns('two_by_two')),
+                      material_button(
+                          input_id = ns("reset_table"),
+                          label = "Table back to example",
+                          icon = "restore",
+                          color = "red accent-3"
+                      )
+                      ),
                   br(),
                   div(
                       id = "side-panel",
@@ -135,7 +143,7 @@ mod_analysis_server <- function(input, output, session){
                   })
 
     output$two_by_two = renderRHandsontable({
-                                                input$reset_input # trigger rendering on reset
+                                                input$reset_table # trigger rendering on reset
                                                 rhandsontable(DF(),
                                                               rowHeaderWidth = 200,
                                                               width = 500,
