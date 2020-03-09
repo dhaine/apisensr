@@ -6,6 +6,9 @@
 #' @import rmarkdown
 #' @import rhandsontable
 #' @import episensr
+#' @import ggplot2
+#' @import dagitty
+#' @import ggdag
 source("inst/app/www/pop_up.R")
 
 app_ui <- function() {
@@ -25,6 +28,7 @@ app_ui <- function() {
         material_tabs(
             tabs = c(
                 "Simple analysis" = "tab_analysis",
+                "Simple analysis, no observed data" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
                 "About the analyses" = "tab_about"
             ),
@@ -32,6 +36,8 @@ app_ui <- function() {
         ),
 
         mod_analysis_ui("tab_analysis"),
+
+        mod_notable_ui("tab_notable"),
 
         mod_prob_ui("tab_prob"),
 

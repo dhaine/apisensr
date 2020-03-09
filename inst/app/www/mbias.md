@@ -6,14 +6,14 @@ runtime: shiny
 ---
 M-bias is the bias introduced by conditioning on a collider that has no causal
 association with exposure or outcome, but is indirectly associated with both
-trough ancestors (causes) of exposure and disease.
+through ancestors (causes) of exposure and disease.
 
 <center>
 <img src="mbias.png" width="400"/>
 </center>
 
-In the **Analysis tab**, provide the odds ratio between exposure, outcome,
-collider, and ancestors:
+In the **Simple analysis, no observed data tab**, provide the odds ratio between
+exposure, outcome, collider, and ancestors:
 
 - Odds ratio between A and the exposure X,
 - Odds ratio between A and the collider M,

@@ -27,7 +27,7 @@ mod_parms2_ui <- function(id, label_parms, value){
   ns <- NS(id)
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
-                  value = value, min = 0,
+                  value = value, min = 0, max = 20, step = 0.01,
                   width = "600px")  
   )
 }
@@ -39,6 +39,11 @@ mod_parms2_ui <- function(id, label_parms, value){
 #' @keywords internal
     
 mod_parms_server <- function(input, output, session){
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms2_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
 }

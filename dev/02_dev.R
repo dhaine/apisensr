@@ -20,6 +20,9 @@ usethis::use_package("shinyalert")
 usethis::use_package("rhandsontable")
 usethis::use_package("shinyWidgets")
 usethis::use_package("rmarkdown")
+usethis::use_package("ggplot2")
+usethis::use_package("dagitty")
+usethis::use_package("ggdag")
 
 ## 2.3 Add tests
 

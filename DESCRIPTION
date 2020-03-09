@@ -21,7 +21,10 @@ Imports:
     shinyalert,
     rhandsontable,
     shinyWidgets,
-    rmarkdown
+    rmarkdown,
+    ggplot2,
+    dagitty,
+    ggdag
 RoxygenNote: 7.0.2
 URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr.app/issues

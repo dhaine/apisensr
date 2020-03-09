@@ -27,6 +27,7 @@ mod_about_ui <- function(id, label = "tab_about"){
                       label = "Information about which bias analysis?",
                       choices = c(
                           "Selection bias" = "about_selection",
+                          "M-bias" = "about_mbias",
                           "Misclassification bias" = "about_misclass",
                           "Probabilistic selection bias" = "about_probsens"
                       ),
@@ -54,6 +55,7 @@ mod_about_server <- function(input, output, session){
     output$about_bias_choice <- renderUI({
                                              bias_file <- switch(input$about_type,
                                                                  about_selection = "inst/app/www/selection_bias.md",
+                                                                 about_mbias = "inst/app/www/mbias.md",
                                                                  about_misclass = "inst/app/www/misclassification.md",
                                                                  about_probsens = "inst/app/www/probsens.md"
                                                                  )
