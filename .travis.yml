@@ -10,3 +10,9 @@ notifications:
     on_failure: change
 
 r_github_packages: Thinkr-open/golem
+
+addons:
+  apt:
+    packages:
+      - libv8-3.14-dev
+      - libudunits2-dev
