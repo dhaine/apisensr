@@ -1,0 +1,31 @@
+<dl> Quantitative bias analysis allows to estimate nonrandom errors in
+  epidemiologic studies, assessing the magnitude and direction of biases, and
+  quantifying their uncertainties. Every study has some random error due to its
+  limited sample size, and is susceptible to systematic errors as well, from
+  selection bias to the presence of (un)known confounders or information bias
+  (measurement error, including misclassification). Bias analysis methods were
+  compiled by Lash et al. in their book <a href =
+  'https://www.springer.com/us/book/9780387879604'>Applying Quantitative Bias
+  Analysis to Epidemiologic Data</a>. This Shiny app implements these bias
+  analyses using <a href =
+                    'https://CRAN.R-project.org/package=episensr'>episensr</a> R package.
+  Please report bugs at <a href = "https://github.com/dhaine/apisensr/issues">https://github.com/dhaine/apisensr/issues</a>.
+<br/><br/>
+<dt>SIMPLE ANALYSIS TAB</dt>
+<dd>Choose a bias analysis available in the R package 'episensr'</dd>
+<br/>
+<dt>SIMPLE ANALYSIS, NO OBSERVED DATA TAB</dt>
+<dd>Choose a bias analysis that do not have as input an observed 2-by-2
+  table.</dd>
+<br/>
+<dt>PROBABILISTIC ANALYSIS TAB</dt>
+<dd>Choose a probabilistic bias analysis from 'episensr'. </dd>
+<br/>
+<dt>ABOUT ANALYSES TAB</dt>
+<dd>This tab provides you with some explanations about the bias analyses
+  available, as well as the reference(s) for the examples used. </dd>
+<br/>
+<dt>DISTRIBUTIONS TAB</dt>
+<dd>When performing a probabilistic analysis, you have to give some parameters a
+  probability distribution. This tab helps you evaluate a given distribution. </dd>
+</dl>

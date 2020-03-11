@@ -1,8 +1,8 @@
 # Module UI
   
 #' @title   Module to provide simple bias parameters
-#' @description  A shiny Module to treat simple Se/Sp bias analysis parameters
-#' (selection, misclassification).
+#' @description  A shiny Module to treat simple Se/Sp and prevalence bias analysis
+#' parameters (between 0 and 1), risk (from 0 to 20).
 #'
 #' @param id shiny id
 #' @param input internal
@@ -27,9 +27,19 @@ mod_parms2_ui <- function(id, label_parms, value){
   ns <- NS(id)
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
-                  value = value, min = 0,
+                  value = value, min = 0, max = 20, step = 0.01,
                   width = "600px")  
   )
+}
+
+mod_parms3_ui <- function(id, label_parms, value) {
+    ns <- NS(id)
+    tagList(
+        material_number_box(ns("bias_parms"), label_parms,
+                            min_value = -100, max_value = 100,
+                            step_size = 0.01, initial_value = value,
+                            color = "#0277bd")
+    )
 }
 
 # Module Server
@@ -39,6 +49,16 @@ mod_parms2_ui <- function(id, label_parms, value){
 #' @keywords internal
     
 mod_parms_server <- function(input, output, session){
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms2_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms3_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
 }

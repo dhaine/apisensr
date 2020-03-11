@@ -15,6 +15,14 @@ golem::add_module( name = "my_other_module" ) # Name of the module
 #usethis::use_package( "thinkr" ) # To call each time you need a new package
 usethis::use_package( "episensr", min_version = "0.9.5" ) # To call each time you need a new package
 usethis::use_package("shinymaterial")
+usethis::use_package("shinyjs")
+usethis::use_package("shinyalert")
+usethis::use_package("rhandsontable")
+usethis::use_package("shinyWidgets")
+usethis::use_package("rmarkdown")
+usethis::use_package("ggplot2")
+usethis::use_package("dagitty")
+usethis::use_package("ggdag")
 
 ## 2.3 Add tests
 
