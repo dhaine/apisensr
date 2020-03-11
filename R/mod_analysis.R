@@ -27,6 +27,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       label = "Choose bias analysis:",
                       choices = c(
                           "Selection bias" = "selection",
+                          "Unmeasured confounder" = "confounder",
                           "Misclassification bias" = "misclass"
                       ),
                       color = "#ff1744"
@@ -75,6 +76,35 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                                           min = 0,
                                           max = 1)
                           )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder"',
+                          ns = ns,
+                          material_radio_button(
+                              input_id = ns("confounder_type"),
+                              label = "Type of implementation",
+                              choices = c("Relative Risk" = "RR",
+                                          "Odds Ratio" = "OR",
+                                          "Risk Difference" = "RD"),
+                              selected = "RR",
+                              color = "#ff1744"
+                          ),
+                          conditionalPanel(
+                              condition = 'input.confounder_type != "RD"',
+                              ns = ns,
+                              mod_parms_ui(ns("parms_confounder1a"),
+                                           "Association between the confounder and the outcome among those who were not exposed:", 0.63),                          
+                              ),
+                          conditionalPanel(
+                              condition = 'input.confounder_type == "RD"',
+                              ns = ns,
+                              mod_parms3_ui(ns("parms_confounder1b"),
+                                            "Association between the confounder and the outcome among those who were not exposed:", -0.37)
+                          ),
+                          mod_parms_ui(ns("parms_confounder2"),
+                                       "Prevalence of the confounder among the exposed:", 0.8),
+                          mod_parms_ui(ns("parms_confounder3"),
+                                       "Prevalence of the confounder among the unexposed:", 0.05)
                       ),
                       conditionalPanel(
                           condition = 'input.type == "misclass"',
@@ -136,6 +166,9 @@ mod_analysis_server <- function(input, output, session){
                       if(input$type == "selection") {
                           data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
                                      row.names = c("Cases", "Noncases"))
+                      } else if (input$type == "confounder") {
+                          data.frame(Exposed = c(105, 527), Unexposed = c(85, 93),
+                                     row.names = c("Cases", "Noncases"))
                       } else if(input$type == "misclass") {
                           data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
                                      row.names = c("Cases", "Noncases"))
@@ -163,6 +196,13 @@ mod_analysis_server <- function(input, output, session){
                                                              input$bias_factor
                                                          },
                                             alpha = input$alpha)
+                               } else if (input$type == "confounder") {
+                                   confounders(mat,
+                                               type = input$confounder_type,
+                                               bias_parms = c(if (input$confounder_type != "RD")
+                                                              {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
+                                                              callModule(mod_parms_server, "parms_confounder2"),
+                                                              callModule(mod_parms_server, "parms_confounder3")))
                                } else if (input$type == "misclass") {
                                    misclassification(mat,
                                                      type = input$misclass_type,

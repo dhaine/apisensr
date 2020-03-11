@@ -28,6 +28,7 @@ mod_about_ui <- function(id, label = "tab_about"){
                       choices = c(
                           "Selection bias" = "about_selection",
                           "M-bias" = "about_mbias",
+                          "Unmeasured confounding" = "about_confounding",
                           "Misclassification bias" = "about_misclass",
                           "Probabilistic selection bias" = "about_probsens"
                       ),
@@ -56,6 +57,7 @@ mod_about_server <- function(input, output, session){
                                              bias_file <- switch(input$about_type,
                                                                  about_selection = "inst/app/www/selection_bias.md",
                                                                  about_mbias = "inst/app/www/mbias.md",
+                                                                 about_confounding = "inst/app/www/confounders.md",
                                                                  about_misclass = "inst/app/www/misclassification.md",
                                                                  about_probsens = "inst/app/www/probsens.md"
                                                                  )

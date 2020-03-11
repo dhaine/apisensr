@@ -19,7 +19,7 @@ mod_parms_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to treat simple Se/Sp bias analysis parameters
-(selection, misclassification).
+A shiny Module to treat simple Se/Sp and prevalence bias analysis
+parameters (between 0 and 1), risk (from 0 to 20).
 }
 \keyword{internal}
