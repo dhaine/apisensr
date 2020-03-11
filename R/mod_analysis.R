@@ -70,11 +70,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.parms_controller == 1',
                               ns = ns,
-                              sliderInput(ns("bias_factor"),
-                                          "Selection-bias factor:",
-                                          value = 0.43,
-                                          min = 0,
-                                          max = 1)
+                              mod_parms_ui(ns("bias_factor"),
+                                           "Selection-bias factor:",
+                                           value = 0.43)
                           )
                       ),
                       conditionalPanel(
