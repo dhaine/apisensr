@@ -27,7 +27,8 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                       ns("type"),
                       label = "Choose bias analysis:",
                       choices = c(
-                          "M-bias" = "mbias"
+                          "M-bias" = "mbias",
+                          "Bounding the bias limits of unmeasured confounding" = "confounder_limit"
                       ),
                       color = "#ff1744"
                   ),
@@ -48,6 +49,24 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                           mod_parms2_ui(ns("parms_mbias5"),
                                         "Odds ratio observed between the exposure E and the outcome D", 1)
                       ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder_limit"',
+                          ns = ns,
+                          mod_parms3a_ui(ns("parms_conflimit1"),
+                                       "Proportion with the confounder among the unexposed group:", NA),
+                          mod_parms3b_ui(ns("parms_conflimit2"),
+                                       "Relative risk between the confounder and the outcome:", NA),
+                          mod_parms3b_ui(ns("parms_conflimit3"),
+                                        "Odds ratio between the confounder and the outcome:", 1.65),
+                          mod_parms3b_ui(ns("parms_conflimit4"),
+                                         "Crude relative risk between the exposure and the outcome", 1.5),
+                          material_button(
+                              input_id = "help_conflimit",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
                       material_button(
                           input_id = "reset_input2",
                           label = "Parameters back to example",
@@ -62,19 +81,23 @@ mod_notable_ui <- function(id, label = "tab_notable"){
               material_card(
                   verbatimTextOutput(ns("summary"))
               ),
-              material_column(
-                  width = 6,
-                  material_card(
-                  title = "DAG before conditioning on M",
-                  plotOutput(ns("plot_mbias_before"), width = "400px")
-              )                  
-              ),
-              material_column(
-                  width = 6,
-                  material_card(
-                  title = "DAG after conditioning on M",
-                  plotOutput(ns("plot_mbias_after"), width = "400px")
-              )                  
+              conditionalPanel(
+                  condition = 'input.type == "mbias"',
+                  ns = ns,
+                  material_column(
+                      width = 6,
+                      material_card(
+                          title = "DAG before conditioning on M",
+                          plotOutput(ns("plot_mbias_before"), width = "400px")
+                      )                  
+                  ),
+                  material_column(
+                      width = 6,
+                      material_card(
+                          title = "DAG after conditioning on M",
+                          plotOutput(ns("plot_mbias_after"), width = "400px")
+                      )                  
+                  )   
               )
           )
       )
@@ -98,8 +121,12 @@ mod_notable_server <- function(input, output, session){
                                                 callModule(mod_parms2_server, "parms_mbias4"),
                                                 callModule(mod_parms2_server, "parms_mbias5")),
                                          var = c("Outcome", "Exposure", "A", "B", "Collider"))
-                               } else if (input$type != "mbias") {
-                                   "Text"
+                               } else if (input$type == "confounder_limit") {
+                                   confounders.limit(p = callModule(mod_parms3a_server, "parms_conflimit1"),
+                                                     RR = callModule(mod_parms3b_server, "parms_conflimit2"),
+                                                     OR = callModule(mod_parms3b_server, "parms_conflimit3"),
+                                                     crude.RR = callModule(mod_parms3b_server, "parms_conflimit4")
+                                                     )
                                }
                            })
 
@@ -118,7 +145,12 @@ mod_notable_server <- function(input, output, session){
                                               plot_out <- plot(episensrout(),
                                                                type = "after")
                                               plot_out
-                                           })
+                                          })
+
+    runjs("document.getElementById('help_conflimit').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
+         };"
+  )
 }
     
 ## To be copied in the UI

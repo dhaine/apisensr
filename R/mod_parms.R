@@ -38,7 +38,25 @@ mod_parms3_ui <- function(id, label_parms, value) {
         numericInput(ns("bias_parms"), label_parms,
                      value = value, min = -100, max = 100, step = 0.01,
                      width = "100%")
-)
+    )
+}
+
+mod_parms3a_ui <- function(id, label_parms, value) {
+    ns <- NS(id)
+    tagList(
+        numericInput(ns("bias_parms"), label_parms,
+                     value = value, min = 0, max = 1, step = 0.01,
+                     width = "100%")
+    )
+}
+
+mod_parms3b_ui <- function(id, label_parms, value) {
+    ns <- NS(id)
+    tagList(
+        numericInput(ns("bias_parms"), label_parms,
+                     value = value, min = 0, max = 20, step = 0.01,
+                     width = "100%")
+    )
 }
 
 # Module Server
@@ -58,6 +76,16 @@ mod_parms2_server <- function(input, output, session) {
 }
 
 mod_parms3_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms3a_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms3b_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
 }
