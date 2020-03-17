@@ -24,6 +24,8 @@ usethis::use_package("ggplot2")
 usethis::use_package("dagitty")
 usethis::use_package("ggdag")
 
+usethis::use_dev_package("episensr")
+
 ## 2.3 Add tests
 
 usethis::use_test( "app" )

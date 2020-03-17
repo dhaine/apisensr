@@ -23,13 +23,41 @@ exposure or that share common causal ancestors with the exposure.
 For the first 3 bias analysis, provide the 2-by-2 table of exposure and outcome and
 the following bias parameters in the **Simple analysis tab**:
 
-    - The association between the confounder and the outcome among those who were not exposed (RR, OR, or RD according to choice of implementation),
-    - The prevalence of the confounder among the exposed (between 0 and 1), and
-    - The prevalence of the confounder among the unexposed (between 0 and 1).
+###### Unknown or unmeasured confounding without effect modification ######
+
+1. The association between the confounder and the outcome among those who were
+   not exposed (RR, OR, or RD according to choice of implementation),
+2. The prevalence of the confounder among the exposed (between 0 and 1), and
+3. The prevalence of the confounder among the unexposed (between 0 and 1).
 
 You also have the choice of implementation between ratio measures (relative
 risk - RR; odds ratio - OR) and difference measure (risk difference - RD).
 
 The data for the example provided come from:
 
-    - Tyndall M.W., Ronald A.R., Agoki E., Malisa W., Bwayo J.J., Ndinya-Achola J.O. et al. Increased risk of infection with human immunodeficiency virus type 1 among uncircumcised men presenting with genital ulcer disease in Kenya. Clin Infect Dis 1996;23:449-53.
+> Tyndall M.W., Ronald A.R., Agoki E., Malisa W., Bwayo J.J., Ndinya-Achola J.O.
+> et al. Increased risk of infection with human immunodeficiency virus type 1
+> among uncircumcised men presenting with genital ulcer disease in Kenya. Clin
+> Infect Dis 1996;23:449-53.
+
+###### Unknown or unmeasured 3-level confounding without effect modification ######
+
+1. The association between the highest level confounder and the outcome,
+2. The association between the mid-level confounder and the outcome,
+3. The prevalence of the highest level confounder among the exposed (between 0
+   and 1),
+4. The prevalence of the highest level confounder among the unexposed (between 0
+and 1),
+5. The prevalence of the mid-level confounder among the exposed (between 0 and
+1), and
+6. The prevalence of the mid-level confounder among the unexposed (between 0 and 1).
+
+You also have the choice of implementation between ratio measures (relative
+risk - RR; odds ratio - OR) and difference measure (risk difference - RD).
+
+The data for the example provided come from:
+
+> Tyndall M.W., Ronald A.R., Agoki E., Malisa W., Bwayo J.J., Ndinya-Achola J.O.
+> et al. Increased risk of infection with human immunodeficiency virus type 1
+> among uncircumcised men presenting with genital ulcer disease in Kenya. Clin
+> Infect Dis 1996;23:449-53.

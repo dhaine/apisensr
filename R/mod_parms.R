@@ -35,11 +35,10 @@ mod_parms2_ui <- function(id, label_parms, value){
 mod_parms3_ui <- function(id, label_parms, value) {
     ns <- NS(id)
     tagList(
-        material_number_box(ns("bias_parms"), label_parms,
-                            min_value = -100, max_value = 100,
-                            step_size = 0.01, initial_value = value,
-                            color = "#0277bd")
-    )
+        numericInput(ns("bias_parms"), label_parms,
+                     value = value, min = -100, max = 100, step = 0.01,
+                     width = "100%")
+)
 }
 
 # Module Server

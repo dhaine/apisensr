@@ -15,6 +15,7 @@ app_server <- function(input, output, session) {
     ## Observed events
     observeEvent(input$reset_input, {
                      shinyjs::reset("side-panel")
+                     shinyjs::reset("side-panel_RR_RD")
                  })
     observeEvent(input$reset_table, {
                      shinyjs::reset("obs-table")

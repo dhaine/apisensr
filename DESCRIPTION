@@ -15,7 +15,7 @@ Imports:
     DT,
     glue,
     htmltools,
-    episensr (>= 0.9.5),
+    episensr (>= 0.9.6),
     shinymaterial,
     shinyjs,
     shinyalert,
@@ -30,3 +30,5 @@ URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr.app/issues
 Suggests: 
     testthat
+Remotes:  
+    dhaine/episensr
