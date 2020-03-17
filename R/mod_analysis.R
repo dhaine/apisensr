@@ -51,6 +51,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 #                      condition = paste0('input[\'', ns('type'), "\' == \'selection\'"),
                           condition = 'input.type == "selection"',
                           ns = ns,
+                          material_button(
+                              input_id = "help_selection",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          ),
                           material_checkbox(
                               input_id = ns("parms_controller"),
                               label = "Providing Selection-bias factor instead of Selection probabilities",
@@ -80,6 +86,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       conditionalPanel(
                           condition = 'input.type == "confounder"',
                           ns = ns,
+                          material_button(
+                              input_id = "help_confounder",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          ),
                           material_radio_button(
                               input_id = ns("confounder_type"),
                               label = "Type of implementation",
@@ -112,6 +124,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       conditionalPanel(
                           condition = 'input.type == "confounder_3"',
                           ns = ns,
+                          material_button(
+                              input_id = "help_confounder3",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          ),
                           material_radio_button(
                               input_id = ns("confounder3_type"),
                               label = "Type of implementation",
@@ -149,6 +167,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       conditionalPanel(
                           condition = 'input.type == "confounder_emm"',
                           ns = ns,
+                          material_button(
+                              input_id = "help_confounderemm",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          ),
                           material_radio_button(
                               input_id = ns("confounderemm_type"),
                               label = "Type of implementation",
@@ -182,6 +206,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       conditionalPanel(
                           condition = 'input.type == "misclass"',
                           ns = ns,
+                          material_button(
+                              input_id = "help_misclass",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          ),
                           material_radio_button(
                               input_id = ns("misclass_type"),
                               label = "Misclassification of:",
@@ -322,6 +352,30 @@ mod_analysis_server <- function(input, output, session){
                                      episensrout()
                                  })
 
+    runjs("document.getElementById('help_selection').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/selection.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounder').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounder3').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.poly.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounderemm').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.emm.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_misclass').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
+         };"
+  )
 }
     
 ## To be copied in the UI

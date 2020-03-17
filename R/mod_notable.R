@@ -47,7 +47,13 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                           mod_parms2_ui(ns("parms_mbias4"),
                                         "Odds ratio between B and the outcome D:", 1.5),
                           mod_parms2_ui(ns("parms_mbias5"),
-                                        "Odds ratio observed between the exposure E and the outcome D", 1)
+                                        "Odds ratio observed between the exposure E and the outcome D", 1),
+                          material_button(
+                              input_id = "help_mbias",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "confounder_limit"',
@@ -149,6 +155,11 @@ mod_notable_server <- function(input, output, session){
 
     runjs("document.getElementById('help_conflimit').onclick = function() { 
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_mbias').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/mbias.html', '_blank');
          };"
   )
 }
