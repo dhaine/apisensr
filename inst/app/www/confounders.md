@@ -61,3 +61,21 @@ The data for the example provided come from:
 > et al. Increased risk of infection with human immunodeficiency virus type 1
 > among uncircumcised men presenting with genital ulcer disease in Kenya. Clin
 > Infect Dis 1996;23:449-53.
+
+###### Unknown or unmeasured confounding with effect modification ######
+
+1. The association between the confounder and the outcome among those who were exposed,
+2. The association between the confounder and the outcome among those who were
+   not exposed,
+3. The prevalence of the confounder among the exposed (between 0 and 1), and
+4. The prevalence of the confounder among the unexposed (between 0 and 1).
+
+You also have the choice of implementation between ratio measures (relative
+risk - RR; odds ratio - OR) and difference measure (risk difference - RD).
+
+The data for the example provided come from:
+
+> Tyndall M.W., Ronald A.R., Agoki E., Malisa W., Bwayo J.J., Ndinya-Achola J.O.
+> et al. Increased risk of infection with human immunodeficiency virus type 1
+> among uncircumcised men presenting with genital ulcer disease in Kenya. Clin
+> Infect Dis 1996;23:449-53.
