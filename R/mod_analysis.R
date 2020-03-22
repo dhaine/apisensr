@@ -51,12 +51,6 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 #                      condition = paste0('input[\'', ns('type'), "\' == \'selection\'"),
                           condition = 'input.type == "selection"',
                           ns = ns,
-                          material_button(
-                              input_id = "help_selection",
-                              label = "Help",
-                              icon = "help",
-                              color = "orange"
-                          ),
                           material_checkbox(
                               input_id = ns("parms_controller"),
                               label = "Providing Selection-bias factor instead of Selection probabilities",
@@ -81,17 +75,17 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               mod_parms_ui(ns("bias_factor"),
                                            "Selection-bias factor:",
                                            value = 0.43)
+                          ),
+                          material_button(
+                              input_id = "help_selection",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
                           )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "confounder"',
                           ns = ns,
-                          material_button(
-                              input_id = "help_confounder",
-                              label = "Help",
-                              icon = "help",
-                              color = "orange"
-                          ),
                           material_radio_button(
                               input_id = ns("confounder_type"),
                               label = "Type of implementation",
@@ -119,17 +113,17 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           mod_parms_ui(ns("parms_confounder2"),
                                        "Prevalence of the confounder among the exposed:", 0.8),
                           mod_parms_ui(ns("parms_confounder3"),
-                                       "Prevalence of the confounder among the unexposed:", 0.05)
+                                       "Prevalence of the confounder among the unexposed:", 0.05),
+                          material_button(
+                              input_id = "help_confounder",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "confounder_3"',
                           ns = ns,
-                          material_button(
-                              input_id = "help_confounder3",
-                              label = "Help",
-                              icon = "help",
-                              color = "orange"
-                          ),
                           material_radio_button(
                               input_id = ns("confounder3_type"),
                               label = "Type of implementation",
@@ -162,17 +156,17 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           mod_parms_ui(ns("parms_confounder_3_5"),
                                        "Prevalence of the mid-level confounder among the exposed:", 0.2),
                           mod_parms_ui(ns("parms_confounder_3_6"),
-                                       "Prevalence of the mid-level confounder among the unexposed:", 0.2)
+                                       "Prevalence of the mid-level confounder among the unexposed:", 0.2),
+                          material_button(
+                              input_id = "help_confounder3",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "confounder_emm"',
                           ns = ns,
-                          material_button(
-                              input_id = "help_confounderemm",
-                              label = "Help",
-                              icon = "help",
-                              color = "orange"
-                          ),
                           material_radio_button(
                               input_id = ns("confounderemm_type"),
                               label = "Type of implementation",
@@ -201,17 +195,17 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           mod_parms_ui(ns("parms_confounder_emm_3"),
                                        "Prevalence of the confounder among the exposed:", 0.8),
                           mod_parms_ui(ns("parms_confounder_emm_4"),
-                                       "Prevalence of the confounder among the unexposed:", 0.05)
+                                       "Prevalence of the confounder among the unexposed:", 0.05),
+                          material_button(
+                              input_id = "help_confounderemm",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "misclass"',
                           ns = ns,
-                          material_button(
-                              input_id = "help_misclass",
-                              label = "Help",
-                              icon = "help",
-                              color = "orange"
-                          ),
                           material_radio_button(
                               input_id = ns("misclass_type"),
                               label = "Misclassification of:",
@@ -225,7 +219,13 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           mod_parms_ui(ns("parms_mis3"),
                                        "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
                           mod_parms_ui(ns("parms_mis4"),
-                                       "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99)
+                                       "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99),
+                          material_button(
+                              input_id = "help_misclass",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       ## Alpha level
                       material_slider(
