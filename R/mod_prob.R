@@ -57,6 +57,12 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           initial_value = 25000,
                           color = "#ff1744")
 
+                  ),
+                  material_button(
+                      input_id = "help_probsens",
+                      label = "Help",
+                      icon = "help",
+                      color = "orange"
                   )
               )
           ),
@@ -165,7 +171,10 @@ mod_prob_server <- function(input, output, session){
 
     ## Output
 #    output$summary = renderUI({episensrout()})
-
+    runjs("document.getElementById('help_probsens').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
+         };"
+    )
 }
     
 ## To be copied in the UI
