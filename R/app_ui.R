@@ -30,7 +30,7 @@ app_ui <- function() {
                 "Simple analysis" = "tab_analysis",
                 "Simple analysis, no observed data" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
-                "About the analyses" = "tab_about"
+                "About" = "tab_about"
             ),
             color = "#ff8a80"
         ),

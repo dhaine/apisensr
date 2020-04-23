@@ -20,25 +20,14 @@ mod_about_ui <- function(id, label = "tab_about"){
       tab_id = id,
       material_row(
           material_column(
-              width = 3,
+              width = 9,
               material_card(
-                  material_dropdown(
-                      ns("about_type"),
-                      label = "Information about which bias analysis?",
-                      choices = c(
-                          "Selection bias" = "about_selection",
-                          "M-bias" = "about_mbias",
-                          "Unmeasured confounding" = "about_confounding",
-                          "Misclassification bias" = "about_misclass",
-                          "Probabilistic selection bias" = "about_probsens"
-                      ),
-                      color = "#ff1744"
-                  )
+                  p("Quantitative bias analysis allows to estimate nonrandom errors in epidemiologic studies, assessing the magnitude and direction of biases, and quantifying their uncertainties. Every study has some random error due to its limited sample size, and is susceptible to systematic errors as well, from selection bias to the presence of (un)known confounders or information bias (measurement error, including misclassification). Bias analysis methods were compiled by Lash et al. in their book", a("Applying Quantitative Bias Analysis to Epidemiologic Data.", href="https://www.springer.com/us/book/9780387879604"), "This Shiny app implements bias analyses from the book, as well as others (e.g. by S. Greenland), as computed by the R package", a("episensr", href="https://dhaine.github.io/episensr/index.html"), ". More can be found in the", code("episensr"), "package available for download on", a("R CRAN", href="https://CRAN.R-project.org/package=episensr"), "."), br(), br(), br(), includeMarkdown("inst/app/www/functions.md")
               )
           ),
           material_column(
-              width = 9,
-              uiOutput(ns("about_bias_choice"))
+              width = 3,
+              wellPanel("Please report bugs at", a("https://github.com/dhaine/apisensr/issues", href="https://github.com/dhaine/apisensr/issues"), br(), br(), "Shiny app by", a("Denis Haine", href="https://www.denishaine.ca"), br(), br(), "episensr version:", verbatimTextOutput(ns("versioning_epi"), placeholder = TRUE), "apisensr version:", verbatimTextOutput(ns("versioning_api"), placeholder = TRUE))
           )
       )
   )
@@ -53,16 +42,9 @@ mod_about_ui <- function(id, label = "tab_about"){
 mod_about_server <- function(input, output, session){
     ns <- session$ns
 
-    output$about_bias_choice <- renderUI({
-                                             bias_file <- switch(input$about_type,
-                                                                 about_selection = "inst/app/www/selection_bias.md",
-                                                                 about_mbias = "inst/app/www/mbias.md",
-                                                                 about_confounding = "inst/app/www/confounders.md",
-                                                                 about_misclass = "inst/app/www/misclassification.md",
-                                                                 about_probsens = "inst/app/www/probsens.md"
-                                                                 )
-                                             includeMarkdown(bias_file)
-                                         })
+    output$versioning_epi <- renderPrint(packageVersion("episensr"))
+    output$versioning_api <- renderPrint(packageVersion("apisensr"))
+
 }
     
 ## To be copied in the UI
