@@ -72,7 +72,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           material_checkbox(
                               input_id = ns("discard"),
                               label = "Discard draws of negative adjusted counts.",
-                              initial_value = FALSE,
+                              initial_value = TRUE,
                               color = "#ff1744"),
                           conditionalPanel(
                               condition = 'input.diff == 1',
@@ -452,12 +452,18 @@ mod_prob_server <- function(input, output, session){
                                                    input$parms_spexp_B2)
                                }
 
+                               if (input$discard == 0) {
+                                   throw_away <- FALSE
+                               } else throw_away <- TRUE
+
                                if (input$prob_type == "probsens" & input$diff == 0) {
                                    probsens(mat,
                                             type = input$probsens_type,
                                             reps = input$reps,
                                             seca.parms = list(input$seca_parms, dist_seca),
-                                            spca.parms = list(input$spca_parms, dist_spca))
+                                            spca.parms = list(input$spca_parms, dist_spca),
+                                            discard = throw_away,
+                                            alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
                                    probsens(mat,
                                             type = input$probsens_type,
@@ -469,7 +475,9 @@ mod_prob_server <- function(input, output, session){
                                             spexp.parms = list(input$spexp_parms,
                                                                dist_spexp),
                                             corr.se = input$corr_se,
-                                            corr.sp = input$corr_sp)
+                                            corr.sp = input$corr_sp,
+                                            discard = throw_away,
+                                            alpha = input$alpha)
                                }
                            })
 
