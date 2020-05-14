@@ -458,7 +458,7 @@ mod_prob_server <- function(input, output, session){
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
                                    probsens(mat,
-                                            type = input$probsens_type,
+                                            type = input$misclassProb_type,
                                             reps = input$reps,
                                             seca.parms = list(input$seca_parms, dist_seca),
                                             spca.parms = list(input$spca_parms, dist_spca),
@@ -466,7 +466,7 @@ mod_prob_server <- function(input, output, session){
                                             alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
                                    probsens(mat,
-                                            type = input$probsens_type,
+                                            type = input$misclassProb_type,
                                             reps = input$reps,
                                             seca.parms = list(input$seca_parms, dist_seca),
                                             seexp.parms = list(input$seexp_parms,
