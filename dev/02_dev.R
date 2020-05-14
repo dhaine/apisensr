@@ -13,7 +13,7 @@ golem::add_module( name = "my_other_module" ) # Name of the module
 ## 2.2 Add dependencies
 
 #usethis::use_package( "thinkr" ) # To call each time you need a new package
-usethis::use_package( "episensr", min_version = "0.9.5" ) # To call each time you need a new package
+usethis::use_package( "episensr", min_version = "0.9.6" ) # To call each time you need a new package
 usethis::use_package("shinymaterial")
 usethis::use_package("shinyjs")
 usethis::use_package("shinyalert")
