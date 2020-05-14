@@ -181,7 +181,43 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Trapezoidal" = "trapezoidal",
                               "Beta" = "beta"),
                           selected = "trapezoidal",
-                          color = "#ff1744")
+                          color = "#ff1744"),
+                      conditionalPanel(
+                          condition = 'input.seexp_parms == "constant"',
+                          ns = ns,
+                          mod_parms_ui(ns("parms_seexp_C"), "Constant value:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.seexp_parms == "uniform"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_seexp_U"), "Minimum and maximum:",
+                                          0.7, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.seexp_parms == "triangular"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_seexp_Tr1"),
+                                          "Lower and upper limit:", 0.7, 0.9),
+                          mod_parms_ui(ns("parms_seexp_Tr2"), "Mode:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.seexp_parms == "trapezoidal"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_seexp_Tz1"),
+                                          "Minimum and maximum:", 0.75, 1),
+                          mod_parmsrge_ui(ns("parms_seexp_Tz2"),
+                                          "Lower and upper mode:", 0.85, 0.95)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.seexp_parms == "beta"',
+                          ns = ns,
+                          material_number_box(ns("parms_seexp_B1"),
+                                              "alpha:", min_value = 0, max_value = 10^6,
+                                              initial_value = 908, color = "#ff1744"),
+                          material_number_box(ns("parms_seexp_B2"),
+                                              "beta:", min_value = 0, max_value = 10^6,
+                                              initial_value = 56, color = "#ff1744")
+                      )
                   )
               )
           ),
@@ -233,19 +269,58 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       material_number_box(ns("parms_spca_B2"),
                                           "beta:", min_value = 0, max_value = 10^6,
                                           initial_value = 6, color = "teal accent-2")
-                  )#,
-#                  material_dropdown(
-#                      input_id = ns("spexp_parms"),
-#                      label = "Distribution, specificity of exposure classification among those without the outcome:",
-#                      choices = c(
-#                          "Constant" = "constant",
-#                          "Uniform" = "uniform",
-#                          "Triangular" = "triangular",
-#                          "Trapezoidal" = "trapezoidal",
-#                          "Beta" = "beta"),
-#                      selected = "trapezoidal",
-#                      color = "teal accent-2")
-#              )
+                  ),
+                  conditionalPanel(
+                      condition = 'input.diff == 1',
+                      ns = ns,
+                      material_dropdown(
+                          input_id = ns("spexp_parms"),
+                          label = "Distribution, specificity of exposure classification among those without the outcome:",
+                          choices = c(
+                              "Constant" = "constant",
+                              "Uniform" = "uniform",
+                              "Triangular" = "triangular",
+                              "Trapezoidal" = "trapezoidal",
+                              "Beta" = "beta"),
+                          selected = "trapezoidal",
+                          color = "teal accent-2"),
+                      conditionalPanel(
+                          condition = 'input.spexp_parms == "constant"',
+                          ns = ns,
+                          mod_parms_ui(ns("parms_spexp_C"), "Constant value:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.spexp_parms == "uniform"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_spexp_U"), "Minimum and maximum:",
+                                          0.7, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.spexp_parms == "triangular"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_spexp_Tr1"),
+                                          "Lower and upper limit:", 0.7, 0.9),
+                          mod_parms_ui(ns("parms_spexp_Tr2"), "Mode:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.spexp_parms == "trapezoidal"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_spexp_Tz1"),
+                                          "Minimum and maximum:", 0.75, 1),
+                          mod_parmsrge_ui(ns("parms_spexp_Tz2"),
+                                          "Lower and upper mode:", 0.85, 0.95)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.spexp_parms == "beta"',
+                          ns = ns,
+                          material_number_box(ns("parms_spexp_B1"),
+                                              "alpha:", min_value = 0, max_value = 10^6,
+                                              initial_value = 908, color = "#ff1744"),
+                          material_number_box(ns("parms_spexp_B2"),
+                                              "beta:", min_value = 0, max_value = 10^6,
+                                              initial_value = 56, color = "#ff1744")
+                      )   
+                  )
           )
       ),
       material_column(
@@ -306,24 +381,30 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$seca_parms == "beta") {
                                    dist_seca <- c(input$parms_seca_B1, input$parms_seca_B2)
                                }
-#                               dist_seexp <- if (input$seexp_parms == "trapezoidal") {
-#                                                dist_seexp <- c(input$parms_seexp1[1],
-#                                                               input$parms_seexp2[1],
-#                                                               input$parms_seexp2[2],
-#                                                               input$parms_seexp1[2])
-#                                            } else if (input$seexp_parms == "triangular") {
-#                                                dist_seexp <- c(input$parms_seexp1[1],
-#                                                               input$parms_seexp1[2],
-#                                                               input$parms_seexp2)
-#                                            } else if (input$seexp_parms == "uniform") {
-#                                                dist_seexp <- c(input$parms_seexp1[1],
-#                                                               input$parms_seexp1[2])
-#                                            } else if (input$seexp_parms == "constant") {
-#                                                dist_seexp <- input$parms_seexp1
-#                                            } else if (input$seexp_parms == "beta") {
-#                                                dist_seexp <- c(input$parms_seexp1,
-#                                                               input$parms_seexp2)
-#                                            }
+                               if (input$seexp_parms == "trapezoidal") {
+                                   dist_seexp <- c(callModule(mod_parmsrge_server,
+                                                              "parms_seexp_Tz1")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Tz2")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Tz2")[2],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Tz1")[2])
+                               } else if (input$seexp_parms == "triangular") {
+                                   dist_seexp <- c(callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Tr1"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Tr2"))
+                               } else if (input$seexp_parms == "uniform") {
+                                   dist_seexp <- callModule(mod_parmsrge_server,
+                                                           "parms_seexp_U")
+                               } else if (input$seexp_parms == "constant") {
+                                   dist_seexp <- callModule(mod_parms_server,
+                                                            "parms_seexp_C")
+                               } else if (input$seexp_parms == "beta") {
+                                   dist_seexp <- c(input$parms_seexp_B1,
+                                                   input$parms_seexp_B2)
+                               }
                                if (input$spca_parms == "trapezoidal") {
                                    dist_spca <- c(callModule(mod_parmsrge_server,
                                                              "parms_spca_Tz1")[1],
@@ -345,28 +426,32 @@ mod_prob_server <- function(input, output, session){
                                    dist_spca <- callModule(mod_parms_server, "parms_spca_C")
                                } else if (input$spca_parms == "beta") {
                                    dist_spca <- c(input$parms_spca_B1, input$parms_spca_B2)
-                                            }
-#                               dist_spexp <- if (input$spexp_parms == "trapezoidal") {
-#                                                dist_spexp <- c(input$parms_spexp1[1],
-#                                                               input$parms_spexp2[1],
-#                                                               input$parms_spexp2[2],
-#                                                               input$parms_spexp1[2])
-#                                            } else if (input$spexp_parms == "triangular") {
-#                                                dist_spexp <- c(input$parms_spexp1[1],
-#                                                               input$parms_spexp1[2],
-#                                                               input$parms_spexp2)
-#                                            } else if (input$spexp_parms == "uniform") {
-#                                                dist_spexp <- c(input$parms_spexp1[1],
-#                                                               input$parms_spexp1[2])
-#                                            } else if (input$spexp_parms == "constant") {
-#                                                dist_spexp <- input$parms_spexp1
-#                                            } else if (input$spexp_parms == "beta") {
-#                                                dist_spexp <- c(input$parms_spexp1,
-#                                                               input$parms_spexp2)
-#                                            }
+                               }
+                               if (input$spexp_parms == "trapezoidal") {
+                                   dist_spexp <- c(callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tz1")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tz2")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tz2")[2],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tz1")[2])
+                               } else if (input$spexp_parms == "triangular") {
+                                   dist_spexp <- c(callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tr1"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Tr2"))
+                               } else if (input$spexp_parms == "uniform") {
+                                   dist_spexp <- callModule(mod_parmsrge_server,
+                                                           "parms_spexp_U")
+                               } else if (input$spexp_parms == "constant") {
+                                   dist_spexp <- callModule(mod_parms_server,
+                                                            "parms_spexp_C")
+                               } else if (input$spexp_parms == "beta") {
+                                   dist_spexp <- c(input$parms_spexp_B1,
+                                                   input$parms_spexp_B2)
+                               }
 
-                               dist_seca
-                               dist_spca
                                if (input$prob_type == "probsens" & input$diff == 0) {
                                    probsens(mat,
                                             type = input$probsens_type,
@@ -378,12 +463,13 @@ mod_prob_server <- function(input, output, session){
                                             type = input$probsens_type,
                                             reps = input$reps,
                                             seca.parms = list(input$seca_parms, dist_seca),
-                                            seexp.parms = list(input$seca_parms, dist_seca),
+                                            seexp.parms = list(input$seexp_parms,
+                                                               dist_seexp),
                                             spca.parms = list(input$spca_parms, dist_spca),
                                             spexp.parms = list(input$spexp_parms,
                                                                dist_spexp),
-                                            corr.se = 0.8,
-                                            corr.sp = 0.8)
+                                            corr.se = input$corr_se,
+                                            corr.sp = input$corr_sp)
                                }
                            })
 
