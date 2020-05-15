@@ -110,12 +110,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           max_value = 0.2,
                           step_size = 0.01,
                           initial_value = 0.05,
-                          color = "#ff1744"),
-                      material_button(
-                          input_id = "reset_input3",
-                          label = "Parameters back to example",
-                          icon = "restore",
-                          color = "red accent-3"),
+                          color = "#ff1744")
                       )
               )
           ),
