@@ -63,7 +63,6 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               color = "#ff1744"),
                           material_switch(
                               input_id = ns("diff"),
-                              label = "",
                               off_label = "Non-differential misclassification",
                               on_label = "Differential misclassification",
                               initial_value = FALSE,
