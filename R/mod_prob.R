@@ -163,6 +163,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                       0.5, 0.9)
                   ),
                   conditionalPanel(
+                      condition = 'input.seca_parms == "logit-normal"',
+                      ns = ns,
+                      mod_parms2a_ui(ns("parms_seca_Ln1"), "Location:", 0, -5, 5),
+                      mod_parms2a_ui(ns("parms_seca_Ln2"), "Scale:", 0.8, -10, 10),
+                      mod_parmsrge_ui(ns("parms_seca_Ln3"), "Lower and upper bound shift:",
+                                      0.5, 0.9)
+                  ),
+                  conditionalPanel(
                       condition = 'input.seca_parms == "beta"',
                       ns = ns,
                       material_number_box(ns("parms_seca_B1"),
@@ -220,6 +228,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       mod_parms2a_ui(ns("parms_seexp_Ll1"), "Location:", 0, -5, 5),
                       mod_parms2a_ui(ns("parms_seexp_Ll2"), "Scale:", 0.8, -10, 10),
                       mod_parmsrge_ui(ns("parms_seexp_Ll3"), "Lower and upper bound shift:",
+                                      0.5, 0.9)
+                  ),
+                  conditionalPanel(
+                      condition = 'input.seexp_parms == "logit-normal"',
+                      ns = ns,
+                      mod_parms2a_ui(ns("parms_seexp_Ln1"), "Location:", 0, -5, 5),
+                      mod_parms2a_ui(ns("parms_seexp_Ln2"), "Scale:", 0.8, -10, 10),
+                      mod_parmsrge_ui(ns("parms_seexp_Ln3"), "Lower and upper bound shift:",
                                       0.5, 0.9)
                   ),
                       conditionalPanel(
@@ -285,6 +301,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                       0.5, 0.9)
                   ),
                   conditionalPanel(
+                      condition = 'input.spca_parms == "logit-normal"',
+                      ns = ns,
+                      mod_parms2a_ui(ns("parms_spca_Ln1"), "Location:", 0, -5, 5),
+                      mod_parms2a_ui(ns("parms_spca_Ln2"), "Scale:", 0.8, -10, 10),
+                      mod_parmsrge_ui(ns("parms_spca_Ln3"), "Lower and upper bound shift:",
+                                      0.5, 0.9)
+                  ),
+                  conditionalPanel(
                       condition = 'input.spca_parms == "beta"',
                       ns = ns,
                       material_number_box(ns("parms_spca_B1"),
@@ -342,6 +366,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       mod_parms2a_ui(ns("parms_spexp_Ll1"), "Location:", 0, -5, 5),
                       mod_parms2a_ui(ns("parms_spexp_Ll2"), "Scale:", 0.8, -10, 10),
                       mod_parmsrge_ui(ns("parms_spexp_Ll3"), "Lower and upper bound shift:",
+                                      0.5, 0.9)
+                  ),
+                  conditionalPanel(
+                      condition = 'input.spexp_parms == "logit-normal"',
+                      ns = ns,
+                      mod_parms2a_ui(ns("parms_spexp_Ln1"), "Location:", 0, -5, 5),
+                      mod_parms2a_ui(ns("parms_spexp_Ln2"), "Scale:", 0.8, -10, 10),
+                      mod_parmsrge_ui(ns("parms_spexp_Ln3"), "Lower and upper bound shift:",
                                       0.5, 0.9)
                   ),
                       conditionalPanel(
@@ -413,6 +445,15 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_seca_Ll3")[1],
                                                   callModule(mod_parmsrge_server,
                                                              "parms_seca_Ll3")[2])
+                               } else if (input$seca_parms == "logit-normal") {
+                                   dist_seca <- c(callModule(mod_parms2a_server,
+                                                             "parms_seca_Ln1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_seca_Ln2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seca_Ln3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seca_Ln3")[2])
                                } else if (input$seca_parms == "triangular") {
                                    dist_seca <- c(callModule(mod_parmsrge_server,
                                                              "parms_seca_Tr1"),
@@ -444,6 +485,15 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_seexp_Ll3")[1],
                                                   callModule(mod_parmsrge_server,
                                                              "parms_seexp_Ll3")[2])
+                               } else if (input$seexp_parms == "logit-normal") {
+                                   dist_seexp <- c(callModule(mod_parms2a_server,
+                                                             "parms_seexp_Ln1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_seexp_Ln2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Ln3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_seexp_Ln3")[2])
                                } else if (input$seexp_parms == "triangular") {
                                    dist_seexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_seexp_Tr1"),
@@ -468,7 +518,7 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_spca_Tz2")[2],
                                                   callModule(mod_parmsrge_server,
                                                              "parms_spca_Tz1")[2])
-                               }  else if (input$spca_parms == "logit-logistic") {
+                               } else if (input$spca_parms == "logit-logistic") {
                                    dist_spca <- c(callModule(mod_parms2a_server,
                                                              "parms_spca_Ll1"),
                                                   callModule(mod_parms2a_server,
@@ -477,6 +527,15 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_spca_Ll3")[1],
                                                   callModule(mod_parmsrge_server,
                                                              "parms_spca_Ll3")[2])
+                               } else if (input$spca_parms == "logit-normal") {
+                                   dist_spca <- c(callModule(mod_parms2a_server,
+                                                             "parms_spca_Ln1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_spca_Ln2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spca_Ln3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spca_Ln3")[2])
                                } else if (input$spca_parms == "triangular") {
                                    dist_spca <- c(callModule(mod_parmsrge_server,
                                                              "parms_spca_Tr1"),
@@ -508,6 +567,15 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_spexp_Ll3")[1],
                                                   callModule(mod_parmsrge_server,
                                                              "parms_spexp_Ll3")[2])
+                               } else if (input$spexp_parms == "logit-normal") {
+                                   dist_spexp <- c(callModule(mod_parms2a_server,
+                                                             "parms_spexp_Ln1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_spexp_Ln2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Ln3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_spexp_Ln3")[2])
                                } else if (input$spexp_parms == "triangular") {
                                    dist_spexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_spexp_Tr1"),
