@@ -77,6 +77,15 @@ mod_parmsrge_ui <- function(id, label_parms, lo, hi) {
     )
 }
 
+mod_parmsrge2_ui <- function(id, label_parms, lo, hi, step) {
+    ns <- NS(id)
+    tagList(
+        sliderInput(ns("bias_parms"), label_parms,
+                        min = 0, max = 20, value = c(lo, hi), step = step,
+                        width = "100%")
+    )
+}
+
 # Module Server
     
 #' @rdname mod_parms
@@ -117,7 +126,12 @@ mod_parmsrge_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
 }
-     
+
+mod_parmsrge2_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
 ## To be copied in the UI
 # mod_parms_ui("parms_ui_1")
     
