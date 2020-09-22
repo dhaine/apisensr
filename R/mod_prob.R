@@ -100,7 +100,22 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               input_id = "help_probsens",
                               label = "Help",
                               icon = "help",
-                              color = "orange")
+                              color = "orange"),
+                          br(),
+                          material_dropdown(
+                              input_id = ns("plot_probsens"),
+                              label = "Plot of output/parameters:",
+                              choices = c(
+                                  "Relative risk - systematic error" = "rr",
+                                  "Odds ratio - systematic error" = "or",
+                                  "Relative risk - systematic and random error" = "rr_tot",
+                                  "Odds ratio - systematic and random error" = "or_tot",
+                                  "Sensitivity for cases" = "seca",
+                                  "Sensitivity of exposed" = "seexp",
+                                  "Specificity for cases" = "spca",
+                                  "Specificity of exposed" = "spexp"),
+                              selected = "rr",
+                              color = "#ff1744")
                       ),
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_sel"',
@@ -124,7 +139,16 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               input_id = "help_probsens_sel",
                               label = "Help",
                               icon = "help",
-                              color = "orange")
+                              color = "orange"),
+                          material_dropdown(
+                              input_id = ns("plot_probsens_sel"),
+                              label = "Plot of output/parameters",
+                              choices = c(
+                                  "Odds ratio - systematic error" = "or",
+                                  "Odds ratio - systematic and random error" = "or_tot",
+                                  "Selection odds ratio" = "or_sel"),
+                              selected = "or",
+                              color = "#ff1744")
                       ),
                       ## Alpha level
                       material_slider(
@@ -760,7 +784,8 @@ mod_prob_ui <- function(id, label = "tab_prob"){
           material_card(
               verbatimTextOutput(ns("summary_prob")),
               verbatimTextOutput(ns("warnings_prob")),
-              verbatimTextOutput(ns("message_prob"))
+              verbatimTextOutput(ns("message_prob")),
+              plotOutput(ns("plot_res"), width = "600px")
           )
       )
       )
@@ -1225,6 +1250,14 @@ mod_prob_server <- function(input, output, session){
                                }
                            })
 
+    plotout = reactive({
+                           if (input$prob_type == "probsens") {
+                               plot(episensrout(), input$plot_probsens)
+                           } else if (input$prob_type == "probsens_sel") {
+                               plot(episensrout(), input$plot_probsens_sel)
+                           }
+                       })
+
     ## Output
     output$summary_prob = renderPrint({
                                           episensrout()
@@ -1234,7 +1267,11 @@ mod_prob_server <- function(input, output, session){
                                       })
     output$message_prob = renderText({
                                           invisible(episensrout()$message)
-                                      })
+                                     })
+
+    output$plot_res <- renderPlot({
+                                      plotout()
+                                  })
     
     runjs("document.getElementById('help_probsens').onclick = function() { 
            window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
