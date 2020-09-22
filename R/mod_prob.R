@@ -121,7 +121,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               color = "#ff1744"),
                           br(),
                           material_button(
-                              input_id = "help_probsens",
+                              input_id = "help_probsens_sel",
                               label = "Help",
                               icon = "help",
                               color = "orange")
@@ -1239,7 +1239,12 @@ mod_prob_server <- function(input, output, session){
     runjs("document.getElementById('help_probsens').onclick = function() { 
            window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
          };"
-    )
+         )
+
+        runjs("document.getElementById('help_probsens_sel').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/probsens.sel.html', '_blank');
+         };"
+         )
 }
     
 ## To be copied in the UI
