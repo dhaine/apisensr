@@ -52,8 +52,8 @@ golem::use_recommended_deps()
 ## 1.6 Add various tools
 
 # If you want to change the favicon (default is golem's one)
-#golem::remove_favicon()
-#golem::use_favicon() # path = "path/to/ico". Can be an online file. 
+golem::remove_favicon()
+golem::use_favicon("~/workspace/h/haine/Rpackages/episensr-hex/favicon/favicon-32x32.png") # path = "path/to/ico". Can be an online file. 
 
 # Add helper functions 
 golem::use_utils_ui()
