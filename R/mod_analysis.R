@@ -28,6 +28,8 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                       choices = c(
                           "Selection bias" = "selection",
                           "Unmeasured confounder" = "confounder",
+                          "Unmeasured 3-level confounder" = "confounder_3",
+                          "Unmeasured confounder with effect modification" = "confounder_emm",
                           "Misclassification bias" = "misclass"
                       ),
                       color = "#ff1744"
@@ -73,6 +75,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               mod_parms_ui(ns("bias_factor"),
                                            "Selection-bias factor:",
                                            value = 0.43)
+                          ),
+                          material_button(
+                              input_id = "help_selection",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
                           )
                       ),
                       conditionalPanel(
@@ -87,22 +95,113 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               selected = "RR",
                               color = "#ff1744"
                           ),
-                          conditionalPanel(
-                              condition = 'input.confounder_type != "RD"',
-                              ns = ns,
-                              mod_parms_ui(ns("parms_confounder1a"),
-                                           "Association between the confounder and the outcome among those who were not exposed:", 0.63),                          
-                              ),
-                          conditionalPanel(
-                              condition = 'input.confounder_type == "RD"',
-                              ns = ns,
-                              mod_parms3_ui(ns("parms_confounder1b"),
-                                            "Association between the confounder and the outcome among those who were not exposed:", -0.37)
+                          div(
+                              id = "side-panel_RR_RD",
+                              conditionalPanel(
+                                  condition = 'input.confounder_type != "RD"',
+                                  ns = ns,
+                                  mod_parms_ui(ns("parms_confounder1a"),
+                                               "Association between the confounder and the outcome among those who were not exposed:", 0.63),                          
+                                  ),
+                              conditionalPanel(
+                                  condition = 'input.confounder_type == "RD"',
+                                  ns = ns,
+                                  mod_parms3_ui(ns("parms_confounder1b"),
+                                                "Association between the confounder and the outcome among those who were not exposed:", -0.37)
+                              )
                           ),
                           mod_parms_ui(ns("parms_confounder2"),
                                        "Prevalence of the confounder among the exposed:", 0.8),
                           mod_parms_ui(ns("parms_confounder3"),
-                                       "Prevalence of the confounder among the unexposed:", 0.05)
+                                       "Prevalence of the confounder among the unexposed:", 0.05),
+                          material_button(
+                              input_id = "help_confounder",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder_3"',
+                          ns = ns,
+                          material_radio_button(
+                              input_id = ns("confounder3_type"),
+                              label = "Type of implementation",
+                              choices = c("Relative Risk" = "RR",
+                                          "Odds Ratio" = "OR",
+                                          "Risk Difference" = "RD"),
+                              selected = "RR",
+                              color = "#ff1744"
+                          ),
+                          conditionalPanel(
+                              condition = 'input.confounder3_type != "RD"',
+                              ns = ns,
+                              mod_parms_ui(ns("parms_confounder_3_1a"),
+                                           "Association between the highest level confounder and the outcome:", 0.4),
+                              mod_parms_ui(ns("parms_confounder_3_2a"),
+                                           "Association between the mid-level confounder and the outcome:", 0.8)
+                          ),
+                          conditionalPanel(
+                              condition = 'input.confounder3_type == "RD"',
+                              ns = ns,
+                              mod_parms3_ui(ns("parms_confounder_3_1b"),
+                                            "Association between the highest level confounder and the outcome:", -0.4),
+                              mod_parms3_ui(ns("parms_confounder_3_2b"),
+                                            "Association between the mid-level confounder and the outcome:", -0.2)
+                          ),
+                          mod_parms_ui(ns("parms_confounder_3_3"),
+                                       "Prevalence of the highest level confounder among the exposed:", 0.6),
+                          mod_parms_ui(ns("parms_confounder_3_4"),
+                                       "Prevalence of the highest level confounder among the unexposed:", 0.05),
+                          mod_parms_ui(ns("parms_confounder_3_5"),
+                                       "Prevalence of the mid-level confounder among the exposed:", 0.2),
+                          mod_parms_ui(ns("parms_confounder_3_6"),
+                                       "Prevalence of the mid-level confounder among the unexposed:", 0.2),
+                          material_button(
+                              input_id = "help_confounder3",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder_emm"',
+                          ns = ns,
+                          material_radio_button(
+                              input_id = ns("confounderemm_type"),
+                              label = "Type of implementation",
+                              choices = c("Relative Risk" = "RR",
+                                          "Odds Ratio" = "OR",
+                                          "Risk Difference" = "RD"),
+                              selected = "RR",
+                              color = "#ff1744"
+                          ),
+                          conditionalPanel(
+                              condition = 'input.confounderemm_type != "RD"',
+                              ns = ns,
+                              mod_parms_ui(ns("parms_confounder_emm_1a"),
+                                           "Association between the confounder and the outcome among those who were exposed:", 0.4),
+                              mod_parms_ui(ns("parms_confounder_emm_2a"),
+                                           "Association between the confounder and the outcome among those who were not exposed:", 0.7)
+                          ),
+                          conditionalPanel(
+                              condition = 'input.confounderemm_type == "RD"',
+                              ns = ns,
+                              mod_parms3_ui(ns("parms_confounder_emm_1b"),
+                                            "Association between the confounder and the outcome among those who were exposed:", -0.6),
+                              mod_parms3_ui(ns("parms_confounder_emm_2b"),
+                                            "Association between the confounder and the outcome among those who were not exposed:", -0.3)
+                          ),
+                          mod_parms_ui(ns("parms_confounder_emm_3"),
+                                       "Prevalence of the confounder among the exposed:", 0.8),
+                          mod_parms_ui(ns("parms_confounder_emm_4"),
+                                       "Prevalence of the confounder among the unexposed:", 0.05),
+                          material_button(
+                              input_id = "help_confounderemm",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       conditionalPanel(
                           condition = 'input.type == "misclass"',
@@ -120,7 +219,13 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           mod_parms_ui(ns("parms_mis3"),
                                        "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
                           mod_parms_ui(ns("parms_mis4"),
-                                       "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99)
+                                       "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99),
+                          material_button(
+                              input_id = "help_misclass",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
                       ),
                       ## Alpha level
                       material_slider(
@@ -164,10 +269,12 @@ mod_analysis_server <- function(input, output, session){
                       if(input$type == "selection") {
                           data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
                                      row.names = c("Cases", "Noncases"))
-                      } else if (input$type == "confounder") {
+                      } else if (input$type == "confounder" |
+                                 input$type == "confounder_3" |
+                                 input$type == "confounder_emm") {
                           data.frame(Exposed = c(105, 527), Unexposed = c(85, 93),
                                      row.names = c("Cases", "Noncases"))
-                      } else if(input$type == "misclass") {
+                      } else if (input$type == "misclass") {
                           data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
                                      row.names = c("Cases", "Noncases"))
                       }
@@ -200,7 +307,35 @@ mod_analysis_server <- function(input, output, session){
                                                bias_parms = c(if (input$confounder_type != "RD")
                                                               {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
                                                               callModule(mod_parms_server, "parms_confounder2"),
-                                                              callModule(mod_parms_server, "parms_confounder3")))
+                                                              callModule(mod_parms_server, "parms_confounder3")),
+                                               alpha = input$alpha)
+                               } else if (input$type == "confounder_3") {
+                                   confounders.poly(mat,
+                                                    type = input$confounder3_type,
+                                                    bias_parms = c(if (input$confounder3_type != "RD")
+                                                                   {callModule(mod_parms_server, "parms_confounder_3_1a")}
+                                                                   else callModule(mod_parms3_server, "parms_confounder_3_1b"),
+                                                                   if (input$confounder3_type != "RD")
+                                                                   {callModule(mod_parms_server, "parms_confounder_3_2a")}
+                                                                   else callModule(mod_parms3_server, "parms_confounder_3_2b"),
+                                                                   callModule(mod_parms_server, "parms_confounder_3_3"),
+                                                                   callModule(mod_parms_server, "parms_confounder_3_4"),
+                                                                   callModule(mod_parms_server, "parms_confounder_3_5"),
+                                                                   callModule(mod_parms_server, "parms_confounder_3_6")),
+                                                    alpha = input$alpha)
+                               } else if (input$type == "confounder_emm") {
+                                   confounders.emm(mat,
+                                                   type = input$confounderemm_type,
+                                                   bias_parms = c(if (input$confounderemm_type != "RD")
+                                                                  {callModule(mod_parms_server, "parms_confounder_emm_1a")}
+                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
+                                                                  if (input$confounderemm_type != "RD")
+                                                                  {callModule(mod_parms_server, "parms_confounder_emm_2a")}
+                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
+                                                                  callModule(mod_parms_server, "parms_confounder_emm_3"),
+                                                                  callModule(mod_parms_server, "parms_confounder_emm_4")),
+                                                   alpha = input$alpha
+                                                   )
                                } else if (input$type == "misclass") {
                                    misclassification(mat,
                                                      type = input$misclass_type,
@@ -217,6 +352,30 @@ mod_analysis_server <- function(input, output, session){
                                      episensrout()
                                  })
 
+    runjs("document.getElementById('help_selection').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/selection.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounder').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounder3').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.poly.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_confounderemm').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/confounders.emm.html', '_blank');
+         };"
+         )
+
+    runjs("document.getElementById('help_misclass').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
+         };"
+  )
 }
     
 ## To be copied in the UI

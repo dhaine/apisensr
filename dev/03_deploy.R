@@ -2,7 +2,7 @@
 # 
 # 4. Test my package
 
-devtools::test()
+#devtools::test()
 rhub::check_for_cran()
 
 # 5. Deployment elements

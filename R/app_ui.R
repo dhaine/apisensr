@@ -9,7 +9,6 @@
 #' @import ggplot2
 #' @import dagitty
 #' @import ggdag
-source("inst/app/www/pop_up.R")
 
 app_ui <- function() {
   tagList(
@@ -30,7 +29,7 @@ app_ui <- function() {
                 "Simple analysis" = "tab_analysis",
                 "Simple analysis, no observed data" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
-                "About the analyses" = "tab_about"
+                "About" = "tab_about"
             ),
             color = "#ff8a80"
         ),
@@ -55,7 +54,7 @@ golem_add_external_resources <- function(){
  
   tags$head(
     golem::activate_js(),
-    golem::favicon(),
+    golem::favicon(ext = 'png'),
     # Add here all the external resources
     # If you have a custom.css in the inst/app/www
     # Or for example, you can add shinyalert::useShinyalert() here
