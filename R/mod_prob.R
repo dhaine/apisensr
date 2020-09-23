@@ -26,9 +26,9 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       ns("prob_type"),
                       label = "Choose bias analysis:",
                       choices = c(
-                          "Misclassification bias" = "probsens",
                           "Selection bias" = "probsens_sel",
-                          "Unmeasured confounder" = "probsens_conf"
+                          "Unmeasured confounder" = "probsens_conf",
+                          "Misclassification bias" = "probsens"
                       ),
                       color = "#ff1744"
                   ),
