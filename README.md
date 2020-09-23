@@ -40,7 +40,7 @@ remotes::install_github("dhaine/apisensr", ref = "develop")
 
 ``` r
 library(apisensr)
-run.app()
+run_app()
 ```
 
 Please note that the ‘apisensr’ project is released with a [Contributor
