@@ -150,6 +150,50 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               selected = "or",
                               color = "#ff1744")
                       ),
+                      conditionalPanel(
+                          condition = 'input.prob_type == "probsens_conf"',
+                          ns = ns,
+                          material_slider(
+                              input_id = ns("reps_conf"),
+                              label = "Number of replications to run:",
+                              min_value = 10000,
+                              max_value = 100000,
+                              step_size = 5000,
+                              initial_value = 25000,
+                              color = "#ff1744"),
+                          material_slider(
+                              input_id = ns("corr_conf"),
+                              label = "Correlation between the exposure-specific confounder prevalences:",
+                              min_value = 0,
+                              max_value = 1,
+                              step_size = 0.1,
+                              initial_value = 0.8,
+                              color = "#ff1744"),
+                          material_checkbox(
+                              input_id = ns("discard_conf"),
+                              label = "Discard draws of negative adjusted counts.",
+                              initial_value = TRUE,
+                              color = "#ff1744"),
+                          br(),
+                          material_button(
+                              input_id = "help_probsens_conf",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"),
+                          material_dropdown(
+                              input_id = ns("plot_probsens_conf"),
+                              label = "Plot of output/parameters",
+                              choices = c(
+                                  "Relative risk - systematic error" = "rr",
+                                  "Odds ratio - systematic error" = "or",
+                                  "Relative risk - systematic and random error" = "rr_tot",
+                                  "Odds ratio - systematic and random error" = "or_tot",
+                                  "Distribution of prevalence of exposure among the exposed" = "prev.exp",
+                                  "Distribution of prevalence of exposure among the unexposed" = "prev.nexp",
+                                  "Distribution of confounder-disease relative risk (or confounder-exposure odds ratio)" = "risk"),
+                              selected = "rr",
+                              color = "#ff1744")
+                      ),
                       ## Alpha level
                       material_slider(
                           ns("alpha"),
@@ -497,7 +541,141 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                               "beta:", min_value = 0, max_value = 10^6,
                                               initial_value = 6, color = "teal accent-2")
                       )
-                  )                  
+                  ),
+                  conditionalPanel(
+                      condition = 'input.prob_type == "probsens_conf"',
+                      ns = ns,
+                      material_dropdown(
+                          input_id = ns("prevexp_parms"),
+                          label = "Distribution of prevalence of exposure among exposed:",
+                          choices = c(
+                              "Constant" = "constant",
+                              "Uniform" = "uniform",
+                              "Triangular" = "triangular",
+                              "Trapezoidal" = "trapezoidal",
+                              "Logit-logistic" = "logit-logistic",
+                              "Logit-normal" = "logit-normal",
+                              "Beta" = "beta"),
+                          selected = "triangular",
+                          color = "#ff1744"),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "constant"',
+                          ns = ns,
+                          mod_parms_ui(ns("parms_prevexp_C"), "Constant value:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "uniform"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevexp_U"), "Minimum and maximum:",
+                                          0.7, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "triangular"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevexp_Tr1"),
+                                          "Lower and upper limit:", 0.7, 0.9),
+                          mod_parms_ui(ns("parms_prevexp_Tr2"), "Mode:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "trapezoidal"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevexp_Tz1"),
+                                          "Minimum and maximum:", 0.75, 1),
+                          mod_parmsrge_ui(ns("parms_prevexp_Tz2"),
+                                          "Lower and upper mode:", 0.85, 0.95)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "logit-logistic"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_prevexp_Ll1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_prevexp_Ll2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_prevexp_Ll3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "logit-normal"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_prevexp_Ln1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_prevexp_Ln2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_prevexp_Ln3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevexp_parms == "beta"',
+                          ns = ns,
+                          material_number_box(ns("parms_prevexp_B1"),
+                                              "alpha:", min_value = 0, max_value = 10^6,
+                                              initial_value = 200, color = "#ff1744"),
+                          material_number_box(ns("parms_prevexp_B2"),
+                                              "beta:", min_value = 0, max_value = 10^6,
+                                              initial_value = 56, color = "#ff1744")
+                      ),
+                      material_dropdown(
+                          input_id = ns("prevnexp_parms"),
+                          label = "Distribution of prevalence of exposure among non-exposed:",
+                          choices = c(
+                              "Constant" = "constant",
+                              "Uniform" = "uniform",
+                              "Triangular" = "triangular",
+                              "Trapezoidal" = "trapezoidal",
+                              "Logit-logistic" = "logit-logistic",
+                              "Logit-normal" = "logit-normal",
+                              "Beta" = "beta"),
+                          selected = "trapezoidal",
+                          color = "#ff1744"),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "constant"',
+                          ns = ns,
+                          mod_parms_ui(ns("parms_prevnexp_C"), "Constant value:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "uniform"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevnexp_U"), "Minimum and maximum:",
+                                          0.7, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "triangular"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevnexp_Tr1"),
+                                          "Lower and upper limit:", 0.7, 0.9),
+                          mod_parms_ui(ns("parms_prevnexp_Tr2"), "Mode:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "trapezoidal"',
+                          ns = ns,
+                          mod_parmsrge_ui(ns("parms_prevnexp_Tz1"),
+                                          "Minimum and maximum:", 0.03, 0.06),
+                          mod_parmsrge_ui(ns("parms_prevnexp_Tz2"),
+                                          "Lower and upper mode:", 0.04, 0.05)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "logit-logistic"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_prevnexp_Ll1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_prevnexp_Ll2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_prevnexp_Ll3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "logit-normal"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_prevnexp_Ln1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_prevnexp_Ln2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_prevnexp_Ln3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.prevnexp_parms == "beta"',
+                          ns = ns,
+                          material_number_box(ns("parms_prevnexp_B1"),
+                                              "alpha:", min_value = 0, max_value = 10^6,
+                                              initial_value = 10, color = "#ff1744"),
+                          material_number_box(ns("parms_prevnexp_B2"),
+                                              "beta:", min_value = 0, max_value = 10^6,
+                                              initial_value = 16, color = "#ff1744")
+                      )
+                  )
               )
           ),
           material_column(
@@ -776,6 +954,64 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                               "beta:", min_value = 0, max_value = 10^6,
                                               initial_value = 6, color = "teal accent-2")
                       )
+                  ),
+                  conditionalPanel(
+                      condition = 'input.prob_type == "probsens_conf"',
+                      ns = ns,
+                      material_dropdown(
+                          input_id = ns("risk_parms"),
+                          label = "Distribution of confounder-disease relative risk or confounder-exposure odds ratio:",
+                          choices = c(
+                              "Constant" = "constant",
+                              "Uniform" = "uniform",
+                              "Triangular" = "triangular",
+                              "Trapezoidal" = "trapezoidal",
+                              "Logit-logistic" = "logit-logistic",
+                              "Logit-normal" = "logit-normal"),
+                          selected = "triangular",
+                          color = "teal accent-2"),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "constant"',
+                          ns = ns,
+                          mod_parms2_ui(ns("parms_risk_C"), "Constant value:", 0.8)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "uniform"',
+                          ns = ns,
+                          mod_parmsrge2_ui(ns("parms_risk_U"), "Minimum and maximum:",
+                                          0.7, 0.9, 0.01)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "triangular"',
+                          ns = ns,
+                          mod_parmsrge2_ui(ns("parms_risk_Tr1"),
+                                          "Lower and upper limit:", 0.6, 0.7, 0.01),
+                          mod_parms2_ui(ns("parms_risk_Tr2"), "Mode:", 0.63)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "trapezoidal"',
+                          ns = ns,
+                          mod_parmsrge2_ui(ns("parms_risk_Tz1"),
+                                          "Minimum and maximum:", 0.75, 1, 0.01),
+                          mod_parmsrge2_ui(ns("parms_risk_Tz2"),
+                                          "Lower and upper mode:", 0.85, 0.95, 0.01)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "logit-logistic"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_risk_Ll1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_risk_Ll2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_risk_Ll3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      ),
+                      conditionalPanel(
+                          condition = 'input.risk_parms == "logit-normal"',
+                          ns = ns,
+                          mod_parms2a_ui(ns("parms_risk_Ln1"), "Location:", 0, -5, 5),
+                          mod_parms2a_ui(ns("parms_risk_Ln2"), "Scale:", 0.8, -10, 10),
+                          mod_parmsrge_ui(ns("parms_risk_Ln3"),
+                                          "Lower and upper bound shift:", 0.5, 0.9)
+                      )
                   )
               )
           ),
@@ -807,6 +1043,9 @@ mod_prob_server <- function(input, output, session){
                                      row.names = c("Cases", "Noncases"))
                       } else if (input$prob_type == "probsens_sel") {
                           data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
+                                     row.names = c("Cases", "Non-cases"))
+                      } else if (input$prob_type == "probsens_conf") {
+                          data.frame(Exposed = c(105, 527), Unexposed = c(85, 93),
                                      row.names = c("Cases", "Non-cases"))
                       }
                   })
@@ -851,7 +1090,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$seca_parms == "triangular") {
                                    dist_seca <- c(callModule(mod_parmsrge_server,
                                                              "parms_seca_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_seca_Tr2"))
                                } else if (input$seca_parms == "uniform") {
                                    dist_seca <- callModule(mod_parmsrge_server,
@@ -891,7 +1130,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$seexp_parms == "triangular") {
                                    dist_seexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_seexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_seexp_Tr2"))
                                } else if (input$seexp_parms == "uniform") {
                                    dist_seexp <- callModule(mod_parmsrge_server,
@@ -933,7 +1172,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$spca_parms == "triangular") {
                                    dist_spca <- c(callModule(mod_parmsrge_server,
                                                              "parms_spca_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_spca_Tr2"))
                                } else if (input$spca_parms == "uniform") {
                                    dist_spca <- callModule(mod_parmsrge_server,
@@ -973,7 +1212,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$spexp_parms == "triangular") {
                                    dist_spexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_spexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_spexp_Tr2"))
                                } else if (input$spexp_parms == "uniform") {
                                    dist_spexp <- callModule(mod_parmsrge_server,
@@ -994,7 +1233,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$or_parms == "triangular") {
                                    dist_orparms <- c(callModule(mod_parmsrge2_server,
                                                                 "parms_or_Tr1"),
-                                                     callModule(mod_parmsrge2_server,
+                                                     callModule(mod_parms2_server,
                                                                 "parms_or_Tr2"))
                                } else if (input$or_parms == "trapezoidal") {
                                    dist_orparms <- c(callModule(mod_parmsrge2_server,
@@ -1033,7 +1272,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$cexp_parms == "triangular") {
                                    dist_cexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_cexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_cexp_Tr2"))
                                } else if (input$cexp_parms == "trapezoidal") {
                                    dist_cexp <- c(callModule(mod_parmsrge_server,
@@ -1075,7 +1314,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$cnexp_parms == "triangular") {
                                    dist_cnexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_cnexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_cnexp_Tr2"))
                                } else if (input$cnexp_parms == "trapezoidal") {
                                    dist_cnexp <- c(callModule(mod_parmsrge_server,
@@ -1117,7 +1356,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$ncexp_parms == "triangular") {
                                    dist_ncexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_ncexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_ncexp_Tr2"))
                                } else if (input$ncexp_parms == "trapezoidal") {
                                    dist_ncexp <- c(callModule(mod_parmsrge_server,
@@ -1159,7 +1398,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$ncnexp_parms == "triangular") {
                                    dist_ncnexp <- c(callModule(mod_parmsrge_server,
                                                              "parms_ncnexp_Tr1"),
-                                                  callModule(mod_parmsrge_server,
+                                                  callModule(mod_parms_server,
                                                              "parms_ncnexp_Tr2"))
                                } else if (input$ncnexp_parms == "trapezoidal") {
                                    dist_ncnexp <- c(callModule(mod_parmsrge_server,
@@ -1192,10 +1431,136 @@ mod_prob_server <- function(input, output, session){
                                    dist_ncnexp <- c(input$parms_ncnexp_B1,
                                                   input$parms_ncnexp_B2)
                                }
-
+                               if (input$prevexp_parms == "constant") {
+                                   dist_prevexp <- callModule(mod_parms_server,
+                                                              "parms_prevexp_C")
+                               } else if (input$prevexp_parms == "uniform") {
+                                   dist_prevexp <- callModule(mod_parmsrge_server,
+                                                              "parms_prevexp_U")
+                               } else if (input$prevexp_parms == "triangular") {
+                                   dist_prevexp <- c(callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Tr1"),
+                                                     callModule(mod_parms_server,
+                                                                "parms_prevexp_Tr2"))
+                               } else if (input$prevexp_parms == "trapezoidal") {
+                                   dist_prevexp <- c(callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Tz1")[1],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Tz2")[1],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Tz2")[2],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Tz1")[2])
+                               } else if (input$prevexp_parms == "logit-logistic") {
+                                   dist_prevexp <- c(callModule(mod_parms2a_server,
+                                                                "parms_prevexp_Ll1"),
+                                                     callModule(mod_parms2a_server,
+                                                                "parms_prevexp_Ll2"),
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Ll3")[1],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Ll3")[2])
+                               } else if (input$prevexp_parms == "logit-normal") {
+                                   dist_prevexp <- c(callModule(mod_parms2a_server,
+                                                                "parms_prevexp_Ln1"),
+                                                     callModule(mod_parms2a_server,
+                                                                "parms_prevexp_Ln2"),
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Ln3")[1],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_prevexp_Ln3")[2])
+                               } else if (input$prevexp_parms == "beta") {
+                                   dist_prevexp <- c(input$parms_prevexp_B1,
+                                                     input$parms_prevexp_B2)
+                               }
+                               if (input$prevnexp_parms == "constant") {
+                                   dist_prevnexp <- callModule(mod_parms_server,
+                                                               "parms_prevnexp_C")
+                               } else if (input$prevnexp_parms == "uniform") {
+                                   dist_prevnexp <- callModule(mod_parmsrge_server,
+                                                               "parms_prevnexp_U")
+                               } else if (input$prevnexp_parms == "triangular") {
+                                   dist_prevnexp <- c(callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Tr1"),
+                                                      callModule(mod_parms_server,
+                                                                 "parms_prevnexp_Tr2"))
+                               } else if (input$prevnexp_parms == "trapezoidal") {
+                                   dist_prevnexp <- c(callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Tz1")[1],
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Tz2")[1],
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Tz2")[2],
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Tz1")[2])
+                               } else if (input$prevnexp_parms == "logit-logistic") {
+                                   dist_prevnexp <- c(callModule(mod_parms2a_server,
+                                                                 "parms_prevnexp_Ll1"),
+                                                      callModule(mod_parms2a_server,
+                                                                 "parms_prevnexp_Ll2"),
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Ll3")[1],
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Ll3")[2])
+                               } else if (input$prevnexp_parms == "logit-normal") {
+                                   dist_prevnexp <- c(callModule(mod_parms2a_server,
+                                                                 "parms_prevnexp_Ln1"),
+                                                      callModule(mod_parms2a_server,
+                                                                 "parms_prevnexp_Ln2"),
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Ln3")[1],
+                                                      callModule(mod_parmsrge_server,
+                                                                 "parms_prevnexp_Ln3")[2])
+                               } else if (input$prevnexp_parms == "beta") {
+                                   dist_prevnexp <- c(input$parms_prevnexp_B1,
+                                                      input$parms_prevnexp_B2)
+                               }
+                               if (input$risk_parms == "constant") {
+                                   dist_risk <- callModule(mod_parms2_server,
+                                                           "parms_risk_C")
+                               } else if (input$risk_parms == "uniform") {
+                                   dist_risk <- callModule(mod_parmsrge2_server,
+                                                           "parms_risk_U")
+                               } else if (input$risk_parms == "triangular") {
+                                   dist_risk <- c(callModule(mod_parmsrge2_server,
+                                                             "parms_risk_Tr1"),
+                                                  callModule(mod_parms2_server,
+                                                             "parms_risk_Tr2"))
+                               } else if (input$risk_parms == "trapezoidal") {
+                                   dist_risk <- c(callModule(mod_parmsrge2_server,
+                                                             "parms_risk_Tz1")[1],
+                                                  callModule(mod_parmsrge2_server,
+                                                             "parms_risk_Tz2")[1],
+                                                  callModule(mod_parmsrge2_server,
+                                                             "parms_risk_Tz2")[2],
+                                                  callModule(mod_parmsrge2_server,
+                                                             "parms_risk_Tz1")[2])
+                               } else if (input$risk_parms == "logit-logistic") {
+                                   dist_risk <- c(callModule(mod_parms2a_server,
+                                                             "parms_risk_Ll1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_risk_Ll2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_risk_Ll3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_risk_Ll3")[2])
+                               } else if (input$risk_parms == "logit-normal") {
+                                   dist_risk <- c(callModule(mod_parms2a_server,
+                                                             "parms_risk_Ln1"),
+                                                  callModule(mod_parms2a_server,
+                                                             "parms_risk_Ln2"),
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_risk_Ln3")[1],
+                                                  callModule(mod_parmsrge_server,
+                                                             "parms_risk_Ln3")[2])
+                               }
+                               
                                if (input$discard == 0) {
                                    throw_away <- FALSE
                                } else throw_away <- TRUE
+                               if (input$discard_conf == 0) {
+                                   throw_away_conf <- FALSE
+                               } else throw_away_conf <- TRUE
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
                                    set.seed(123)
@@ -1247,6 +1612,19 @@ mod_prob_server <- function(input, output, session){
                                                 ncase.nexp = list(input$ncnexp_parms,
                                                                   dist_ncnexp),
                                                 alpha = input$alpha)
+                               } else if (input$prob_type == "probsens_conf") {
+                                   set.seed(123)
+                                   probsens.conf(mat,
+                                                 reps = input$reps_conf,
+                                                 prev.exp = list(input$prevexp_parms,
+                                                                 dist_prevexp),
+                                                 prev.nexp = list(input$prevnexp_parms,
+                                                                  dist_prevnexp),
+                                                 risk = list(input$risk_parms,
+                                                             dist_risk),
+                                                 corr.p = input$corr_conf,
+                                                 discard = throw_away_conf,
+                                                 alpha = input$alpha)
                                }
                            })
 
@@ -1255,6 +1633,8 @@ mod_prob_server <- function(input, output, session){
                                plot(episensrout(), input$plot_probsens)
                            } else if (input$prob_type == "probsens_sel") {
                                plot(episensrout(), input$plot_probsens_sel)
+                           } else if (input$prob_type == "probsens_conf") {
+                               plot(episensrout(), input$plot_probsens_conf)
                            }
                        })
 
@@ -1280,6 +1660,11 @@ mod_prob_server <- function(input, output, session){
 
         runjs("document.getElementById('help_probsens_sel').onclick = function() { 
            window.open('https://dhaine.github.io/episensr/reference/probsens.sel.html', '_blank');
+         };"
+         )
+
+        runjs("document.getElementById('help_probsens_conf').onclick = function() { 
+           window.open('https://dhaine.github.io/episensr/reference/probsens.conf.html', '_blank');
          };"
          )
 }
