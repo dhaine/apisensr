@@ -3,7 +3,7 @@
 \name{mod_parms_ui}
 \alias{mod_parms_ui}
 \alias{mod_parms_server}
-\title{Module to provide simple bias parameters}
+\title{Module to provide parameters}
 \usage{
 mod_parms_ui(id, label_parms, value)
 
@@ -19,7 +19,6 @@ mod_parms_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to treat simple Se/Sp and prevalence bias analysis
-parameters (between 0 and 1), risk (from 0 to 20).
+A shiny Module to manage bias analysis parameters.
 }
 \keyword{internal}

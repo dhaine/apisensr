@@ -3,7 +3,7 @@
 \name{mod_notable_ui}
 \alias{mod_notable_ui}
 \alias{mod_notable_server}
-\title{UI Module for Analysis tab with no 2x2 table.}
+\title{UI Module for Simple Analysis tab with no 2x2 table.}
 \usage{
 mod_notable_ui(id, label = "tab_notable")
 
@@ -19,7 +19,8 @@ mod_notable_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to render the analysis tab when no 2-by-2 table
-is provided.
+A shiny Module to render the Simple Analysis tab when no 2-by-2 table
+is provided (M-bias analysis `mbias` and analysis by bounding the bias limits of
+unmeasured confounding `confounders.limit`).
 }
 \keyword{internal}

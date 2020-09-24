@@ -1,8 +1,9 @@
 # Analysis Module UI with no observed data table
   
-#' @title   UI Module for Analysis tab with no 2x2 table.
-#' @description  A shiny Module to render the analysis tab when no 2-by-2 table
-#' is provided.
+#' @title   UI Module for Simple Analysis tab with no 2x2 table.
+#' @description  A shiny Module to render the Simple Analysis tab when no 2-by-2 table
+#' is provided (M-bias analysis `mbias` and analysis by bounding the bias limits of
+#' unmeasured confounding `confounders.limit`).
 #'
 #' @param id shiny id
 #' @param input internal

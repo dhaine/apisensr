@@ -3,7 +3,7 @@
 \name{mod_about_ui}
 \alias{mod_about_ui}
 \alias{mod_about_server}
-\title{UI Module for About Analysis tab}
+\title{UI Module for the About Analysis tab}
 \usage{
 mod_about_ui(id, label = "tab_about")
 
@@ -19,6 +19,7 @@ mod_about_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to render the About analysis tab.
+A shiny Module to render the About analysis tab, including the table
+for available functions and comparison with `episensr`, as well as `episensr` version.
 }
 \keyword{internal}
