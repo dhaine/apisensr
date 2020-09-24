@@ -1,8 +1,7 @@
-# Module UI
+# Module UI for parameters
   
-#' @title   Module to provide simple bias parameters
-#' @description  A shiny Module to treat simple Se/Sp and prevalence bias analysis
-#' parameters (between 0 and 1), risk (from 0 to 20).
+#' @title   Module to provide parameters
+#' @description  A shiny Module to manage bias analysis parameters.
 #'
 #' @param id shiny id
 #' @param input internal

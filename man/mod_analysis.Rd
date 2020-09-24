@@ -3,7 +3,7 @@
 \name{mod_analysis_ui}
 \alias{mod_analysis_ui}
 \alias{mod_analysis_server}
-\title{UI Module for Analysis tab}
+\title{UI Module for the Simple Analysis tab}
 \usage{
 mod_analysis_ui(id, label = "tab_analysis")
 
@@ -19,6 +19,11 @@ mod_analysis_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to render the analysis tab.
+A shiny Module to render the Simple Analysis tab, i.e. non-probabilistic
+analyses not requiring a 2-by-2 table as input (selection bias analysis `selection`,
+bias analysis for unmeasured confounder `confounders`, bias analysis for unmeasured
+3-level confounder `confounders.poly`, bias analysis for unmeasured confounder with
+effect modification `confounders.emm`, and misclassification bias analysis
+`misclassification`).
 }
 \keyword{internal}

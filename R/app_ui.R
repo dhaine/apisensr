@@ -1,7 +1,5 @@
 #' @import shiny
 #' @import shinymaterial
-#' @import shinyalert
-#' @import shinyWidgets
 #' @import shinyjs
 #' @import rmarkdown
 #' @import rhandsontable
@@ -21,7 +19,7 @@ app_ui <- function() {
         nav_bar_color = "red accent-4",
         title = "apisensr: Happy API for episensr!",
         
-        shinyjs::useShinyjs(),
+        useShinyjs(),
    
         ## tabs
         material_tabs(

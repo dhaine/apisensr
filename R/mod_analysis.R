@@ -1,7 +1,12 @@
 # Analysis Module UI
   
-#' @title   UI Module for Analysis tab
-#' @description  A shiny Module to render the analysis tab.
+#' @title   UI Module for the Simple Analysis tab
+#' @description  A shiny Module to render the Simple Analysis tab, i.e. non-probabilistic
+#' analyses not requiring a 2-by-2 table as input (selection bias analysis `selection`,
+#' bias analysis for unmeasured confounder `confounders`, bias analysis for unmeasured
+#' 3-level confounder `confounders.poly`, bias analysis for unmeasured confounder with
+#' effect modification `confounders.emm`, and misclassification bias analysis
+#' `misclassification`).
 #'
 #' @param id shiny id
 #' @param input internal

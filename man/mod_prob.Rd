@@ -3,7 +3,7 @@
 \name{mod_prob_ui}
 \alias{mod_prob_ui}
 \alias{mod_prob_server}
-\title{UI Module for Probabilistic analysis tab}
+\title{UI Module for Probabilistic Analysis tab}
 \usage{
 mod_prob_ui(id, label = "tab_prob")
 
@@ -19,6 +19,8 @@ mod_prob_server(input, output, session)
 \item{session}{internal}
 }
 \description{
-A shiny Module to render the probabilistic analysis tab.
+A shiny Module to render the Probabilistic Analysis tab (selection bias
+analysis `probsens.sel`, bias analysis for unmeasured confounder `probsens.conf`, and
+misclassification bias analysis `probsens`).
 }
 \keyword{internal}

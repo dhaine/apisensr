@@ -1,7 +1,9 @@
 # Probabilistic Analysis Module UI
   
-#' @title   UI Module for Probabilistic analysis tab
-#' @description  A shiny Module to render the probabilistic analysis tab.
+#' @title   UI Module for Probabilistic Analysis tab
+#' @description  A shiny Module to render the Probabilistic Analysis tab (selection bias
+#' analysis `probsens.sel`, bias analysis for unmeasured confounder `probsens.conf`, and
+#' misclassification bias analysis `probsens`).
 #'
 #' @param id shiny id
 #' @param input internal

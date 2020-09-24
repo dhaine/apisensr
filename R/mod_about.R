@@ -1,7 +1,8 @@
 # About Module UI
   
-#' @title   UI Module for About Analysis tab
-#' @description  A shiny Module to render the About analysis tab.
+#' @title   UI Module for the About Analysis tab
+#' @description  A shiny Module to render the About analysis tab, including the table
+#' for available functions and comparison with `episensr`, as well as `episensr` version.
 #'
 #' @param id shiny id
 #' @param input internal
@@ -12,7 +13,8 @@
 #'
 #' @keywords internal
 #' @export 
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom utils packageVersion
 mod_about_ui <- function(id, label = "tab_about"){
   ns <- NS(id)
 
