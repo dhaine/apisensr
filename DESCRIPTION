@@ -15,7 +15,7 @@ Imports:
     DT,
     glue,
     htmltools,
-    episensr (>= 0.9.6),
+    episensr (>= 0.9.999),
     shinymaterial,
     shinyjs,
     rhandsontable,
