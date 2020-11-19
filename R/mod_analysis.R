@@ -296,59 +296,59 @@ mod_analysis_server <- function(input, output, session){
     episensrout = reactive({
                                mat <- as.matrix(hot_to_r(req({input$two_by_two})))
                                if (input$type == "selection") {
-                                  selection(mat,
-                                            bias_parms = if (input$parms_controller == 0) {
-                                                             c(callModule(mod_parms_server, "parms_sel1"),
-                                                               callModule(mod_parms_server, "parms_sel2"),
-                                                               callModule(mod_parms_server, "parms_sel3"),
-                                                               callModule(mod_parms_server, "parms_sel4"))
-                                                         } else if (input$parms_controller == 1) {
-                                                             input$bias_factor
-                                                         },
-                                            alpha = input$alpha)
+                                  episensr::selection(mat,
+                                                      bias_parms = if (input$parms_controller == 0) {
+                                                                       c(callModule(mod_parms_server, "parms_sel1"),
+                                                                         callModule(mod_parms_server, "parms_sel2"),
+                                                                         callModule(mod_parms_server, "parms_sel3"),
+                                                                         callModule(mod_parms_server, "parms_sel4"))
+                                                                   } else if (input$parms_controller == 1) {
+                                                                       input$bias_factor
+                                                                   },
+                                                      alpha = input$alpha)
                                } else if (input$type == "confounder") {
-                                   confounders(mat,
-                                               type = input$confounder_type,
-                                               bias_parms = c(if (input$confounder_type != "RD")
-                                                              {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
-                                                              callModule(mod_parms_server, "parms_confounder2"),
-                                                              callModule(mod_parms_server, "parms_confounder3")),
-                                               alpha = input$alpha)
+                                   episensr::confounders(mat,
+                                                         type = input$confounder_type,
+                                                         bias_parms = c(if (input$confounder_type != "RD")
+                                                                        {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
+                                                                        callModule(mod_parms_server, "parms_confounder2"),
+                                                                        callModule(mod_parms_server, "parms_confounder3")),
+                                                         alpha = input$alpha)
                                } else if (input$type == "confounder_3") {
-                                   confounders.poly(mat,
-                                                    type = input$confounder3_type,
-                                                    bias_parms = c(if (input$confounder3_type != "RD")
-                                                                   {callModule(mod_parms_server, "parms_confounder_3_1a")}
-                                                                   else callModule(mod_parms3_server, "parms_confounder_3_1b"),
-                                                                   if (input$confounder3_type != "RD")
-                                                                   {callModule(mod_parms_server, "parms_confounder_3_2a")}
-                                                                   else callModule(mod_parms3_server, "parms_confounder_3_2b"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_3"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_4"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_5"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_6")),
-                                                    alpha = input$alpha)
+                                   episensr::confounders.poly(mat,
+                                                              type = input$confounder3_type,
+                                                              bias_parms = c(if (input$confounder3_type != "RD")
+                                                                             {callModule(mod_parms_server, "parms_confounder_3_1a")}
+                                                                             else callModule(mod_parms3_server, "parms_confounder_3_1b"),
+                                                                             if (input$confounder3_type != "RD")
+                                                                             {callModule(mod_parms_server, "parms_confounder_3_2a")}
+                                                                             else callModule(mod_parms3_server, "parms_confounder_3_2b"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_3"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_4"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_5"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_6")),
+                                                              alpha = input$alpha)
                                } else if (input$type == "confounder_emm") {
-                                   confounders.emm(mat,
-                                                   type = input$confounderemm_type,
-                                                   bias_parms = c(if (input$confounderemm_type != "RD")
-                                                                  {callModule(mod_parms_server, "parms_confounder_emm_1a")}
-                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
-                                                                  if (input$confounderemm_type != "RD")
-                                                                  {callModule(mod_parms_server, "parms_confounder_emm_2a")}
-                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
-                                                                  callModule(mod_parms_server, "parms_confounder_emm_3"),
-                                                                  callModule(mod_parms_server, "parms_confounder_emm_4")),
-                                                   alpha = input$alpha
-                                                   )
+                                   episensr::confounders.emm(mat,
+                                                             type = input$confounderemm_type,
+                                                             bias_parms = c(if (input$confounderemm_type != "RD")
+                                                                            {callModule(mod_parms_server, "parms_confounder_emm_1a")}
+                                                                            else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
+                                                                            if (input$confounderemm_type != "RD")
+                                                                            {callModule(mod_parms_server, "parms_confounder_emm_2a")}
+                                                                            else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
+                                                                            callModule(mod_parms_server, "parms_confounder_emm_3"),
+                                                                            callModule(mod_parms_server, "parms_confounder_emm_4")),
+                                                             alpha = input$alpha
+                                                             )
                                } else if (input$type == "misclass") {
-                                   misclassification(mat,
-                                                     type = input$misclass_type,
-                                                     bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
-                                                                    callModule(mod_parms_server, "parms_mis2"),
-                                                                    callModule(mod_parms_server, "parms_mis3"),
-                                                                    callModule(mod_parms_server, "parms_mis4")),
-                                                     alpha = input$alpha)
+                                   episensr::misclassification(mat,
+                                                               type = input$misclass_type,
+                                                               bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
+                                                                              callModule(mod_parms_server, "parms_mis2"),
+                                                                              callModule(mod_parms_server, "parms_mis3"),
+                                                                              callModule(mod_parms_server, "parms_mis4")),
+                                                               alpha = input$alpha)
                                }
                            })
 

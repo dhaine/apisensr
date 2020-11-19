@@ -1566,67 +1566,67 @@ mod_prob_server <- function(input, output, session){
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
                                    set.seed(123)
-                                   probsens(mat,
-                                            type = input$misclassProb_type,
-                                            reps = input$reps,
-                                            seca.parms = list(input$seca_parms,
-                                                              dist_seca),
-                                            spca.parms = list(input$spca_parms,
-                                                              dist_spca),
-                                            discard = throw_away,
-                                            alpha = input$alpha)
+                                   episensr::probsens(mat,
+                                                      type = input$misclassProb_type,
+                                                      reps = input$reps,
+                                                      seca.parms = list(input$seca_parms,
+                                                                        dist_seca),
+                                                      spca.parms = list(input$spca_parms,
+                                                                        dist_spca),
+                                                      discard = throw_away,
+                                                      alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
                                    set.seed(123)
-                                   probsens(mat,
-                                            type = input$misclassProb_type,
-                                            reps = input$reps,
-                                            seca.parms = list(input$seca_parms,
-                                                              dist_seca),
-                                            seexp.parms = list(input$seexp_parms,
-                                                               dist_seexp),
-                                            spca.parms = list(input$spca_parms,
-                                                              dist_spca),
-                                            spexp.parms = list(input$spexp_parms,
-                                                               dist_spexp),
-                                            corr.se = input$corr_se,
-                                            corr.sp = input$corr_sp,
-                                            discard = throw_away,
-                                            alpha = input$alpha)
+                                   episensr::probsens(mat,
+                                                      type = input$misclassProb_type,
+                                                      reps = input$reps,
+                                                      seca.parms = list(input$seca_parms,
+                                                                        dist_seca),
+                                                      seexp.parms = list(input$seexp_parms,
+                                                                         dist_seexp),
+                                                      spca.parms = list(input$spca_parms,
+                                                                        dist_spca),
+                                                      spexp.parms = list(input$spexp_parms,
+                                                                         dist_spexp),
+                                                      corr.se = input$corr_se,
+                                                      corr.sp = input$corr_sp,
+                                                      discard = throw_away,
+                                                      alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 0) {
                                    set.seed(123)
-                                   probsens.sel(mat,
-                                                reps = input$reps_sel,
-                                                or.parms = list(input$or_parms,
-                                                                dist_orparms),
-                                                alpha = input$alpha)
+                                   episensr::probsens.sel(mat,
+                                                          reps = input$reps_sel,
+                                                          or.parms = list(input$or_parms,
+                                                                          dist_orparms),
+                                                          alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 1) {
                                    set.seed(123)
-                                   probsens.sel(mat,
-                                                reps = input$reps_sel,
-                                                case.exp = list(input$cexp_parms,
-                                                                dist_cexp),
-                                                case.nexp = list(input$cnexp_parms,
-                                                                 dist_cnexp),
-                                                ncase.exp = list(input$ncexp_parms,
-                                                                 dist_ncexp),
-                                                ncase.nexp = list(input$ncnexp_parms,
-                                                                  dist_ncnexp),
-                                                alpha = input$alpha)
+                                   episensr::probsens.sel(mat,
+                                                          reps = input$reps_sel,
+                                                          case.exp = list(input$cexp_parms,
+                                                                          dist_cexp),
+                                                          case.nexp = list(input$cnexp_parms,
+                                                                           dist_cnexp),
+                                                          ncase.exp = list(input$ncexp_parms,
+                                                                           dist_ncexp),
+                                                          ncase.nexp = list(input$ncnexp_parms,
+                                                                            dist_ncnexp),
+                                                          alpha = input$alpha)
                                } else if (input$prob_type == "probsens_conf") {
                                    set.seed(123)
-                                   probsens.conf(mat,
-                                                 reps = input$reps_conf,
-                                                 prev.exp = list(input$prevexp_parms,
-                                                                 dist_prevexp),
-                                                 prev.nexp = list(input$prevnexp_parms,
-                                                                  dist_prevnexp),
-                                                 risk = list(input$risk_parms,
-                                                             dist_risk),
-                                                 corr.p = input$corr_conf,
-                                                 discard = throw_away_conf,
-                                                 alpha = input$alpha)
+                                   episensr::probsens.conf(mat,
+                                                           reps = input$reps_conf,
+                                                           prev.exp = list(input$prevexp_parms,
+                                                                           dist_prevexp),
+                                                           prev.nexp = list(input$prevnexp_parms,
+                                                                            dist_prevnexp),
+                                                           risk = list(input$risk_parms,
+                                                                       dist_risk),
+                                                           corr.p = input$corr_conf,
+                                                           discard = throw_away_conf,
+                                                           alpha = input$alpha)
                                }
                            })
 
