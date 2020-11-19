@@ -11,16 +11,17 @@
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources
-    golem_add_external_resources(),
-    # List the first level UI elements here 
+      golem_add_external_resources(),
+      tags$a(tags$style(HTML("a {color: #d50000}"))),
+    # List the first level UI elements here
     material_page(
         ## title bar
         nav_bar_fixed = TRUE,
-        nav_bar_color = "red accent-4",
-        title = "apisensr: Happy API for episensr!",
-        
+        primary_theme_color = "#d50000",
+        title = "apisensr: Quantitative bias analysis with episensr",
+
         useShinyjs(),
-   
+
         ## tabs
         material_tabs(
             tabs = c(
@@ -29,7 +30,7 @@ app_ui <- function() {
                 "Probabilistic analysis" = "tab_prob",
                 "About" = "tab_about"
             ),
-            color = "#ff8a80"
+            color = "#9b0000"
         ),
 
         mod_analysis_ui("tab_analysis"),
@@ -45,11 +46,11 @@ app_ui <- function() {
 
 #' @import shiny
 golem_add_external_resources <- function(){
-  
+
   addResourcePath(
     'www', system.file('app/www', package = 'apisensr')
   )
- 
+
   tags$head(
     golem::activate_js(),
     golem::favicon(ext = 'png'),

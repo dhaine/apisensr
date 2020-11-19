@@ -1,5 +1,5 @@
 # Probabilistic Analysis Module UI
-  
+
 #' @title   UI Module for Probabilistic Analysis tab
 #' @description  A shiny Module to render the Probabilistic Analysis tab (selection bias
 #' analysis `probsens.sel`, bias analysis for unmeasured confounder `probsens.conf`, and
@@ -13,8 +13,8 @@
 #' @rdname mod_prob
 #'
 #' @keywords internal
-#' @export 
-#' @importFrom shiny NS tagList 
+#' @export
+#' @importFrom shiny NS tagList
 mod_prob_ui <- function(id, label = "tab_prob"){
   ns <- NS(id)
 
@@ -32,7 +32,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           "Unmeasured confounder" = "probsens_conf",
                           "Misclassification bias" = "probsens"
                       ),
-                      color = "#ff1744"
+                      color = "#d50000"
                   ),
                   "Observed data",
                   div(id = "obs-table-prob",
@@ -41,7 +41,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           input_id = ns("reset_table"),
                           label = "Table back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                       ),
                   br(),
@@ -55,7 +55,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               label = "Misclassification of:",
                               choices = c("exposure", "outcome"),
                               selected = "exposure",
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           material_slider(
                               input_id = ns("reps"),
                               label = "Number of replications to run:",
@@ -63,19 +63,19 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               max_value = 100000,
                               step_size = 5000,
                               initial_value = 25000,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           material_switch(
                               input_id = ns("diff"),
                               off_label = "Non-differential misclassification",
                               on_label = "Differential misclassification",
                               initial_value = FALSE,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           br(),
                           material_checkbox(
                               input_id = ns("discard"),
                               label = "Discard draws of negative adjusted counts.",
                               initial_value = TRUE,
-                              color = "#ff1744"),
+                              color = "#9b0000"),
                           conditionalPanel(
                               condition = 'input.diff == 1',
                               ns = ns,
@@ -86,7 +86,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   max_value = 1,
                                   step_size = 0.1,
                                   initial_value = 0.8,
-                                  color = "#ff1744"
+                                  color = "#ff5131"
                               ),
                               material_slider(
                                   input_id = ns("corr_sp"),
@@ -95,8 +95,8 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   max_value = 1,
                                   step_size = 0.1,
                                   initial_value = 0.8,
-                                  color = "teal accent-2"
-                              )                              
+                                  color = "9b0000"
+                              )
                           ),
                           material_button(
                               input_id = "help_probsens",
@@ -117,7 +117,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   "Specificity for cases" = "spca",
                                   "Specificity of exposed" = "spexp"),
                               selected = "rr",
-                              color = "#ff1744")
+                              color = "#ff5131")
                       ),
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_sel"',
@@ -129,13 +129,13 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               max_value = 100000,
                               step_size = 5000,
                               initial_value = 25000,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           material_switch(
                               input_id = ns("or_case"),
                               off_label = "Using selection bias odds",
                               on_label = "Using selection probabilities",
                               initial_value = FALSE,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           br(),
                           material_button(
                               input_id = "help_probsens_sel",
@@ -150,7 +150,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   "Odds ratio - systematic and random error" = "or_tot",
                                   "Selection odds ratio" = "or_sel"),
                               selected = "or",
-                              color = "#ff1744")
+                              color = "#ff5131")
                       ),
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_conf"',
@@ -162,7 +162,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               max_value = 100000,
                               step_size = 5000,
                               initial_value = 25000,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           material_slider(
                               input_id = ns("corr_conf"),
                               label = "Correlation between the exposure-specific confounder prevalences:",
@@ -170,12 +170,12 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               max_value = 1,
                               step_size = 0.1,
                               initial_value = 0.8,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           material_checkbox(
                               input_id = ns("discard_conf"),
                               label = "Discard draws of negative adjusted counts.",
                               initial_value = TRUE,
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           br(),
                           material_button(
                               input_id = "help_probsens_conf",
@@ -194,7 +194,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   "Distribution of prevalence of exposure among the unexposed" = "prev.nexp",
                                   "Distribution of confounder-disease relative risk (or confounder-exposure odds ratio)" = "risk"),
                               selected = "rr",
-                              color = "#ff1744")
+                              color = "#9b0000")
                       ),
                       ## Alpha level
                       material_slider(
@@ -204,7 +204,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           max_value = 0.2,
                           step_size = 0.01,
                           initial_value = 0.05,
-                          color = "#ff1744")
+                          color = "#ff5131")
                       )
               )
           ),
@@ -226,7 +226,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-normal" = "logit-normal",
                               "Beta" = "beta"),
                           selected = "trapezoidal",
-                          color = "#ff1744"),
+                          color = "#ff5131"),
                       conditionalPanel(
                           condition = 'input.seca_parms == "constant"',
                           ns = ns,
@@ -274,10 +274,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_seca_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 908, color = "#ff1744"),
+                                              initial_value = 908, color = "#ff5131"),
                           material_number_box(ns("parms_seca_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 56, color = "#ff1744")
+                                              initial_value = 56, color = "#ff5131")
                       ),
                       conditionalPanel(
                           condition = 'input.diff == 1',
@@ -294,7 +294,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   "Logit-normal" = "logit-normal",
                                   "Beta" = "beta"),
                               selected = "trapezoidal",
-                              color = "#ff1744"),
+                              color = "#ff5131"),
                           conditionalPanel(
                               condition = 'input.seexp_parms == "constant"',
                               ns = ns,
@@ -342,10 +342,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               ns = ns,
                               material_number_box(ns("parms_seexp_B1"),
                                                   "alpha:", min_value = 0, max_value = 10^6,
-                                                  initial_value = 908, color = "#ff1744"),
+                                                  initial_value = 908, color = "#ff5131"),
                               material_number_box(ns("parms_seexp_B2"),
                                                   "beta:", min_value = 0, max_value = 10^6,
-                                                  initial_value = 56, color = "#ff1744")
+                                                  initial_value = 56, color = "#ff5131")
                           )
                       )
                   ),
@@ -364,7 +364,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-normal" = "logit-normal"
                           ),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#ff5131"),
                       conditionalPanel(
                           condition = 'input.or_parms == "constant"',
                           ns = ns,
@@ -424,7 +424,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Beta" = "beta"
                           ),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#ff5131"),
                       conditionalPanel(
                           condition = 'input.cexp_parms == "constant"',
                           ns = ns,
@@ -472,10 +472,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_cexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 153, color = "teal accent-2"),
+                                              initial_value = 153, color = "#9b0000"),
                           material_number_box(ns("parms_cexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 6, color = "teal accent-2")
+                                              initial_value = 6, color = "#9b0000")
                       ),
                       material_dropdown(
                           input_id = ns("cnexp_parms"),
@@ -490,7 +490,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Beta" = "beta"
                           ),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#9b0000"),
                       conditionalPanel(
                           condition = 'input.cnexp_parms == "constant"',
                           ns = ns,
@@ -538,10 +538,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_cnexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 153, color = "teal accent-2"),
+                                              initial_value = 153, color = "#9b0000"),
                           material_number_box(ns("parms_cnexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 6, color = "teal accent-2")
+                                              initial_value = 6, color = "#9b0000")
                       )
                   ),
                   conditionalPanel(
@@ -559,7 +559,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-normal" = "logit-normal",
                               "Beta" = "beta"),
                           selected = "triangular",
-                          color = "#ff1744"),
+                          color = "#ff5131"),
                       conditionalPanel(
                           condition = 'input.prevexp_parms == "constant"',
                           ns = ns,
@@ -607,10 +607,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_prevexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 200, color = "#ff1744"),
+                                              initial_value = 200, color = "#ff5131"),
                           material_number_box(ns("parms_prevexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 56, color = "#ff1744")
+                                              initial_value = 56, color = "#ff5131")
                       ),
                       material_dropdown(
                           input_id = ns("prevnexp_parms"),
@@ -624,7 +624,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-normal" = "logit-normal",
                               "Beta" = "beta"),
                           selected = "trapezoidal",
-                          color = "#ff1744"),
+                          color = "#ff5131"),
                       conditionalPanel(
                           condition = 'input.prevnexp_parms == "constant"',
                           ns = ns,
@@ -672,10 +672,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_prevnexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 10, color = "#ff1744"),
+                                              initial_value = 10, color = "#ff5131"),
                           material_number_box(ns("parms_prevnexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 16, color = "#ff1744")
+                                              initial_value = 16, color = "#ff5131")
                       )
                   )
               )
@@ -698,7 +698,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-normal" = "logit-normal",
                               "Beta" = "beta"),
                           selected = "trapezoidal",
-                          color = "teal accent-2"),
+                          color = "#9b0000"),
                       conditionalPanel(
                           condition = 'input.spca_parms == "constant"',
                           ns = ns,
@@ -746,10 +746,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_spca_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 153, color = "teal accent-2"),
+                                              initial_value = 153, color = "#9b0000"),
                           material_number_box(ns("parms_spca_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 6, color = "teal accent-2")
+                                              initial_value = 6, color = "#9b0000")
                       ),
                       conditionalPanel(
                           condition = 'input.diff == 1',
@@ -766,7 +766,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                   "Logit-normal" = "logit-normal",
                                   "Beta" = "beta"),
                               selected = "trapezoidal",
-                              color = "teal accent-2"),
+                              color = "#9b0000"),
                           conditionalPanel(
                               condition = 'input.spexp_parms == "constant"',
                               ns = ns,
@@ -814,11 +814,11 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               ns = ns,
                               material_number_box(ns("parms_spexp_B1"),
                                                   "alpha:", min_value = 0, max_value = 10^6,
-                                                  initial_value = 908, color = "#ff1744"),
+                                                  initial_value = 908, color = "#ff5131"),
                               material_number_box(ns("parms_spexp_B2"),
                                                   "beta:", min_value = 0, max_value = 10^6,
-                                                  initial_value = 56, color = "#ff1744")
-                          )   
+                                                  initial_value = 56, color = "#ff5131")
+                          )
                       )
                   ),
                   conditionalPanel(
@@ -837,7 +837,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Beta" = "beta"
                           ),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#9b0000"),
                       conditionalPanel(
                           condition = 'input.ncexp_parms == "constant"',
                           ns = ns,
@@ -885,10 +885,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_ncexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 153, color = "teal accent-2"),
+                                              initial_value = 153, color = "#9b0000"),
                           material_number_box(ns("parms_ncexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 6, color = "teal accent-2")
+                                              initial_value = 6, color = "#9b0000")
                       ),
                       material_dropdown(
                           input_id = ns("ncnexp_parms"),
@@ -903,7 +903,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Beta" = "beta"
                           ),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#9b0000"),
                       conditionalPanel(
                           condition = 'input.ncnexp_parms == "constant"',
                           ns = ns,
@@ -951,10 +951,10 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           ns = ns,
                           material_number_box(ns("parms_ncnexp_B1"),
                                               "alpha:", min_value = 0, max_value = 10^6,
-                                              initial_value = 153, color = "teal accent-2"),
+                                              initial_value = 153, color = "#9b0000"),
                           material_number_box(ns("parms_ncnexp_B2"),
                                               "beta:", min_value = 0, max_value = 10^6,
-                                              initial_value = 6, color = "teal accent-2")
+                                              initial_value = 6, color = "#9b0000")
                       )
                   ),
                   conditionalPanel(
@@ -971,7 +971,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Logit-logistic" = "logit-logistic",
                               "Logit-normal" = "logit-normal"),
                           selected = "triangular",
-                          color = "teal accent-2"),
+                          color = "#9b0000"),
                       conditionalPanel(
                           condition = 'input.risk_parms == "constant"',
                           ns = ns,
@@ -1031,11 +1031,11 @@ mod_prob_ui <- function(id, label = "tab_prob"){
 }
 
 # Module Server
-    
+
 #' @rdname mod_prob
 #' @export
 #' @keywords internal
-    
+
 mod_prob_server <- function(input, output, session){
     ns <- session$ns
 
@@ -1306,7 +1306,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$cexp_parms == "beta") {
                                    dist_cexp <- c(input$parms_cexp_B1,
                                                   input$parms_cexp_B2)
-                               }  
+                               }
                                if (input$cnexp_parms == "constant") {
                                    dist_cnexp <- callModule(mod_parms_server,
                                                            "parms_cnexp_C")
@@ -1390,7 +1390,7 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$ncexp_parms == "beta") {
                                    dist_ncexp <- c(input$parms_ncexp_B1,
                                                   input$parms_ncexp_B2)
-                               }  
+                               }
                                if (input$ncnexp_parms == "constant") {
                                    dist_ncnexp <- callModule(mod_parms_server,
                                                            "parms_ncnexp_C")
@@ -1556,7 +1556,7 @@ mod_prob_server <- function(input, output, session){
                                                   callModule(mod_parmsrge_server,
                                                              "parms_risk_Ln3")[2])
                                }
-                               
+
                                if (input$discard == 0) {
                                    throw_away <- FALSE
                                } else throw_away <- TRUE
@@ -1654,25 +1654,25 @@ mod_prob_server <- function(input, output, session){
     output$plot_res <- renderPlot({
                                       plotout()
                                   })
-    
-    runjs("document.getElementById('help_probsens').onclick = function() { 
+
+    runjs("document.getElementById('help_probsens').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_sel').onclick = function() { 
+        runjs("document.getElementById('help_probsens_sel').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.sel.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_conf').onclick = function() { 
+        runjs("document.getElementById('help_probsens_conf').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.conf.html', '_blank');
          };"
          )
 }
-    
+
 ## To be copied in the UI
 # mod_prob_ui("tab_prob")
-    
+
 ## To be copied in the server
 # callModule(mod_prob_server, "tab_prob")

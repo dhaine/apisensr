@@ -1,5 +1,5 @@
 # Analysis Module UI
-  
+
 #' @title   UI Module for the Simple Analysis tab
 #' @description  A shiny Module to render the Simple Analysis tab, i.e. non-probabilistic
 #' analyses not requiring a 2-by-2 table as input (selection bias analysis `selection`,
@@ -16,8 +16,8 @@
 #' @rdname mod_analysis
 #'
 #' @keywords internal
-#' @export 
-#' @importFrom shiny NS tagList 
+#' @export
+#' @importFrom shiny NS tagList
 mod_analysis_ui <- function(id, label = "tab_analysis"){
   ns <- NS(id)
 
@@ -37,7 +37,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           "Unmeasured confounder with effect modification" = "confounder_emm",
                           "Misclassification bias" = "misclass"
                       ),
-                      color = "#ff1744"
+                      color = "#d50000"
                   ),
                   "Observed data",
                   div(id = "obs-table",
@@ -46,7 +46,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           input_id = ns("reset_table"),
                           label = "Table back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                       ),
                   br(),
@@ -60,7 +60,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               input_id = ns("parms_controller"),
                               label = "Providing Selection-bias factor instead of Selection probabilities",
                               initial_value = FALSE,
-                              color = "#ff1744"
+                              color = "#9b0000"
                           ),
                           conditionalPanel(
                               condition = 'input.parms_controller == 0',
@@ -98,7 +98,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                                           "Odds Ratio" = "OR",
                                           "Risk Difference" = "RD"),
                               selected = "RR",
-                              color = "#ff1744"
+                              color = "#ff5131"
                           ),
                           div(
                               id = "side-panel_RR_RD",
@@ -106,7 +106,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                                   condition = 'input.confounder_type != "RD"',
                                   ns = ns,
                                   mod_parms_ui(ns("parms_confounder1a"),
-                                               "Association between the confounder and the outcome among those who were not exposed:", 0.63),                          
+                                               "Association between the confounder and the outcome among those who were not exposed:", 0.63),
                                   ),
                               conditionalPanel(
                                   condition = 'input.confounder_type == "RD"',
@@ -246,7 +246,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           input_id = "reset_input",
                           label = "Parameters back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                   )
               )
@@ -262,11 +262,11 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 }
 
 # Module Server
-    
+
 #' @rdname mod_analysis
 #' @export
 #' @keywords internal
-    
+
 mod_analysis_server <- function(input, output, session){
     ns <- session$ns
 
@@ -357,34 +357,34 @@ mod_analysis_server <- function(input, output, session){
                                      episensrout()
                                  })
 
-    runjs("document.getElementById('help_selection').onclick = function() { 
+    runjs("document.getElementById('help_selection').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/selection.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder').onclick = function() { 
+    runjs("document.getElementById('help_confounder').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder3').onclick = function() { 
+    runjs("document.getElementById('help_confounder3').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.poly.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounderemm').onclick = function() { 
+    runjs("document.getElementById('help_confounderemm').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.emm.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_misclass').onclick = function() { 
+    runjs("document.getElementById('help_misclass').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
          };"
   )
 }
-    
+
 ## To be copied in the UI
 # mod_analysis_ui("tab_analysis")
-    
+
 ## To be copied in the server
 # callModule(mod_analysis_server, "tab_analysis")
