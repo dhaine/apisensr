@@ -12,12 +12,6 @@ app_server <- function(input, output, session) {
                      shinyjs::reset("side-panel")
                      shinyjs::reset("side-panel_RR_RD")
                  })
-    observeEvent(input$reset_table, {
-                     shinyjs::reset("obs-table")
-                 })
-    observeEvent(input$reset_table, {
-                     shinyjs::reset("obs-table-prob")
-                 })
     observeEvent(input$reset_input2, {
                      shinyjs::reset("side-panel-notab")
                  })
