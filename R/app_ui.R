@@ -25,8 +25,8 @@ app_ui <- function() {
         ## tabs
         material_tabs(
             tabs = c(
-                "Simple analysis" = "tab_analysis",
-                "Simple analysis, no observed data" = "tab_notable",
+                "Simple analysis with 2-by-2 table" = "tab_analysis",
+                "Simple analysis, no 2-by-2 table" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
                 "About" = "tab_about"
             ),
