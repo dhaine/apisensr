@@ -1,5 +1,5 @@
 # Analysis Module UI with no observed data table
-  
+
 #' @title   UI Module for Simple Analysis tab with no 2x2 table.
 #' @description  A shiny Module to render the Simple Analysis tab when no 2-by-2 table
 #' is provided (M-bias analysis `mbias` and analysis by bounding the bias limits of
@@ -13,7 +13,7 @@
 #' @rdname mod_notable
 #'
 #' @keywords internal
-#' @export 
+#' @export
 #' @importFrom shiny NS tagList
 mod_notable_ui <- function(id, label = "tab_notable"){
   ns <- NS(id)
@@ -31,7 +31,7 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                           "M-bias" = "mbias",
                           "Bounding the bias limits of unmeasured confounding" = "confounder_limit"
                       ),
-                      color = "#ff1744"
+                      color = "#d50000"
                   ),
                   br(),
                   div(
@@ -78,7 +78,7 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                           input_id = "reset_input2",
                           label = "Parameters back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                   )
               )
@@ -96,15 +96,15 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                       material_card(
                           title = "DAG before conditioning on M",
                           plotOutput(ns("plot_mbias_before"), width = "400px")
-                      )                  
+                      )
                   ),
                   material_column(
                       width = 6,
                       material_card(
                           title = "DAG after conditioning on M",
                           plotOutput(ns("plot_mbias_after"), width = "400px")
-                      )                  
-                  )   
+                      )
+                  )
               )
           )
       )
@@ -112,29 +112,29 @@ mod_notable_ui <- function(id, label = "tab_notable"){
 }
 
 # Module Server
-    
+
 #' @rdname mod_notable
 #' @export
 #' @keywords internal
-    
+
 mod_notable_server <- function(input, output, session){
     ns <- session$ns
 
     episensrout = reactive({
-                               if (input$type == "mbias") {
-                                   mbias(or = c(callModule(mod_parms2_server, "parms_mbias1"),
-                                                callModule(mod_parms2_server, "parms_mbias2"),
-                                                callModule(mod_parms2_server, "parms_mbias3"),
-                                                callModule(mod_parms2_server, "parms_mbias4"),
-                                                callModule(mod_parms2_server, "parms_mbias5")),
-                                         var = c("Outcome", "Exposure", "A", "B", "Collider"))
-                               } else if (input$type == "confounder_limit") {
+#                               if (input$type == "mbias") {
+#                                   mbias(or = c(callModule(mod_parms2_server, "parms_mbias1"),
+#                                                callModule(mod_parms2_server, "parms_mbias2"),
+#                                                callModule(mod_parms2_server, "parms_mbias3"),
+#                                                callModule(mod_parms2_server, "parms_mbias4"),
+#                                                callModule(mod_parms2_server, "parms_mbias5")),
+#                                         var = c("Outcome", "Exposure", "A", "B", "Collider"))
+#                               } else if (input$type == "confounder_limit") {
                                    confounders.limit(p = callModule(mod_parms3a_server, "parms_conflimit1"),
                                                      RR = callModule(mod_parms3b_server, "parms_conflimit2"),
                                                      OR = callModule(mod_parms3b_server, "parms_conflimit3"),
                                                      crude.RR = callModule(mod_parms3b_server, "parms_conflimit4")
                                                      )
-                               }
+#                               }
                            })
 
     ## Output
@@ -142,31 +142,31 @@ mod_notable_server <- function(input, output, session){
                                       episensrout()
                                   })
 
-    output$plot_mbias_before <- renderPlot({
-                                               plot_out <- plot(episensrout(),
-                                                                type = "before")
-                                               plot_out
-                                           })
+#    output$plot_mbias_before <- renderPlot({
+#                                               plot_out <- plot(episensrout(),
+#                                                                type = "before")
+#                                               plot_out
+#                                           })
 
-    output$plot_mbias_after <- renderPlot({
-                                              plot_out <- plot(episensrout(),
-                                                               type = "after")
-                                              plot_out
-                                          })
+#    output$plot_mbias_after <- renderPlot({
+#                                              plot_out <- plot(episensrout(),
+#                                                               type = "after")
+#                                              plot_out
+#                                          })
 
-    runjs("document.getElementById('help_conflimit').onclick = function() { 
+    runjs("document.getElementById('help_conflimit').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_mbias').onclick = function() { 
+    runjs("document.getElementById('help_mbias').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/mbias.html', '_blank');
          };"
   )
 }
-    
+
 ## To be copied in the UI
 # mod_notable_ui("tab_notable")
-    
+
 ## To be copied in the server
 # callModule(mod_notable_server, "tab_notable")
