@@ -39,15 +39,15 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                       conditionalPanel(
                           condition = 'input.type == "mbias"',
                           ns = ns,
-                          mod_parms2_ui(ns("parms_mbias1"),
+                          mod_parms3b_ui(ns("parms_mbias1"),
                                         "Odds ratio between A and the exposure E:", 2),
-                          mod_parms2_ui(ns("parms_mbias2"),
+                          mod_parms3b_ui(ns("parms_mbias2"),
                                         "Odds ratio between A and the collider C:", 5.4),
-                          mod_parms2_ui(ns("parms_mbias3"),
+                          mod_parms3b_ui(ns("parms_mbias3"),
                                         "Odds ratio between B and the collider C:", 2.5),
-                          mod_parms2_ui(ns("parms_mbias4"),
+                          mod_parms3b_ui(ns("parms_mbias4"),
                                         "Odds ratio between B and the outcome D:", 1.5),
-                          mod_parms2_ui(ns("parms_mbias5"),
+                          mod_parms3b_ui(ns("parms_mbias5"),
                                         "Odds ratio observed between the exposure E and the outcome D", 1),
                           actionButton(
                               inputId = "run_mbias",
@@ -128,11 +128,11 @@ mod_notable_server <- function(input, output, session){
 
     episensrout = reactive({
                                if (input$type == "mbias") {
-                                   episensr::mbias(or = c(callModule(mod_parms2_server, "parms_mbias1"),
-                                                          callModule(mod_parms2_server, "parms_mbias2"),
-                                                          callModule(mod_parms2_server, "parms_mbias3"),
-                                                          callModule(mod_parms2_server, "parms_mbias4"),
-                                                          callModule(mod_parms2_server, "parms_mbias5")),
+                                   episensr::mbias(or = c(callModule(mod_parms3b_server, "parms_mbias1"),
+                                                          callModule(mod_parms3b_server, "parms_mbias2"),
+                                                          callModule(mod_parms3b_server, "parms_mbias3"),
+                                                          callModule(mod_parms3b_server, "parms_mbias4"),
+                                                          callModule(mod_parms3b_server, "parms_mbias5")),
                                                    var = c("Outcome", "Exposure", "A", "B", "Collider"))
                                } else if (input$type == "confounder_limit") {
                                    episensr::confounders.limit(p = callModule(mod_parms3a_server, "parms_conflimit1"),
