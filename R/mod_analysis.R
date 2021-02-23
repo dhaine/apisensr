@@ -104,7 +104,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               conditionalPanel(
                                   condition = 'input.confounder_type != "RD"',
                                   ns = ns,
-                                  mod_parms_ui(ns("parms_confounder1a"),
+                                  mod_parms3b_ui(ns("parms_confounder1a"),
                                                "Association between the confounder and the outcome among those who were not exposed:", 0.63),
                                   ),
                               conditionalPanel(
@@ -309,7 +309,7 @@ mod_analysis_server <- function(input, output, session){
                                    episensr::confounders(mat,
                                                          type = input$confounder_type,
                                                          bias_parms = c(if (input$confounder_type != "RD")
-                                                                        {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
+                                                                        {callModule(mod_parms3b_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
                                                                         callModule(mod_parms_server, "parms_confounder2"),
                                                                         callModule(mod_parms_server, "parms_confounder3")),
                                                          alpha = input$alpha)
