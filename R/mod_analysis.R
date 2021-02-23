@@ -140,9 +140,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.confounder3_type != "RD"',
                               ns = ns,
-                              mod_parms_ui(ns("parms_confounder_3_1a"),
+                              mod_parms3b_ui(ns("parms_confounder_3_1a"),
                                            "Association between the highest level confounder and the outcome:", 0.4),
-                              mod_parms_ui(ns("parms_confounder_3_2a"),
+                              mod_parms3b_ui(ns("parms_confounder_3_2a"),
                                            "Association between the mid-level confounder and the outcome:", 0.8)
                           ),
                           conditionalPanel(
@@ -317,10 +317,10 @@ mod_analysis_server <- function(input, output, session){
                                    episensr::confounders.poly(mat,
                                                               type = input$confounder3_type,
                                                               bias_parms = c(if (input$confounder3_type != "RD")
-                                                                             {callModule(mod_parms_server, "parms_confounder_3_1a")}
+                                                                             {callModule(mod_parms3b_server, "parms_confounder_3_1a")}
                                                                              else callModule(mod_parms3_server, "parms_confounder_3_1b"),
                                                                              if (input$confounder3_type != "RD")
-                                                                             {callModule(mod_parms_server, "parms_confounder_3_2a")}
+                                                                             {callModule(mod_parms3b_server, "parms_confounder_3_2a")}
                                                                              else callModule(mod_parms3_server, "parms_confounder_3_2b"),
                                                                              callModule(mod_parms_server, "parms_confounder_3_3"),
                                                                              callModule(mod_parms_server, "parms_confounder_3_4"),
