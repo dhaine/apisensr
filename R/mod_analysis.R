@@ -77,9 +77,8 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.parms_controller == 1',
                               ns = ns,
-                              mod_parms_ui(ns("bias_factor"),
-                                           "Selection-bias factor:",
-                                           value = 0.43)
+                              mod_parms3b_ui(ns("bias_factor"),
+                                           "Selection-bias factor:", 0.43)
                           ),
                           material_button(
                               input_id = "help_selection",
@@ -303,7 +302,7 @@ mod_analysis_server <- function(input, output, session){
                                                                          callModule(mod_parms_server, "parms_sel3"),
                                                                          callModule(mod_parms_server, "parms_sel4"))
                                                                    } else if (input$parms_controller == 1) {
-                                                                       input$bias_factor
+                                                                       callModule(mod_parms3b_server, "bias_factor")
                                                                    },
                                                       alpha = input$alpha)
                                } else if (input$type == "confounder") {
