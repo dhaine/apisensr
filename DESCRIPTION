@@ -6,7 +6,7 @@ Description: API for using episensr. See https://cran.r-project.org/web/packages
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Imports: 
+Imports:
     shiny,
     golem,
     config,
@@ -15,7 +15,7 @@ Imports:
     DT,
     glue,
     htmltools,
-    episensr (>= 0.9.999),
+    episensr (>= 1.0.0),
     shinymaterial,
     shinyjs,
     rhandsontable,
@@ -26,7 +26,7 @@ Imports:
 RoxygenNote: 7.1.1
 URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr.app/issues
-Suggests: 
+Suggests:
     testthat
-Remotes: 
+Remotes:
     dhaine/episensr

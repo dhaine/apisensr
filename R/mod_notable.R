@@ -49,6 +49,12 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                                         "Odds ratio between B and the outcome D:", 1.5),
                           mod_parms2_ui(ns("parms_mbias5"),
                                         "Odds ratio observed between the exposure E and the outcome D", 1),
+                          actionButton(
+                              inputId = "run_mbias",
+                              label = "Run analysis"#,
+#                              icon = "play_circle_outline",
+#                              color = "green"
+                          ),
                           material_button(
                               input_id = "help_mbias",
                               label = "Help",
@@ -121,38 +127,48 @@ mod_notable_server <- function(input, output, session){
     ns <- session$ns
 
     episensrout = reactive({
-#                               if (input$type == "mbias") {
-#                                   mbias(or = c(callModule(mod_parms2_server, "parms_mbias1"),
-#                                                callModule(mod_parms2_server, "parms_mbias2"),
-#                                                callModule(mod_parms2_server, "parms_mbias3"),
-#                                                callModule(mod_parms2_server, "parms_mbias4"),
-#                                                callModule(mod_parms2_server, "parms_mbias5")),
-#                                         var = c("Outcome", "Exposure", "A", "B", "Collider"))
-#                               } else if (input$type == "confounder_limit") {
-                                   confounders.limit(p = callModule(mod_parms3a_server, "parms_conflimit1"),
-                                                     RR = callModule(mod_parms3b_server, "parms_conflimit2"),
-                                                     OR = callModule(mod_parms3b_server, "parms_conflimit3"),
-                                                     crude.RR = callModule(mod_parms3b_server, "parms_conflimit4")
-                                                     )
-#                               }
+                               if (input$type == "mbias") {
+                                   episensr::mbias(or = c(callModule(mod_parms2_server, "parms_mbias1"),
+                                                          callModule(mod_parms2_server, "parms_mbias2"),
+                                                          callModule(mod_parms2_server, "parms_mbias3"),
+                                                          callModule(mod_parms2_server, "parms_mbias4"),
+                                                          callModule(mod_parms2_server, "parms_mbias5")),
+                                                   var = c("Outcome", "Exposure", "A", "B", "Collider"))
+                               } else if (input$type == "confounder_limit") {
+                                   episensr::confounders.limit(p = callModule(mod_parms3a_server, "parms_conflimit1"),
+                                                               RR = callModule(mod_parms3b_server, "parms_conflimit2"),
+                                                               OR = callModule(mod_parms3b_server, "parms_conflimit3"),
+                                                               crude.RR = callModule(mod_parms3b_server, "parms_conflimit4")
+                                                               )
+                               }
                            })
+
+
+    episensrplot_before = reactive({
+                                       if (input$type == "mbias")
+                                           plot(episensrout(), type = "before")
+                            })
+
+    episensrplot_after = reactive({
+                                      if (input$type == "mbias")
+                                          plot(episensrout(), type = "after")
+                            })
 
     ## Output
     output$summary <- renderPrint({
                                       episensrout()
                                   })
 
-#    output$plot_mbias_before <- renderPlot({
-#                                               plot_out <- plot(episensrout(),
-#                                                                type = "before")
-#                                               plot_out
-#                                           })
+#    plot_before <- isolate(episensrplot_before())
+    plot_after <- isolate(episensrplot_after())
 
-#    output$plot_mbias_after <- renderPlot({
-#                                              plot_out <- plot(episensrout(),
-#                                                               type = "after")
-#                                              plot_out
-#                                          })
+    output$plot_mbias_before <- renderPlot({
+                                               input$run_mbias
+                                               isolate({
+                                                           episensrplot_before()
+                                                       })
+                                           })
+    output$plot_mbias_after <- renderPlot(plot_after)
 
     runjs("document.getElementById('help_conflimit').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
