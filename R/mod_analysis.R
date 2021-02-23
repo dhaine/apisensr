@@ -183,9 +183,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.confounderemm_type != "RD"',
                               ns = ns,
-                              mod_parms_ui(ns("parms_confounder_emm_1a"),
+                              mod_parms3b_ui(ns("parms_confounder_emm_1a"),
                                            "Association between the confounder and the outcome among those who were exposed:", 0.4),
-                              mod_parms_ui(ns("parms_confounder_emm_2a"),
+                              mod_parms3b_ui(ns("parms_confounder_emm_2a"),
                                            "Association between the confounder and the outcome among those who were not exposed:", 0.7)
                           ),
                           conditionalPanel(
@@ -331,10 +331,10 @@ mod_analysis_server <- function(input, output, session){
                                    episensr::confounders.emm(mat,
                                                              type = input$confounderemm_type,
                                                              bias_parms = c(if (input$confounderemm_type != "RD")
-                                                                            {callModule(mod_parms_server, "parms_confounder_emm_1a")}
+                                                                            {callModule(mod_parms3b_server, "parms_confounder_emm_1a")}
                                                                             else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
                                                                             if (input$confounderemm_type != "RD")
-                                                                            {callModule(mod_parms_server, "parms_confounder_emm_2a")}
+                                                                            {callModule(mod_parms3b_server, "parms_confounder_emm_2a")}
                                                                             else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
                                                                             callModule(mod_parms_server, "parms_confounder_emm_3"),
                                                                             callModule(mod_parms_server, "parms_confounder_emm_4")),
