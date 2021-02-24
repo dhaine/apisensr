@@ -374,20 +374,20 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           condition = 'input.or_parms == "uniform"',
                           ns = ns,
                           mod_parmsrge2_ui(ns("parms_or_U"), "Minimum and maximum:",
-                                           0.35, 1.1, 0.01)
+                                           0.35, 1.0, 0.01)
                       ),
                       conditionalPanel(
                           condition = 'input.or_parms == "triangular"',
                           ns = ns,
                           mod_parmsrge2_ui(ns("parms_or_Tr1"),
-                                          "Lower and upper limit:", 0.35, 1.1, 0.01),
+                                          "Lower and upper limit:", 0.35, 1.0, 0.01),
                           mod_parms2_ui(ns("parms_or_Tr2"), "Mode:", 0.43)
                       ),
                       conditionalPanel(
                           condition = 'input.or_parms == "trapezoidal"',
                           ns = ns,
                           mod_parmsrge2_ui(ns("parms_or_Tz1"),
-                                          "Minimum and maximum:", 0.3, 1.3, 0.01),
+                                          "Minimum and maximum:", 0.3, 1, 0.01),
                           mod_parmsrge2_ui(ns("parms_or_Tz2"),
                                           "Lower and upper mode:", 0.4, 1, 0.01)
                       ),
@@ -434,20 +434,20 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           condition = 'input.cexp_parms == "uniform"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cexp_U"), "Minimum and maximum:",
-                                           0.35, 1.1)
+                                           0.35, 1.0)
                       ),
                       conditionalPanel(
                           condition = 'input.cexp_parms == "triangular"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cexp_Tr1"),
-                                          "Lower and upper limit:", 0.35, 1.1),
+                                          "Lower and upper limit:", 0.35, 1.0),
                           mod_parms_ui(ns("parms_cexp_Tr2"), "Mode:", 0.43)
                       ),
                       conditionalPanel(
                           condition = 'input.cexp_parms == "trapezoidal"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cexp_Tz1"),
-                                          "Minimum and maximum:", 0.3, 1.3),
+                                          "Minimum and maximum:", 0.3, 1),
                           mod_parmsrge_ui(ns("parms_cexp_Tz2"),
                                           "Lower and upper mode:", 0.4, 1)
                       ),
@@ -500,20 +500,20 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           condition = 'input.cnexp_parms == "uniform"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cnexp_U"), "Minimum and maximum:",
-                                           0.35, 1.1)
+                                           0.35, 1.0)
                       ),
                       conditionalPanel(
                           condition = 'input.cnexp_parms == "triangular"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cnexp_Tr1"),
-                                          "Lower and upper limit:", 0.35, 1.1),
+                                          "Lower and upper limit:", 0.35, 1.0),
                           mod_parms_ui(ns("parms_cnexp_Tr2"), "Mode:", 0.43)
                       ),
                       conditionalPanel(
                           condition = 'input.cnexp_parms == "trapezoidal"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_cnexp_Tz1"),
-                                          "Minimum and maximum:", 0.3, 1.3),
+                                          "Minimum and maximum:", 0.3, 1),
                           mod_parmsrge_ui(ns("parms_cnexp_Tz2"),
                                           "Lower and upper mode:", 0.4, 1)
                       ),
@@ -847,20 +847,20 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           condition = 'input.ncexp_parms == "uniform"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncexp_U"), "Minimum and maximum:",
-                                           0.35, 1.1)
+                                           0.35, 1.0)
                       ),
                       conditionalPanel(
                           condition = 'input.ncexp_parms == "triangular"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncexp_Tr1"),
-                                          "Lower and upper limit:", 0.35, 1.1),
+                                          "Lower and upper limit:", 0.35, 1.0),
                           mod_parms_ui(ns("parms_ncexp_Tr2"), "Mode:", 0.43)
                       ),
                       conditionalPanel(
                           condition = 'input.ncexp_parms == "trapezoidal"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncexp_Tz1"),
-                                          "Minimum and maximum:", 0.3, 1.3),
+                                          "Minimum and maximum:", 0.3, 1),
                           mod_parmsrge_ui(ns("parms_ncexp_Tz2"),
                                           "Lower and upper mode:", 0.4, 1)
                       ),
@@ -913,20 +913,20 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                           condition = 'input.ncnexp_parms == "uniform"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncnexp_U"), "Minimum and maximum:",
-                                           0.35, 1.1)
+                                           0.35, 1.0)
                       ),
                       conditionalPanel(
                           condition = 'input.ncnexp_parms == "triangular"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncnexp_Tr1"),
-                                          "Lower and upper limit:", 0.35, 1.1),
+                                          "Lower and upper limit:", 0.35, 1.0),
                           mod_parms_ui(ns("parms_ncnexp_Tr2"), "Mode:", 0.43)
                       ),
                       conditionalPanel(
                           condition = 'input.ncnexp_parms == "trapezoidal"',
                           ns = ns,
                           mod_parmsrge_ui(ns("parms_ncnexp_Tz1"),
-                                          "Minimum and maximum:", 0.3, 1.3),
+                                          "Minimum and maximum:", 0.3, 1),
                           mod_parmsrge_ui(ns("parms_ncnexp_Tz2"),
                                           "Lower and upper mode:", 0.4, 1)
                       ),
