@@ -22,7 +22,9 @@ Imports:
     rmarkdown,
     ggplot2,
     dagitty,
-    ggdag
+    ggdag,
+    ggraph,
+    igraph
 RoxygenNote: 7.1.1
 URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr.app/issues
