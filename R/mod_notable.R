@@ -49,12 +49,6 @@ mod_notable_ui <- function(id, label = "tab_notable"){
                                         "Odds ratio between B and the outcome D:", 1.5),
                           mod_parms3b_ui(ns("parms_mbias5"),
                                         "Odds ratio observed between the exposure E and the outcome D", 1),
-                          actionButton(
-                              inputId = "run_mbias",
-                              label = "Run analysis"#,
-#                              icon = "play_circle_outline",
-#                              color = "green"
-                          ),
                           material_button(
                               input_id = "help_mbias",
                               label = "Help",
@@ -143,32 +137,18 @@ mod_notable_server <- function(input, output, session){
                                }
                            })
 
-
-    episensrplot_before = reactive({
-                                       if (input$type == "mbias")
-                                           plot(episensrout(), type = "before")
-                            })
-
-    episensrplot_after = reactive({
-                                      if (input$type == "mbias")
-                                          plot(episensrout(), type = "after")
-                            })
-
     ## Output
     output$summary <- renderPrint({
                                       episensrout()
                                   })
 
-#    plot_before <- isolate(episensrplot_before())
-    plot_after <- isolate(episensrplot_after())
-
     output$plot_mbias_before <- renderPlot({
-                                               input$run_mbias
-                                               isolate({
-                                                           episensrplot_before()
-                                                       })
-                                           })
-    output$plot_mbias_after <- renderPlot(plot_after)
+                                               draw_mdag_before(episensrout())
+                                      })
+
+    output$plot_mbias_after <- renderPlot({
+                                              draw_mdag_after(episensrout())
+                                          })
 
     runjs("document.getElementById('help_conflimit').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
