@@ -5,10 +5,14 @@
 
 # 2. All along your project
 
+## 2.0 Add functions and utils
+##
+golem::add_fct("draw_dag")
+golem::add_utils("helpers")
+
 ## 2.1 Add modules
 ##
 golem::add_module( name = "parms" ) # Name of the module
-golem::add_module( name = "my_other_module" ) # Name of the module
 
 ## 2.2 Add dependencies
 
@@ -21,8 +25,8 @@ usethis::use_package("rhandsontable")
 usethis::use_package("shinyWidgets")
 usethis::use_package("rmarkdown")
 usethis::use_package("ggplot2")
-usethis::use_package("dagitty")
-usethis::use_package("ggdag")
+usethis::use_package("ggraph")
+usethis::use_package("igraph")
 
 usethis::use_dev_package("episensr")
 
