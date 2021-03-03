@@ -17,6 +17,7 @@ draw_mdag_before <- function(x,
                              dec = 2,
                              ...) {
     obj <- x
+    assoc <- name <- NULL
 
     .mbias_edgesb <- data.frame(from = c("a", "a", "b", "b", "x"),
                                 to = c("x", "m", "m", "y", "y"),
@@ -61,6 +62,7 @@ draw_mdag_after <- function(x,
                             dec = 2,
                             ...) {
     obj <- x
+    assoc <- name <- NULL
 
     .mbias_edges <- data.frame(from = c("z", "z", "x"),
                                to = c("x", "y", "y"),
