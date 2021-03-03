@@ -1,0 +1,12 @@
+name: apisensr_beta
+title:
+username:
+account: dhaine
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3005862
+bundleId: 4295544
+url: https://dhaine.shinyapps.io/apisensr_beta/
+when: 1614782622.79467
+asMultiple: FALSE
+asStatic: FALSE
