@@ -14,7 +14,7 @@
 #' @keywords internal
 #' @export
 #' @importFrom shiny NS tagList
-#' @importFrom utils packageVersion
+#' @importFrom utils packageVersion citation
 mod_about_ui <- function(id, label = "tab_about"){
   ns <- NS(id)
 
