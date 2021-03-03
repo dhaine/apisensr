@@ -2,9 +2,12 @@
 % Please edit documentation in R/fct_draw_dag.R
 \name{draw_mdag_before}
 \alias{draw_mdag_before}
+\alias{draw_mdag_after}
 \title{Draw a M-bias DAG}
 \usage{
 draw_mdag_before(x, dec = 2, ...)
+
+draw_mdag_after(x, dec = 2, ...)
 }
 \arguments{
 \item{x}{'mbias' object to plot.}
@@ -12,8 +15,6 @@ draw_mdag_before(x, dec = 2, ...)
 \item{dec}{Number of digits displayed.}
 
 \item{...}{Other unused arguments.}
-
-\item{type}{DAG before or after conditioning on M.}
 }
 \value{
 A DAG for selection bias caused by M bias.

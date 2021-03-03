@@ -8,6 +8,7 @@
 #' @param ... Other unused arguments.
 #'
 #' @return A DAG for selection bias caused by M bias.
+#' @rdname draw_mdag
 #'
 #' @export
 #' @importFrom igraph graph_from_data_frame
@@ -51,6 +52,11 @@ draw_mdag_before <- function(x,
         theme_graph()
 }
 
+#' @rdname draw_mdag
+#'
+#' @export
+#' @importFrom igraph graph_from_data_frame
+#' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
 draw_mdag_after <- function(x,
                             dec = 2,
                             ...) {
