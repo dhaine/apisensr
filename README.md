@@ -5,14 +5,15 @@
 
 <!-- badges: start -->
 
+[![Travis build
+status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
+[![DOI](https://zenodo.org/badge/XXXXXXX.svg)](https://doi.org/10.XXXX/zenodo.XXXXXX)
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
-[![Travis build
-status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)<!-- badges: end -->
+
+<!-- badges: end -->
 
 **apisensr** provides an interactive web app for the R package
 [**episensr**](https://cran.r-project.org/package=episensr). The R
@@ -25,6 +26,31 @@ and Aliza K. Fink (ISBN: 978-0-387-87960-4,
 ## License
 
 This package is free and open source software, licensed under MIT.
+
+## Citation
+
+To cite **apisensr**, please use:
+
+``` r
+citation("episensr")
+#> 
+#> To cite episensr in publications use:
+#> 
+#>   Haine, Denis (2021). The episensr package: basic sensitivity analysis
+#>   of epidemiological results. R package version 1.0.0.
+#>   https://dhaine.github.io/episensr/. doi: 10.5281/zenodo.4554554.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Misc{,
+#>     title = {The episensr package: basic sensitivity analysis of epidemiological results},
+#>     author = {Denis Haine},
+#>     year = {2021},
+#>     note = {R package version 1.0.0},
+#>     doi = {10.5281/zenodo.4554554},
+#>     url = {https://dhaine.github.io/episensr/},
+#>   }
+```
 
 ## Installation
 
