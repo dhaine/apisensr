@@ -6,5 +6,7 @@ dev_history.R
 $run_dev.*
 ^LICENSE\.md$
 ^README\.Rmd$
+^README-.*\.png$
 ^CODE_OF_CONDUCT\.md$
 ^\.travis\.yml$
+^cran-comments\.md$
