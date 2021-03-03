@@ -9,9 +9,9 @@
 status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
 [![DOI](https://zenodo.org/badge/XXXXXXX.svg)](https://doi.org/10.XXXX/zenodo.XXXXXX)
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 <!-- badges: end -->
 
@@ -69,6 +69,6 @@ library(apisensr)
 run_app()
 ```
 
-Please note that the ‘apisensr’ project is released with a [Contributor
+Please note that the apisensr project is released with a [Contributor
 Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
 you agree to abide by its terms.
