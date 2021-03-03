@@ -1,0 +1,13 @@
+citHeader("To cite apisensr in publications use:")
+
+citEntry(
+  entry    = "Misc",
+  title    = "The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results",
+  author   = "Denis Haine",
+  year     = "2021",
+  note     = "R package version 0.1.0",
+  doi      = "10.XXXX/zenodo.XXXXXXX",
+  url      = "https://github.com/dhaine/apisensr/",
+  textVersion = paste("Haine, Denis (2021). The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results. R package version 0.1.0. https://github.com/dhaine/apisensr/. doi: 10.XXXX/zenodo.XXXXXXX."
+                      )
+)

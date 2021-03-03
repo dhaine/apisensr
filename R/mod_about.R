@@ -29,7 +29,7 @@ mod_about_ui <- function(id, label = "tab_about"){
           ),
           material_column(
               width = 3,
-              wellPanel("Please report bugs at", a("https://github.com/dhaine/apisensr/issues", href="https://github.com/dhaine/apisensr/issues", target="_blank"), br(), br(), "Shiny app by", a("Denis Haine", href="https://www.denishaine.ca", target="_blank"), br(), br(), "episensr version:", verbatimTextOutput(ns("versioning_epi"), placeholder = TRUE), "apisensr version:", verbatimTextOutput(ns("versioning_api"), placeholder = TRUE))
+              wellPanel(verbatimTextOutput(ns("cite_api"), placeholder = TRUE), br(), br(),"Please report bugs at", a("https://github.com/dhaine/apisensr/issues", href="https://github.com/dhaine/apisensr/issues", target="_blank"), br(), br(), "Shiny app by", a("Denis Haine", href="https://www.denishaine.ca/", target="_blank"), br(), br(), "episensr version:", verbatimTextOutput(ns("versioning_epi"), placeholder = TRUE), "apisensr version:", verbatimTextOutput(ns("versioning_api"), placeholder = TRUE))
           )
       )
   )
@@ -44,6 +44,7 @@ mod_about_ui <- function(id, label = "tab_about"){
 mod_about_server <- function(input, output, session){
     ns <- session$ns
 
+    output$cite_api <- renderPrint(citation("apisensr"))
     output$versioning_epi <- renderPrint(packageVersion("episensr"))
     output$versioning_api <- renderPrint(packageVersion("apisensr"))
 
