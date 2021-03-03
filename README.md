@@ -25,7 +25,7 @@ and Aliza K. Fink (ISBN: 978-0-387-87960-4,
 
 ## License
 
-This package is free and open source software, licensed under MIT.
+This package is free and open source software, licensed under GPL-2.
 
 ## Citation
 
