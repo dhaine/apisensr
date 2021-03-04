@@ -8,7 +8,7 @@
 [![Travis build
 status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
-[![DOI](https://zenodo.org/badge/XXXXXXX.svg)](https://doi.org/10.XXXX/zenodo.XXXXXX)
+[![DOI](https://zenodo.org/badge/243598636.svg)](https://zenodo.org/badge/latestdoi/243598636)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -39,7 +39,7 @@ citation("apisensr")
 #>   Haine, Denis (2021). The apisensr Shiny app package: interface to
 #>   episensr for sensitivity analysis of epidemiological results. R
 #>   package version 0.1.0. https://github.com/dhaine/apisensr/. doi:
-#>   10.XXXX/zenodo.XXXXXXX.
+#>   10.5281/zenodo.4579969.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -48,7 +48,7 @@ citation("apisensr")
 #>     author = {Denis Haine},
 #>     year = {2021},
 #>     note = {R package version 0.1.0},
-#>     doi = {10.XXXX/zenodo.XXXXXXX},
+#>     doi = {10.5281/zenodo.4579969},
 #>     url = {https://github.com/dhaine/apisensr/},
 #>   }
 ```
