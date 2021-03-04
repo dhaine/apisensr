@@ -21,3 +21,8 @@ episensr. These two words are correct (R package episensr).
 The error is about failed installation. However the link received by email shows
 success test
 (https://builder.r-hub.io/status/apisensr_0.1.0.tar.gz-2a06ac5d319e4c2c87268fb14bf6cdfa).
+
+Checking with 'devtools::check_win_devl()' gives the same note as above
+regarding mis-spelled word, and a (possibly) invalid file URI in 'readme.md':
+'CODE_OF_CONDUCT.md'. However this link is correct. There is no error reported
+regarding installation and package can be installed.
