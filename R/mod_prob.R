@@ -15,6 +15,7 @@
 #' @keywords internal
 #' @export
 #' @import episensr
+#' @import ggplot2
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 #' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
