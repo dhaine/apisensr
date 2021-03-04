@@ -13,6 +13,8 @@
 #' @export
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
+#'
+#' @noRd
 draw_mdag_before <- function(x,
                              dec = 2,
                              ...) {
@@ -58,6 +60,8 @@ draw_mdag_before <- function(x,
 #' @export
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
+#'
+#' @noRd
 draw_mdag_after <- function(x,
                             dec = 2,
                             ...) {
