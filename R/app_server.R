@@ -1,4 +1,5 @@
 #' @import shiny
+#' @importFrom shinyjs reset
 
 app_server <- function(input, output, session) {
     # List the first level callModules here
@@ -18,5 +19,4 @@ app_server <- function(input, output, session) {
 
     ## Automatically stop Shiny app when closing browser tab
     session$onSessionEnded(stopApp)
-
 }

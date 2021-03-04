@@ -9,14 +9,17 @@
 #'
 #' @return A DAG for selection bias caused by M bias.
 #' @rdname draw_mdag
+#' @keywords internal
 #'
 #' @export
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
+#'
 draw_mdag_before <- function(x,
                              dec = 2,
                              ...) {
     obj <- x
+    assoc <- name <- NULL
 
     .mbias_edgesb <- data.frame(from = c("a", "a", "b", "b", "x"),
                                 to = c("x", "m", "m", "y", "y"),
@@ -57,10 +60,12 @@ draw_mdag_before <- function(x,
 #' @export
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
+#' @keywords internal
 draw_mdag_after <- function(x,
                             dec = 2,
                             ...) {
     obj <- x
+    assoc <- name <- NULL
 
     .mbias_edges <- data.frame(from = c("z", "z", "x"),
                                to = c("x", "y", "y"),

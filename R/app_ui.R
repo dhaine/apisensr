@@ -1,12 +1,7 @@
 #' @import shiny
 #' @import shinymaterial
-#' @import shinyjs
 #' @import rmarkdown
-#' @import rhandsontable
-#' @import episensr
-#' @import ggplot2
-#' @import dagitty
-#' @import ggdag
+#' @importFrom shinyjs useShinyjs
 
 app_ui <- function() {
   tagList(
@@ -20,7 +15,7 @@ app_ui <- function() {
         primary_theme_color = "#d50000",
         title = "apisensr: Quantitative bias analysis with episensr",
 
-        useShinyjs(),
+        shinyjs::useShinyjs(),
 
         ## tabs
         material_tabs(

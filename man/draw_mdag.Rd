@@ -23,3 +23,4 @@ A DAG for selection bias caused by M bias.
 Draw a Directed Acyclic Graph (DAG), either before or after conditioning on the
 collider M, for selection bias caused by M bias.
 }
+\keyword{internal}

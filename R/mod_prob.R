@@ -14,7 +14,11 @@
 #'
 #' @keywords internal
 #' @export
+#' @import episensr
+#' @import ggplot2
 #' @importFrom shiny NS tagList
+#' @importFrom shinyjs runjs
+#' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
 mod_prob_ui <- function(id, label = "tab_prob"){
   ns <- NS(id)
 
@@ -36,7 +40,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                   ),
                   "Observed data",
                   div(id = "obs-table-prob",
-                      rHandsontableOutput(ns('two_by_two_prob')),
+                      rhandsontable::rHandsontableOutput(ns('two_by_two_prob')),
                       material_button(
                           input_id = ns("reset_table"),
                           label = "Table back to example",
@@ -1052,16 +1056,13 @@ mod_prob_server <- function(input, output, session){
                       }
                   })
 
-    output$two_by_two_prob = renderRHandsontable({
-                                                     input$reset_table # trigger rendering on reset
-                                                     rhandsontable(DF(),
-                                                                   rowHeaderWidth = 200,
-                                                                   width = 500,
-                                                                   stretchH = "all")
+    output$two_by_two_prob = rhandsontable::renderRHandsontable({
+                                                                    input$reset_table # trigger rendering on reset
+                                                                    rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
                                                  })
 
     episensrout = reactive({
-                               mat <- as.matrix(hot_to_r(req({input$two_by_two_prob})))
+                               mat <- as.matrix(rhandsontable::hot_to_r(req({input$two_by_two_prob})))
                                if (input$seca_parms == "trapezoidal") {
                                    dist_seca <- c(callModule(mod_parmsrge_server,
                                                              "parms_seca_Tz1")[1],
@@ -1655,17 +1656,17 @@ mod_prob_server <- function(input, output, session){
                                       plotout()
                                   })
 
-    runjs("document.getElementById('help_probsens').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_sel').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens_sel').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.sel.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_conf').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens_conf').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.conf.html', '_blank');
          };"
          )
