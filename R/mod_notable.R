@@ -14,6 +14,7 @@
 #'
 #' @keywords internal
 #' @export
+#' @import episensr
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 mod_notable_ui <- function(id, label = "tab_notable"){

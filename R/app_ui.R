@@ -1,11 +1,6 @@
 #' @import shiny
 #' @import shinymaterial
 #' @import rmarkdown
-#' @import rhandsontable
-#' @import episensr
-#' @import ggplot2
-#' @import dagitty
-#' @import ggdag
 #' @importFrom shinyjs useShinyjs
 
 app_ui <- function() {

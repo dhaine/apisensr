@@ -17,8 +17,10 @@
 #'
 #' @keywords internal
 #' @export
+#' @import episensr
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
+#' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
 mod_analysis_ui <- function(id, label = "tab_analysis"){
   ns <- NS(id)
 
@@ -42,7 +44,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                   ),
                   "Observed data",
                   div(id = "obs-table",
-                      rHandsontableOutput(ns('two_by_two')),
+                      rhandsontable::rHandsontableOutput(ns('two_by_two')),
                       material_button(
                           input_id = ns("reset_table"),
                           label = "Table back to example",
@@ -285,16 +287,13 @@ mod_analysis_server <- function(input, output, session){
                       }
                   })
 
-    output$two_by_two = renderRHandsontable({
-                                                input$reset_table # trigger rendering on reset
-                                                rhandsontable(DF(),
-                                                              rowHeaderWidth = 200,
-                                                              width = 500,
-                                                              stretchH = "all")
+    output$two_by_two = rhandsontable::renderRHandsontable({
+                                                               input$reset_table # trigger rendering on reset
+                                                               rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
                                             })
 
     episensrout = reactive({
-                               mat <- as.matrix(hot_to_r(req({input$two_by_two})))
+                               mat <- as.matrix(rhandsontable::hot_to_r(req({input$two_by_two})))
                                if (input$type == "selection") {
                                   episensr::selection(mat,
                                                       bias_parms = if (input$parms_controller == 0) {
