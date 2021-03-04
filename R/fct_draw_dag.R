@@ -8,7 +8,6 @@
 #' @param ... Other unused arguments.
 #'
 #' @return A DAG for selection bias caused by M bias.
-#' @rdname draw_mdag
 #'
 #' @export
 #' @importFrom igraph graph_from_data_frame
