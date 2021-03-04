@@ -15,6 +15,7 @@
 #' @keywords internal
 #' @export
 #' @importFrom shiny NS tagList
+#' @importFrom shinyjs runjs
 mod_prob_ui <- function(id, label = "tab_prob"){
   ns <- NS(id)
 
@@ -1655,17 +1656,17 @@ mod_prob_server <- function(input, output, session){
                                       plotout()
                                   })
 
-    runjs("document.getElementById('help_probsens').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_sel').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens_sel').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.sel.html', '_blank');
          };"
          )
 
-        runjs("document.getElementById('help_probsens_conf').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_probsens_conf').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/probsens.conf.html', '_blank');
          };"
          )

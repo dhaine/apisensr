@@ -15,6 +15,7 @@
 #' @keywords internal
 #' @export
 #' @importFrom shiny NS tagList
+#' @importFrom shinyjs runjs
 mod_notable_ui <- function(id, label = "tab_notable"){
   ns <- NS(id)
 
@@ -150,12 +151,12 @@ mod_notable_server <- function(input, output, session){
                                               draw_mdag_after(episensrout())
                                           })
 
-    runjs("document.getElementById('help_conflimit').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_conflimit').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_mbias').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_mbias').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/mbias.html', '_blank');
          };"
   )

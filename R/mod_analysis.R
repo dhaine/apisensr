@@ -18,6 +18,7 @@
 #' @keywords internal
 #' @export
 #' @importFrom shiny NS tagList
+#' @importFrom shinyjs runjs
 mod_analysis_ui <- function(id, label = "tab_analysis"){
   ns <- NS(id)
 
@@ -356,27 +357,27 @@ mod_analysis_server <- function(input, output, session){
                                      episensrout()
                                  })
 
-    runjs("document.getElementById('help_selection').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_selection').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/selection.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_confounder').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder3').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_confounder3').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.poly.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounderemm').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_confounderemm').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.emm.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_misclass').onclick = function() {
+    shinyjs::runjs("document.getElementById('help_misclass').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
          };"
   )
