@@ -1,5 +1,5 @@
 # Analysis Module UI
-  
+
 #' @title   UI Module for the Simple Analysis tab
 #' @description  A shiny Module to render the Simple Analysis tab, i.e. non-probabilistic
 #' analyses not requiring a 2-by-2 table as input (selection bias analysis `selection`,
@@ -16,8 +16,11 @@
 #' @rdname mod_analysis
 #'
 #' @keywords internal
-#' @export 
-#' @importFrom shiny NS tagList 
+#' @export
+#' @import episensr
+#' @importFrom shiny NS tagList
+#' @importFrom shinyjs runjs
+#' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
 mod_analysis_ui <- function(id, label = "tab_analysis"){
   ns <- NS(id)
 
@@ -37,16 +40,16 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           "Unmeasured confounder with effect modification" = "confounder_emm",
                           "Misclassification bias" = "misclass"
                       ),
-                      color = "#ff1744"
+                      color = "#d50000"
                   ),
                   "Observed data",
                   div(id = "obs-table",
-                      rHandsontableOutput(ns('two_by_two')),
+                      rhandsontable::rHandsontableOutput(ns('two_by_two')),
                       material_button(
                           input_id = ns("reset_table"),
                           label = "Table back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                       ),
                   br(),
@@ -60,7 +63,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                               input_id = ns("parms_controller"),
                               label = "Providing Selection-bias factor instead of Selection probabilities",
                               initial_value = FALSE,
-                              color = "#ff1744"
+                              color = "#9b0000"
                           ),
                           conditionalPanel(
                               condition = 'input.parms_controller == 0',
@@ -77,9 +80,8 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.parms_controller == 1',
                               ns = ns,
-                              mod_parms_ui(ns("bias_factor"),
-                                           "Selection-bias factor:",
-                                           value = 0.43)
+                              mod_parms3b_ui(ns("bias_factor"),
+                                           "Selection-bias factor:", 0.43)
                           ),
                           material_button(
                               input_id = "help_selection",
@@ -98,15 +100,15 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                                           "Odds Ratio" = "OR",
                                           "Risk Difference" = "RD"),
                               selected = "RR",
-                              color = "#ff1744"
+                              color = "#ff5131"
                           ),
                           div(
                               id = "side-panel_RR_RD",
                               conditionalPanel(
                                   condition = 'input.confounder_type != "RD"',
                                   ns = ns,
-                                  mod_parms_ui(ns("parms_confounder1a"),
-                                               "Association between the confounder and the outcome among those who were not exposed:", 0.63),                          
+                                  mod_parms3b_ui(ns("parms_confounder1a"),
+                                               "Association between the confounder and the outcome among those who were not exposed:", 0.63),
                                   ),
                               conditionalPanel(
                                   condition = 'input.confounder_type == "RD"',
@@ -141,9 +143,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.confounder3_type != "RD"',
                               ns = ns,
-                              mod_parms_ui(ns("parms_confounder_3_1a"),
+                              mod_parms3b_ui(ns("parms_confounder_3_1a"),
                                            "Association between the highest level confounder and the outcome:", 0.4),
-                              mod_parms_ui(ns("parms_confounder_3_2a"),
+                              mod_parms3b_ui(ns("parms_confounder_3_2a"),
                                            "Association between the mid-level confounder and the outcome:", 0.8)
                           ),
                           conditionalPanel(
@@ -184,9 +186,9 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           conditionalPanel(
                               condition = 'input.confounderemm_type != "RD"',
                               ns = ns,
-                              mod_parms_ui(ns("parms_confounder_emm_1a"),
+                              mod_parms3b_ui(ns("parms_confounder_emm_1a"),
                                            "Association between the confounder and the outcome among those who were exposed:", 0.4),
-                              mod_parms_ui(ns("parms_confounder_emm_2a"),
+                              mod_parms3b_ui(ns("parms_confounder_emm_2a"),
                                            "Association between the confounder and the outcome among those who were not exposed:", 0.7)
                           ),
                           conditionalPanel(
@@ -246,7 +248,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           input_id = "reset_input",
                           label = "Parameters back to example",
                           icon = "restore",
-                          color = "red accent-3"
+                          color = "red accent-4"
                       )
                   )
               )
@@ -262,11 +264,11 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 }
 
 # Module Server
-    
+
 #' @rdname mod_analysis
 #' @export
 #' @keywords internal
-    
+
 mod_analysis_server <- function(input, output, session){
     ns <- session$ns
 
@@ -285,70 +287,67 @@ mod_analysis_server <- function(input, output, session){
                       }
                   })
 
-    output$two_by_two = renderRHandsontable({
-                                                input$reset_table # trigger rendering on reset
-                                                rhandsontable(DF(),
-                                                              rowHeaderWidth = 200,
-                                                              width = 500,
-                                                              stretchH = "all")
+    output$two_by_two = rhandsontable::renderRHandsontable({
+                                                               input$reset_table # trigger rendering on reset
+                                                               rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
                                             })
 
     episensrout = reactive({
-                               mat <- as.matrix(hot_to_r(req({input$two_by_two})))
+                               mat <- as.matrix(rhandsontable::hot_to_r(req({input$two_by_two})))
                                if (input$type == "selection") {
-                                  selection(mat,
-                                            bias_parms = if (input$parms_controller == 0) {
-                                                             c(callModule(mod_parms_server, "parms_sel1"),
-                                                               callModule(mod_parms_server, "parms_sel2"),
-                                                               callModule(mod_parms_server, "parms_sel3"),
-                                                               callModule(mod_parms_server, "parms_sel4"))
-                                                         } else if (input$parms_controller == 1) {
-                                                             input$bias_factor
-                                                         },
-                                            alpha = input$alpha)
+                                  episensr::selection(mat,
+                                                      bias_parms = if (input$parms_controller == 0) {
+                                                                       c(callModule(mod_parms_server, "parms_sel1"),
+                                                                         callModule(mod_parms_server, "parms_sel2"),
+                                                                         callModule(mod_parms_server, "parms_sel3"),
+                                                                         callModule(mod_parms_server, "parms_sel4"))
+                                                                   } else if (input$parms_controller == 1) {
+                                                                       callModule(mod_parms3b_server, "bias_factor")
+                                                                   },
+                                                      alpha = input$alpha)
                                } else if (input$type == "confounder") {
-                                   confounders(mat,
-                                               type = input$confounder_type,
-                                               bias_parms = c(if (input$confounder_type != "RD")
-                                                              {callModule(mod_parms_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
-                                                              callModule(mod_parms_server, "parms_confounder2"),
-                                                              callModule(mod_parms_server, "parms_confounder3")),
-                                               alpha = input$alpha)
+                                   episensr::confounders(mat,
+                                                         type = input$confounder_type,
+                                                         bias_parms = c(if (input$confounder_type != "RD")
+                                                                        {callModule(mod_parms3b_server, "parms_confounder1a")} else callModule(mod_parms3_server, "parms_confounder1b"),
+                                                                        callModule(mod_parms_server, "parms_confounder2"),
+                                                                        callModule(mod_parms_server, "parms_confounder3")),
+                                                         alpha = input$alpha)
                                } else if (input$type == "confounder_3") {
-                                   confounders.poly(mat,
-                                                    type = input$confounder3_type,
-                                                    bias_parms = c(if (input$confounder3_type != "RD")
-                                                                   {callModule(mod_parms_server, "parms_confounder_3_1a")}
-                                                                   else callModule(mod_parms3_server, "parms_confounder_3_1b"),
-                                                                   if (input$confounder3_type != "RD")
-                                                                   {callModule(mod_parms_server, "parms_confounder_3_2a")}
-                                                                   else callModule(mod_parms3_server, "parms_confounder_3_2b"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_3"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_4"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_5"),
-                                                                   callModule(mod_parms_server, "parms_confounder_3_6")),
-                                                    alpha = input$alpha)
+                                   episensr::confounders.poly(mat,
+                                                              type = input$confounder3_type,
+                                                              bias_parms = c(if (input$confounder3_type != "RD")
+                                                                             {callModule(mod_parms3b_server, "parms_confounder_3_1a")}
+                                                                             else callModule(mod_parms3_server, "parms_confounder_3_1b"),
+                                                                             if (input$confounder3_type != "RD")
+                                                                             {callModule(mod_parms3b_server, "parms_confounder_3_2a")}
+                                                                             else callModule(mod_parms3_server, "parms_confounder_3_2b"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_3"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_4"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_5"),
+                                                                             callModule(mod_parms_server, "parms_confounder_3_6")),
+                                                              alpha = input$alpha)
                                } else if (input$type == "confounder_emm") {
-                                   confounders.emm(mat,
-                                                   type = input$confounderemm_type,
-                                                   bias_parms = c(if (input$confounderemm_type != "RD")
-                                                                  {callModule(mod_parms_server, "parms_confounder_emm_1a")}
-                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
-                                                                  if (input$confounderemm_type != "RD")
-                                                                  {callModule(mod_parms_server, "parms_confounder_emm_2a")}
-                                                                  else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
-                                                                  callModule(mod_parms_server, "parms_confounder_emm_3"),
-                                                                  callModule(mod_parms_server, "parms_confounder_emm_4")),
-                                                   alpha = input$alpha
-                                                   )
+                                   episensr::confounders.emm(mat,
+                                                             type = input$confounderemm_type,
+                                                             bias_parms = c(if (input$confounderemm_type != "RD")
+                                                                            {callModule(mod_parms3b_server, "parms_confounder_emm_1a")}
+                                                                            else callModule(mod_parms3_server, "parms_confounder_emm_1b"),
+                                                                            if (input$confounderemm_type != "RD")
+                                                                            {callModule(mod_parms3b_server, "parms_confounder_emm_2a")}
+                                                                            else callModule(mod_parms3_server, "parms_confounder_emm_2b"),
+                                                                            callModule(mod_parms_server, "parms_confounder_emm_3"),
+                                                                            callModule(mod_parms_server, "parms_confounder_emm_4")),
+                                                             alpha = input$alpha
+                                                             )
                                } else if (input$type == "misclass") {
-                                   misclassification(mat,
-                                                     type = input$misclass_type,
-                                                     bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
-                                                                    callModule(mod_parms_server, "parms_mis2"),
-                                                                    callModule(mod_parms_server, "parms_mis3"),
-                                                                    callModule(mod_parms_server, "parms_mis4")),
-                                                     alpha = input$alpha)
+                                   episensr::misclassification(mat,
+                                                               type = input$misclass_type,
+                                                               bias_parms = c(callModule(mod_parms_server, "parms_mis1"),
+                                                                              callModule(mod_parms_server, "parms_mis2"),
+                                                                              callModule(mod_parms_server, "parms_mis3"),
+                                                                              callModule(mod_parms_server, "parms_mis4")),
+                                                               alpha = input$alpha)
                                }
                            })
 
@@ -357,34 +356,34 @@ mod_analysis_server <- function(input, output, session){
                                      episensrout()
                                  })
 
-    runjs("document.getElementById('help_selection').onclick = function() { 
+    shinyjs::runjs("document.getElementById('help_selection').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/selection.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder').onclick = function() { 
+    shinyjs::runjs("document.getElementById('help_confounder').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounder3').onclick = function() { 
+    shinyjs::runjs("document.getElementById('help_confounder3').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.poly.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_confounderemm').onclick = function() { 
+    shinyjs::runjs("document.getElementById('help_confounderemm').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.emm.html', '_blank');
          };"
          )
 
-    runjs("document.getElementById('help_misclass').onclick = function() { 
+    shinyjs::runjs("document.getElementById('help_misclass').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
          };"
   )
 }
-    
+
 ## To be copied in the UI
 # mod_analysis_ui("tab_analysis")
-    
+
 ## To be copied in the server
 # callModule(mod_analysis_server, "tab_analysis")

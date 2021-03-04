@@ -1,35 +1,31 @@
 #' @import shiny
 #' @import shinymaterial
-#' @import shinyjs
 #' @import rmarkdown
-#' @import rhandsontable
-#' @import episensr
-#' @import ggplot2
-#' @import dagitty
-#' @import ggdag
+#' @importFrom shinyjs useShinyjs
 
 app_ui <- function() {
   tagList(
     # Leave this function for adding external resources
-    golem_add_external_resources(),
-    # List the first level UI elements here 
+      golem_add_external_resources(),
+      tags$a(tags$style(HTML("a {color: #d50000}"))),
+    # List the first level UI elements here
     material_page(
         ## title bar
         nav_bar_fixed = TRUE,
-        nav_bar_color = "red accent-4",
-        title = "apisensr: Happy API for episensr!",
-        
-        useShinyjs(),
-   
+        primary_theme_color = "#d50000",
+        title = "apisensr: Quantitative bias analysis with episensr",
+
+        shinyjs::useShinyjs(),
+
         ## tabs
         material_tabs(
             tabs = c(
-                "Simple analysis" = "tab_analysis",
-                "Simple analysis, no observed data" = "tab_notable",
+                "Simple analysis with 2-by-2 table" = "tab_analysis",
+                "Simple analysis, no 2-by-2 table" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
                 "About" = "tab_about"
             ),
-            color = "#ff8a80"
+            color = "#9b0000"
         ),
 
         mod_analysis_ui("tab_analysis"),
@@ -45,18 +41,18 @@ app_ui <- function() {
 
 #' @import shiny
 golem_add_external_resources <- function(){
-  
+
   addResourcePath(
     'www', system.file('app/www', package = 'apisensr')
   )
- 
+
   tags$head(
     golem::activate_js(),
     golem::favicon(ext = 'png'),
     # Add here all the external resources
     # If you have a custom.css in the inst/app/www
     # Or for example, you can add shinyalert::useShinyalert() here
-    shinyalert::useShinyalert()
+#    shinyalert::useShinyalert()
     #tags$link(rel="stylesheet", type="text/css", href="www/custom.css")
     )
 

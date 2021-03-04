@@ -1,19 +1,23 @@
 # Building a Prod-Ready, Robust Shiny Application.
-# 
-# Each step is optional. 
-# 
+#
+# Each step is optional.
+#
 
 # 2. All along your project
 
+## 2.0 Add functions and utils
+##
+golem::add_fct("draw_dag")
+golem::add_utils("helpers")
+
 ## 2.1 Add modules
-## 
+##
 golem::add_module( name = "parms" ) # Name of the module
-golem::add_module( name = "my_other_module" ) # Name of the module
 
 ## 2.2 Add dependencies
 
 #usethis::use_package( "thinkr" ) # To call each time you need a new package
-usethis::use_package( "episensr", min_version = "0.9.6" ) # To call each time you need a new package
+usethis::use_package( "episensr", min_version = "1.0.0" ) # To call each time you need a new package
 usethis::use_package("shinymaterial")
 usethis::use_package("shinyjs")
 usethis::use_package("shinyalert")
@@ -21,8 +25,8 @@ usethis::use_package("rhandsontable")
 usethis::use_package("shinyWidgets")
 usethis::use_package("rmarkdown")
 usethis::use_package("ggplot2")
-usethis::use_package("dagitty")
-usethis::use_package("ggdag")
+usethis::use_package("ggraph")
+usethis::use_package("igraph")
 
 usethis::use_dev_package("episensr")
 
@@ -52,6 +56,6 @@ usethis::use_github()
 usethis::use_travis()
 usethis::use_appveyor()
 
-# You're now set! 
+# You're now set!
 # go to dev/03_deploy.R
 rstudioapi::navigateToFile("dev/03_deploy.R")
