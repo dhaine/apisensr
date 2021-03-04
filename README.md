@@ -32,23 +32,24 @@ This package is free and open source software, licensed under GPL-2.
 To cite **apisensr**, please use:
 
 ``` r
-citation("episensr")
+citation("apisensr")
 #> 
-#> To cite episensr in publications use:
+#> To cite apisensr in publications use:
 #> 
-#>   Haine, Denis (2021). The episensr package: basic sensitivity analysis
-#>   of epidemiological results. R package version 1.0.0.
-#>   https://dhaine.github.io/episensr/. doi: 10.5281/zenodo.4554554.
+#>   Haine, Denis (2021). The apisensr Shiny app package: interface to
+#>   episensr for sensitivity analysis of epidemiological results. R
+#>   package version 0.1.0. https://github.com/dhaine/apisensr/. doi:
+#>   10.XXXX/zenodo.XXXXXXX.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Misc{,
-#>     title = {The episensr package: basic sensitivity analysis of epidemiological results},
+#>     title = {The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results},
 #>     author = {Denis Haine},
 #>     year = {2021},
-#>     note = {R package version 1.0.0},
-#>     doi = {10.5281/zenodo.4554554},
-#>     url = {https://dhaine.github.io/episensr/},
+#>     note = {R package version 0.1.0},
+#>     doi = {10.XXXX/zenodo.XXXXXXX},
+#>     url = {https://github.com/dhaine/apisensr/},
 #>   }
 ```
 
