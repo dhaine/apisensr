@@ -14,15 +14,13 @@ New submission
 There are no downstream dependencies.
 
 ## Note
-Checking with 'devtools::check_rhub()' returned one error and one note.
-The note is about possibly mis-spelled words in DESCRIPTION: Episensr and
-episensr. These two words are correct (R package episensr).
-
+Checking with 'devtools::check_rhub()' returned one error.
 The error is about failed installation. However the link received by email shows
-success test
-(https://builder.r-hub.io/status/apisensr_0.1.0.tar.gz-2a06ac5d319e4c2c87268fb14bf6cdfa).
+success test.
 
-Checking with 'devtools::check_win_devl()' gives the same note as above
-regarding mis-spelled word, and a (possibly) invalid file URI in 'readme.md':
-'CODE_OF_CONDUCT.md'. However this link is correct. There is no error reported
-regarding installation and package can be installed.
+Checking with 'devtools::check_win_devel()' reports a single NOTE, the same as
+with R CMD check, i.e. New submission
+
+Spelling of 'episensr' was fixed in DESCRIPTION file, using lower case and
+single quotes.
+Link for code of conduct was omitted.
