@@ -1,5 +1,5 @@
 Package: apisensr
-Title: Interface to Episensr for Sensitivity Analysis of Epidemiological Results
+Title: Interface to 'episensr' for Sensitivity Analysis of Epidemiological Results
 Version: 0.1.0
 Authors@R:
         person(given = "Denis",
@@ -7,7 +7,7 @@ Authors@R:
         role = c("aut", "cre"),
         email = "denis.haine@gmail.com",
         comment = c(ORCID = "0000-0002-6691-7335"))
-Description: API for using episensr, Basic sensitivity analysis of the observed relative risks adjusting for unmeasured confounding and misclassification of the exposure/outcome, or both. See <https://cran.r-project.org/package=episensr>.
+Description: API for using 'episensr', Basic sensitivity analysis of the observed relative risks adjusting for unmeasured confounding and misclassification of the exposure/outcome, or both. See <https://cran.r-project.org/package=episensr>.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
