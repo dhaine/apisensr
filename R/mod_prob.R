@@ -13,7 +13,7 @@
 #' @rdname mod_prob
 #'
 #' @keywords internal
-#' @export
+#' @noRd
 #' @import episensr
 #' @import ggplot2
 #' @importFrom shiny NS tagList
@@ -1037,7 +1037,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
 # Module Server
 
 #' @rdname mod_prob
-#' @export
+#' @noRd
 #' @keywords internal
 
 mod_prob_server <- function(input, output, session){

@@ -12,7 +12,7 @@
 #' @rdname mod_about
 #'
 #' @keywords internal
-#' @export
+#' @noRd
 #' @importFrom shiny NS tagList
 #' @importFrom utils packageVersion citation
 mod_about_ui <- function(id, label = "tab_about"){
@@ -38,7 +38,7 @@ mod_about_ui <- function(id, label = "tab_about"){
 # Module Server
 
 #' @rdname mod_about
-#' @export
+#' @noRd
 #' @keywords internal
 
 mod_about_server <- function(input, output, session){
