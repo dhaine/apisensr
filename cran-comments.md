@@ -1,3 +1,14 @@
+## Resubmission
+This is a resubmission. In this version I have:
+
+* Export of the functions 'mod_about', 'mod_analysis', 'mod_notable',
+  'mod_parms', 'mod_prob' was removed as they are not needed outside of the
+  package. The Rd files are also no longer necessary.
+* Description, returned value (i.e. none) and example were added to the function
+  'run_app'.
+* Seed was removed from the function 'mod_prob'. As such, I felt version number
+  for the package should go from 0.1.0 to 0.2.0 (updated in Description file).
+
 ## Test environments
 * x86_64-pc-linux-gnu (64-bit), R 4.0.4
 * x86_64-pc-linux-gnu (64-bit) (on travis-ci), R 3.6.3
@@ -14,13 +25,5 @@ New submission
 There are no downstream dependencies.
 
 ## Note
-Checking with 'devtools::check_rhub()' returned one error.
-The error is about failed installation. However the link received by email shows
-success test.
-
 Checking with 'devtools::check_win_devel()' reports a single NOTE, the same as
 with R CMD check, i.e. New submission
-
-Spelling of 'episensr' was fixed in DESCRIPTION file, using lower case and
-single quotes.
-Link for code of conduct was omitted.
