@@ -1566,7 +1566,6 @@ mod_prob_server <- function(input, output, session){
                                } else throw_away_conf <- TRUE
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
-                                   set.seed(123)
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1577,7 +1576,6 @@ mod_prob_server <- function(input, output, session){
                                                       discard = throw_away,
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
-                                   set.seed(123)
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1595,7 +1593,6 @@ mod_prob_server <- function(input, output, session){
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 0) {
-                                   set.seed(123)
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           or.parms = list(input$or_parms,
@@ -1603,7 +1600,6 @@ mod_prob_server <- function(input, output, session){
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 1) {
-                                   set.seed(123)
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           case.exp = list(input$cexp_parms,
@@ -1616,7 +1612,6 @@ mod_prob_server <- function(input, output, session){
                                                                             dist_ncnexp),
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_conf") {
-                                   set.seed(123)
                                    episensr::probsens.conf(mat,
                                                            reps = input$reps_conf,
                                                            prev.exp = list(input$prevexp_parms,
