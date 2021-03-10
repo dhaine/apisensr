@@ -38,8 +38,8 @@ citation("apisensr")
 #> 
 #>   Haine, Denis (2021). The apisensr Shiny app package: interface to
 #>   episensr for sensitivity analysis of epidemiological results. R
-#>   package version 0.1.0. https://github.com/dhaine/apisensr/. doi:
-#>   10.5281/zenodo.4579969.
+#>   package version 0.2.0. https://github.com/dhaine/apisensr/. doi:
+#>   10.5281/zenodo.4592620.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -47,8 +47,8 @@ citation("apisensr")
 #>     title = {The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results},
 #>     author = {Denis Haine},
 #>     year = {2021},
-#>     note = {R package version 0.1.0},
-#>     doi = {10.5281/zenodo.4579969},
+#>     note = {R package version 0.2.0},
+#>     doi = {10.5281/zenodo.4592620},
 #>     url = {https://github.com/dhaine/apisensr/},
 #>   }
 ```
