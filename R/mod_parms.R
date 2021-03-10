@@ -1,5 +1,5 @@
 # Module UI for parameters
-  
+
 #' @title   Module to provide parameters
 #' @description  A shiny Module to manage bias analysis parameters.
 #'
@@ -7,18 +7,19 @@
 #' @param input internal
 #' @param output internal
 #' @param session internal
+#' @return Called for side effects.
 #'
 #' @rdname mod_parms
 #'
 #' @keywords internal
-#' @export 
-#' @importFrom shiny NS tagList 
+#' @noRd
+#' @importFrom shiny NS tagList
 mod_parms_ui <- function(id, label_parms, value){
   ns <- NS(id)
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
                   value = value, min = 0, max = 1,
-                  width = "600px")  
+                  width = "600px")
   )
 }
 
@@ -27,7 +28,7 @@ mod_parms2_ui <- function(id, label_parms, value){
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
                   value = value, min = 0, max = 20, step = 0.01,
-                  width = "600px")  
+                  width = "600px")
   )
 }
 
@@ -36,7 +37,7 @@ mod_parms2a_ui <- function(id, label_parms, value, min, max){
   tagList(
       sliderInput(ns("bias_parms"), label_parms,
                   value = value, min = min, max = max, step = 0.1,
-                  width = "600px")  
+                  width = "600px")
   )
 }
 
@@ -86,11 +87,11 @@ mod_parmsrge2_ui <- function(id, label_parms, lo, hi, step) {
 }
 
 # Module Server
-    
+
 #' @rdname mod_parms
-#' @export
+#' @noRd
 #' @keywords internal
-    
+
 mod_parms_server <- function(input, output, session){
     ns <- session$ns
     input$bias_parms
@@ -133,7 +134,6 @@ mod_parmsrge2_server <- function(input, output, session) {
 
 ## To be copied in the UI
 # mod_parms_ui("parms_ui_1")
-    
+
 ## To be copied in the server
 # callModule(mod_parms_server, "parms_ui_1")
- 
