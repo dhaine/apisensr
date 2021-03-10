@@ -7,11 +7,11 @@
 #' @param dec Number of digits displayed.
 #' @param ... Other unused arguments.
 #'
-#' @return A DAG for selection bias caused by M bias.
+#' @return Plot a DAG for selection bias caused by M bias.
 #' @rdname draw_mdag
 #' @keywords internal
 #'
-#' @export
+#' @noRd
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
 #'
@@ -57,7 +57,7 @@ draw_mdag_before <- function(x,
 
 #' @rdname draw_mdag
 #'
-#' @export
+#' @noRd
 #' @importFrom igraph graph_from_data_frame
 #' @importFrom ggraph create_layout ggraph geom_edge_link geom_node_point geom_node_label circle theme_graph
 #' @keywords internal
