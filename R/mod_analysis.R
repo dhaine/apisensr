@@ -16,7 +16,7 @@
 #' @rdname mod_analysis
 #'
 #' @keywords internal
-#' @export
+#' @noRd
 #' @import episensr
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
@@ -266,7 +266,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 # Module Server
 
 #' @rdname mod_analysis
-#' @export
+#' @noRd
 #' @keywords internal
 
 mod_analysis_server <- function(input, output, session){

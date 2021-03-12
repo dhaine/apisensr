@@ -10,5 +10,12 @@ run_app(...)
 \item{...}{Unused arguments.}
 }
 \description{
-Run the Shiny Application
+Runs the 'apisensr' Shiny application. This function does not
+return; interrupt R to stop the application (usually by pressing Ctrl+C or Esc).
+}
+\examples{
+\dontrun{
+run_app()
+}
+
 }
