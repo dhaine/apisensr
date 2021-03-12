@@ -13,7 +13,7 @@
 #' @rdname mod_notable
 #'
 #' @keywords internal
-#' @export
+#' @noRd
 #' @import episensr
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
@@ -116,7 +116,7 @@ mod_notable_ui <- function(id, label = "tab_notable"){
 # Module Server
 
 #' @rdname mod_notable
-#' @export
+#' @noRd
 #' @keywords internal
 
 mod_notable_server <- function(input, output, session){

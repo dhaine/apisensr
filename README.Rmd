@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![Travis build
 status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
-[![DOI](https://zenodo.org/badge/XXXXXXX.svg)](https://doi.org/10.XXXX/zenodo.XXXXXX)
+[![DOI](https://zenodo.org/badge/243598636.svg)](https://zenodo.org/badge/latestdoi/243598636)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
 <!-- badges: end -->
@@ -41,7 +41,7 @@ This package is free and open source software, licensed under GPL-2.
 To cite **apisensr**, please use:
 
 ```{r}
-citation("episensr")
+citation("apisensr")
 ```
 
 ## Installation
@@ -61,6 +61,6 @@ library(apisensr)
 run_app()
 ```
 
-Please note that the apisensr project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+Please note that the apisensr project is released with a Contributor Code of
+Conduct.
 By contributing to this project, you agree to abide by its terms.
