@@ -6,7 +6,7 @@
 ## R CMD check results
 There was one NOTE:
 
-Days since last update: 3
+Days since last update: 4
 
 ## Downstream dependencies
 There are no downstream dependencies.
@@ -14,3 +14,4 @@ There are no downstream dependencies.
 ## Note
 This version fixes the path to file 'functions.md' in 'inst/', which was
 crashing the app.
+Namespaces (ImportFrom) were also fixed.

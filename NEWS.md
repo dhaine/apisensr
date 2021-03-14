@@ -1,6 +1,7 @@
 # apisensr 0.3.0
 
 * Fix path to functions.md to allow rendering of the app.
+* Fix namespaces.
 
 # apisensr 0.2.0
 
