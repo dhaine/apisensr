@@ -6,7 +6,7 @@
 ## R CMD check results
 There was one NOTE:
 
-Days since last update: 2
+Days since last update: 3
 
 ## Downstream dependencies
 There are no downstream dependencies.
