@@ -10,8 +10,14 @@ This is a resubmission. In this version I have:
   for the package should go from 0.1.0 to 0.2.0 (updated in Description file).
 
 ## Test environments
-* x86_64-pc-linux-gnu (64-bit), R 4.0.4
-* x86_64-pc-linux-gnu (64-bit) (on travis-ci), R 3.6.3
+* Local machine
+  * Running under: Ubuntu 20.04.3 LTS
+  * Platform: x86_64-pc-linux-gnu (64-bit)
+  * R version 4.1.1 (2021-08-10)
+* Github Actions:
+  * Windows-latest (R release)
+  * MacOS-latest (R release)
+  * Ubuntu 20.04 (R release, devel)
 * win-builder (devel and release)
 
 ## R CMD check results
