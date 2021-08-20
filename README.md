@@ -7,6 +7,7 @@ apisensr <img src="man/figures/logo.png" align="right" width=120 />
 
 [![Travis build
 status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
+[![R-CMD-check](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4579968.svg)](https://doi.org/10.5281/zenodo.4579968)
 [![Project Status: Active – The project has reached a stable, usable
@@ -39,8 +40,8 @@ To cite **apisensr**, please use:
     #> 
     #>   Haine, Denis (2021). The apisensr Shiny app package: interface to
     #>   episensr for sensitivity analysis of epidemiological results. R
-    #>   package version 0.4.0. https://github.com/dhaine/apisensr/. doi:
-    #>   10.5281/zenodo.4579968.
+    #>   package version 0.2.0. https://github.com/dhaine/apisensr/. doi:
+    #>   10.5281/zenodo.4592620.
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
@@ -48,8 +49,8 @@ To cite **apisensr**, please use:
     #>     title = {The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results},
     #>     author = {Denis Haine},
     #>     year = {2021},
-    #>     note = {R package version 0.4.0},
-    #>     doi = {10.5281/zenodo.4579968},
+    #>     note = {R package version 0.2.0},
+    #>     doi = {10.5281/zenodo.4592620},
     #>     url = {https://github.com/dhaine/apisensr/},
     #>   }
 
