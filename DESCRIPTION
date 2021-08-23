@@ -1,6 +1,6 @@
 Package: apisensr
 Title: Interface to 'episensr' for Sensitivity Analysis of Epidemiological Results
-Version: 0.2.0
+Version: 0.4.0
 Authors@R:
         person(given = "Denis",
         family = "Haine",
@@ -10,7 +10,6 @@ Authors@R:
 Description: API for using 'episensr', Basic sensitivity analysis of the observed relative risks adjusting for unmeasured confounding and misclassification of the exposure/outcome, or both. See <https://cran.r-project.org/package=episensr>.
 License: GPL-2
 Encoding: UTF-8
-LazyData: true
 Imports:
     shiny,
     golem,
@@ -29,10 +28,12 @@ Imports:
 Depends:
     R (>= 3.6.0),
     ggplot2 (>= 3.3.3),
-    episensr (>= 1.0.0)
+    episensr (>= 1.1.0)
 RoxygenNote: 7.1.1
 URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr/issues
 Suggests:
     testthat,
-    rlang
+    rlang,
+    knitr
+VignetteBuilder: knitr

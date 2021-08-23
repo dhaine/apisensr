@@ -11,3 +11,7 @@ $run_dev.*
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
+^rsconnect$
+^\.github$
+^doc$
+^Meta$
