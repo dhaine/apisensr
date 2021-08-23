@@ -1,5 +1,7 @@
 # apisensr 0.4.0
-* Update to use minimally episensr 1.1.0
+* Update to use minimally episensr 1.1.0.
+* Add a vignette to get started with apisensr.
+* Fix NOTE (CRAN Package check) about LazyData.
 
 # apisensr 0.3.0
 
