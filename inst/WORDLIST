@@ -11,6 +11,7 @@ confounder
 Confounder
 confounders
 Confounders
+cov
 Ctrl
 DAGs
 devtools
@@ -25,12 +26,14 @@ episensr
 Episensr
 Esc
 et
+evalue
 ggdag
 Haenszel
 Hosmer
 https
 Huybrechts
 io
+irr
 Khoury
 Lemeshow
 Lifecycle
@@ -42,6 +45,7 @@ MH
 Miettinen
 misclassified
 Muin
+multidimBias
 NaNs
 noncases
 nondifferential
