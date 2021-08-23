@@ -13,3 +13,5 @@ $run_dev.*
 ^CRAN-RELEASE$
 ^rsconnect$
 ^\.github$
+^doc$
+^Meta$
