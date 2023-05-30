@@ -364,8 +364,8 @@ mod_prob_ui <- function(id, label = "tab_prob") {
                               "Uniform" = "uniform",
                               "Triangular" = "triangular",
                               "Trapezoidal" = "trapezoidal",
-                              "Logit-logistic" = "logit-logistic",
-                              "Logit-normal" = "logit-normal"
+                              "Log-logistic" = "log-logistic",
+                              "Log-normal" = "log-normal"
                           ),
                           selected = "triangular",
                           color = "#ff5131"),
@@ -396,20 +396,16 @@ mod_prob_ui <- function(id, label = "tab_prob") {
                                           "Lower and upper mode:", 0.4, 1, 0.01)
                       ),
                       conditionalPanel(
-                          condition = 'input.or_parms == "logit-logistic"',
+                          condition = 'input.or_parms == "log-logistic"',
                           ns = ns,
-                          mod_parms2a_ui(ns("parms_or_Ll1"), "Location:", 0, -5, 5),
-                          mod_parms2a_ui(ns("parms_or_Ll2"), "Scale:", 0.8, -10, 10),
-                          mod_parmsrge_ui(ns("parms_or_Ll3"),
-                                          "Lower and upper bound shift:", 0.5, 0.9)
+                          mod_parms2b_ui(ns("parms_or_Ll1"), "Shape:", 4),
+                          mod_parms2b_ui(ns("parms_or_Ll2"), "Rate:", 0.5)
                       ),
                       conditionalPanel(
-                          condition = 'input.or_parms == "logit-normal"',
+                          condition = 'input.or_parms == "log-normal"',
                           ns = ns,
-                          mod_parms2a_ui(ns("parms_or_Ln1"), "Location:", 0, -5, 5),
-                          mod_parms2a_ui(ns("parms_or_Ln2"), "Scale:", 0.8, -10, 10),
-                          mod_parmsrge_ui(ns("parms_or_Ln3"),
-                                          "Lower and upper bound shift:", 0.5, 0.9)
+                          mod_parms2c_ui(ns("parms_or_Ln1"), "Mean log:", 0),
+                          mod_parms2c_ui(ns("parms_or_Ln2"), "SD log:", 0.5)
                       )
                   ),
                   conditionalPanel(
@@ -1247,24 +1243,16 @@ mod_prob_server <- function(input, output, session) {
                                                              "parms_or_Tz2")[2],
                                                   callModule(mod_parmsrge2_server,
                                                              "parms_or_Tz1")[2])
-                               } else if (input$or_parms == "logit-logistic") {
-                                   dist_orparms <- c(callModule(mod_parms2a_server,
+                               } else if (input$or_parms == "log-logistic") {
+                                   dist_orparms <- c(callModule(mod_parms2_server,
                                                                 "parms_or_Ll1"),
-                                                     callModule(mod_parms2a_server,
-                                                                "parms_or_Ll2"),
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ll3")[1],
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ll3")[2])
-                               } else if (input$or_parms == "logit-normal") {
-                                   dist_orparms <- c(callModule(mod_parms2a_server,
+                                                     callModule(mod_parms2_server,
+                                                                "parms_or_Ll2"))
+                               } else if (input$or_parms == "log-normal") {
+                                   dist_orparms <- c(callModule(mod_parms2c_server,
                                                                 "parms_or_Ln1"),
-                                                     callModule(mod_parms2a_server,
-                                                                "parms_or_Ln2"),
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ln3")[1],
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ln3")[2])
+                                                     callModule(mod_parms2c_server,
+                                                                "parms_or_Ln2"))
                                }
                                if (input$cexp_parms == "constant") {
                                    dist_cexp <- callModule(mod_parms_server,
