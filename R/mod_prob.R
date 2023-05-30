@@ -19,7 +19,7 @@
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 #' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
-mod_prob_ui <- function(id, label = "tab_prob"){
+mod_prob_ui <- function(id, label = "tab_prob") {
   ns <- NS(id)
 
   material_tab_content(
@@ -1040,7 +1040,7 @@ mod_prob_ui <- function(id, label = "tab_prob"){
 #' @noRd
 #' @keywords internal
 
-mod_prob_server <- function(input, output, session){
+mod_prob_server <- function(input, output, session) {
     ns <- session$ns
 
     DF = reactive({
@@ -1250,12 +1250,12 @@ mod_prob_server <- function(input, output, session){
                                } else if (input$or_parms == "logit-logistic") {
                                    dist_orparms <- c(callModule(mod_parms2a_server,
                                                                 "parms_or_Ll1"),
-                                                  callModule(mod_parms2a_server,
-                                                             "parms_or_Ll2"),
-                                                  callModule(mod_parmsrge_server,
-                                                             "parms_or_Ll3")[1],
-                                                  callModule(mod_parmsrge_server,
-                                                             "parms_or_Ll3")[2])
+                                                     callModule(mod_parms2a_server,
+                                                                "parms_or_Ll2"),
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_or_Ll3")[1],
+                                                     callModule(mod_parmsrge_server,
+                                                                "parms_or_Ll3")[2])
                                } else if (input$or_parms == "logit-normal") {
                                    dist_orparms <- c(callModule(mod_parms2a_server,
                                                                 "parms_or_Ln1"),
