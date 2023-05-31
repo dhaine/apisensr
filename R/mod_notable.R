@@ -31,7 +31,8 @@ mod_notable_ui <- function(id, label = "tab_notable") {
                       label = "Choose bias analysis:",
                       choices = c(
                           "M-bias" = "mbias",
-                          "Bounding the bias limits of unmeasured confounding" = "confounder_limit"
+                          "Bounding the bias limits of unmeasured confounding" = "confounder_limit",
+                          "Unmeasured confounders based on external adjustment" = "confounder_ext"
                       ),
                       color = "#d50000"
                   ),
@@ -71,6 +72,28 @@ mod_notable_ui <- function(id, label = "tab_notable") {
                                          "Crude relative risk between the exposure and the outcome", 1.5),
                           material_button(
                               input_id = "help_conflimit",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder_ext"',
+                          ns = ns,
+                          mod_parms3c_ui(ns("parms_confext0"),
+                                         "\"True\" or fully adjusted exposure relative risk:",
+                                         1),
+                          mod_parms3c_ui(ns("parms_confext1"),
+                                         "Association between the confounder and the outcome (RR):",
+                                         0.1),
+                          mod_parms3c_ui(ns("parms_confext2"),
+                                       "Association between the exposure category and the confounder (OR):", 0.9),
+                          mod_parms3a_ui(ns("parms_confext3"),
+                                        "Prevalence of the confounder:", 0.1),
+                          mod_parms3a_ui(ns("parms_confext4"),
+                                         "Prevalence of the exposure", 0.4),
+                          material_button(
+                              input_id = "help_confext",
                               label = "Help",
                               icon = "help",
                               color = "orange"
@@ -136,6 +159,10 @@ mod_notable_server <- function(input, output, session) {
                                                                OR = callModule(mod_parms3b_server, "parms_conflimit3"),
                                                                crude.RR = callModule(mod_parms3b_server, "parms_conflimit4")
                                                                )
+                               } else if (input$type == "confounder_ext") {
+                                   episensr::confounders.ext(RR = callModule(mod_parms3b_server,
+                                                                            "parms_confext0"),
+                                                            bias_parms = c(callModule(mod_parms3b_server, "parms_confext1"), callModule(mod_parms3b_server, "parms_confext2"), callModule(mod_parms3c_server, "parms_confext3"), callModule(mod_parms3c_server, "parms_confext4")))
                                }
                            })
 
@@ -151,6 +178,11 @@ mod_notable_server <- function(input, output, session) {
     output$plot_mbias_after <- renderPlot({
                                               draw_mdag_after(episensrout())
                                           })
+
+    shinyjs::runjs("document.getElementById('help_confext').onclick = function() {
+           window.open('https://dhaine.github.io/episensr/reference/confounders.ext.html', '_blank');
+         };"
+         )
 
     shinyjs::runjs("document.getElementById('help_conflimit').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.limit.html', '_blank');
