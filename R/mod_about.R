@@ -15,7 +15,7 @@
 #' @noRd
 #' @importFrom shiny NS tagList
 #' @importFrom utils packageVersion citation
-mod_about_ui <- function(id, label = "tab_about"){
+mod_about_ui <- function(id, label = "tab_about") {
   ns <- NS(id)
 
   material_tab_content(
@@ -41,7 +41,7 @@ mod_about_ui <- function(id, label = "tab_about"){
 #' @noRd
 #' @keywords internal
 
-mod_about_server <- function(input, output, session){
+mod_about_server <- function(input, output, session) {
     ns <- session$ns
 
     output$cite_api <- renderPrint(citation("apisensr"))
