@@ -17,7 +17,7 @@
 #' @import episensr
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
-mod_notable_ui <- function(id, label = "tab_notable"){
+mod_notable_ui <- function(id, label = "tab_notable") {
   ns <- NS(id)
 
   material_tab_content(
@@ -119,7 +119,7 @@ mod_notable_ui <- function(id, label = "tab_notable"){
 #' @noRd
 #' @keywords internal
 
-mod_notable_server <- function(input, output, session){
+mod_notable_server <- function(input, output, session) {
     ns <- session$ns
 
     episensrout = reactive({
