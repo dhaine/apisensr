@@ -32,7 +32,8 @@ mod_notable_ui <- function(id, label = "tab_notable") {
                       choices = c(
                           "M-bias" = "mbias",
                           "Bounding the bias limits of unmeasured confounding" = "confounder_limit",
-                          "Unmeasured confounders based on external adjustment" = "confounder_ext"
+                          "Unmeasured confounders based on external adjustment" = "confounder_ext",
+                          "Bias due to unmeasured confounders based on confounding imbalance among exposed and unexposed" = "confounder_array"
                       ),
                       color = "#d50000"
                   ),
@@ -94,6 +95,32 @@ mod_notable_ui <- function(id, label = "tab_notable") {
                                          "Prevalence of the exposure", 0.4),
                           material_button(
                               input_id = "help_confext",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "confounder_array"',
+                          ns = ns,
+                          mod_parms3_ui(ns("parms_confarray0"), "Crude risk:", 1.5),
+                          material_radio_button(
+                              input_id = ns("parms_confarray1"),
+                              label = "Type of implementation:",
+                              choices = c("Binary covariates" = "binary",
+                                          "Continuous covariates" = "continuous",
+                                          "Risk difference" = "RD"),
+                              selected = "binary",
+                              color = "#ff5131"),
+                          mod_parms3_ui(ns("parms_confarray2"),
+                                         "Association between the confounder and the outcome (RR):",
+                                         5.5),
+                          mod_parms3_ui(ns("parms_confarray3"),
+                                        "Prevalence of the confounder among the exposed, or mean value of the confounder among the exposed:", 0.5),
+                          mod_parms3a_ui(ns("parms_confarray4"),
+                                         "Prevalence of the confounder among the unexposed, or mean value of the confounder among the unexposed", 0.1),
+                          material_button(
+                              input_id = "help_confarray",
                               label = "Help",
                               icon = "help",
                               color = "orange"
@@ -163,6 +190,13 @@ mod_notable_server <- function(input, output, session) {
                                    episensr::confounders.ext(RR = callModule(mod_parms3b_server,
                                                                             "parms_confext0"),
                                                             bias_parms = c(callModule(mod_parms3b_server, "parms_confext1"), callModule(mod_parms3b_server, "parms_confext2"), callModule(mod_parms3c_server, "parms_confext3"), callModule(mod_parms3c_server, "parms_confext4")))
+                               } else if (input$type == "confounder_array") {
+                                   episensr::confounders.array(
+                                                 crude.risk = callModule(mod_parms3_server,
+                                                                         "parms_confarray0"),
+                                                 type = input$parms_confarray1,
+                                                 bias_parms = c(callModule(mod_parms3_server, "parms_confarray2"), callModule(mod_parms3_server, "parms_confarray3"), callModule(mod_parms3_server, "parms_confarray4"))
+                                             )
                                }
                            })
 
@@ -178,6 +212,11 @@ mod_notable_server <- function(input, output, session) {
     output$plot_mbias_after <- renderPlot({
                                               draw_mdag_after(episensrout())
                                           })
+
+    shinyjs::runjs("document.getElementById('help_confarray').onclick = function() {
+           window.open('https://dhaine.github.io/episensr/reference/confounders.array.html', '_blank');
+         };"
+         )
 
     shinyjs::runjs("document.getElementById('help_confext').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/confounders.ext.html', '_blank');
