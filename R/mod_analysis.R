@@ -21,7 +21,7 @@
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 #' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
-mod_analysis_ui <- function(id, label = "tab_analysis"){
+mod_analysis_ui <- function(id, label = "tab_analysis") {
   ns <- NS(id)
 
   material_tab_content(
@@ -269,7 +269,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 #' @noRd
 #' @keywords internal
 
-mod_analysis_server <- function(input, output, session){
+mod_analysis_server <- function(input, output, session) {
     ns <- session$ns
 
     DF = reactive({
@@ -379,7 +379,7 @@ mod_analysis_server <- function(input, output, session){
     shinyjs::runjs("document.getElementById('help_misclass').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
          };"
-  )
+         )
 }
 
 ## To be copied in the UI
