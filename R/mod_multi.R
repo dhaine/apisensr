@@ -28,11 +28,6 @@ mod_multi_ui <- function(id, label = "tab_multi") {
               material_card(
                   "Sensitivity Analysis for Covariate Misclassification",
                   br(),
-#                  "Observed data",
-#                  div(id = "obs-table",
-#                      rhandsontable::rHandsontableOutput(ns('two_by_two'))
-#                      ),
-#                  br(),
                   "First level of stratification",
                   div(id = "obs-table1",
                       rhandsontable::rHandsontableOutput(ns('two_by_twoA'))
@@ -95,8 +90,6 @@ mod_multi_server <- function(input, output, session) {
     ns <- session$ns
 
     DF = reactive({
- #                     tab1 <- data.frame(Exposed = c(1319, 38054), Unexposed = c(5641, 405546),
- #                                       row.names = c("Cases", "Noncases"))
                       tab2 <- data.frame(Exposed = c(565, 3583), Unexposed = c(781, 21958),
                                         row.names = c("Cases", "Noncases"))
                       tab3 <- data.frame(Exposed = c(754, 34471), Unexposed = c(4860, 383588),
@@ -105,9 +98,6 @@ mod_multi_server <- function(input, output, session) {
                            df2 = tab2, df3 = tab3)
                           })
 
-#    output$two_by_two = rhandsontable::renderRHandsontable({
-#                                                               rhandsontable::rhandsontable(DF()[['df1']], rowHeaderWidth = 200, width = 500, stretchH = "all")
-#                                            })
     output$two_by_twoA = rhandsontable::renderRHandsontable({
                                                                rhandsontable::rhandsontable(DF()[['df2']], rowHeaderWidth = 200, width = 500, stretchH = "all")
                                             })
