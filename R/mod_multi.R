@@ -35,7 +35,13 @@ mod_multi_ui <- function(id, label = "tab_multi") {
                   br(),
                   "Second level of stratification",
                   div(id = "obs-table2",
-                      rhandsontable::rHandsontableOutput(ns('two_by_twoB'))
+                      rhandsontable::rHandsontableOutput(ns('two_by_twoB')),
+                      material_button(
+                          input_id = ns("reset_table"),
+                          label = "Tables back to example",
+                          icon = "restore",
+                          color = "red accent-4"
+                      )
                       ),
                   br(),
                   div(
@@ -99,9 +105,11 @@ mod_multi_server <- function(input, output, session) {
                           })
 
     output$two_by_twoA = rhandsontable::renderRHandsontable({
-                                                               rhandsontable::rhandsontable(DF()[['df2']], rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                                input$reset_table
+                                                                rhandsontable::rhandsontable(DF()[['df2']], rowHeaderWidth = 200, width = 500, stretchH = "all")
                                             })
     output$two_by_twoB = rhandsontable::renderRHandsontable({
+                                                                input$reset_table
                                                                rhandsontable::rhandsontable(DF()[['df3']], rowHeaderWidth = 200, width = 500, stretchH = "all")
                                             })
 
