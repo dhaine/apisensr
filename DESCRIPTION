@@ -26,9 +26,9 @@ Imports:
     ggraph,
     igraph
 Depends:
-    R (>= 3.6.0),
-    ggplot2 (>= 3.3.3),
-    episensr (>= 1.1.0)
+    R (>= 4.0.0),
+    ggplot2 (>= 3.4.0),
+    episensr (>= 1.2.0)
 RoxygenNote: 7.2.3
 URL: https://github.com/dhaine/apisensr
 BugReports: https://github.com/dhaine/apisensr/issues
