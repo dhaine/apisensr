@@ -2,8 +2,11 @@
 
 #' @title   UI Module for Simple Analysis tab with no 2x2 table.
 #' @description  A shiny Module to render the Simple Analysis tab when no 2-by-2 table
-#' is provided (M-bias analysis `mbias` and analysis by bounding the bias limits of
-#' unmeasured confounding `confounders.limit`).
+#' is provided (M-bias analysis `mbias`, analysis by bounding the bias limits of unmeasured
+#' confounding `confounders.limit`, analysis for unmeasured confounders based on external
+#' adjustment `confounders.ext`, analysis for unmeasured confounders based on confounding
+#' imbalance among exposed and unexposed `confounders.array`, and E-value to assess bias due
+#' to unmeasured confounder `confounders.evalue`).
 #'
 #' @param id shiny id
 #' @param input internal
