@@ -241,11 +241,12 @@ mod_analysis_ui <- function(id, label = "tab_analysis") {
                           material_radio_button(
                               input_id = ns("multidim_type"),
                               label = "Type of implementation",
-                              choices = c("Exposure misclassification" = "exp",
+                              choices = c("None selected" = "none",
+                                          "Exposure misclassification" = "exp",
                                           "Outcome misclassification" = "out",
                                           "Uncontrolled confounder" = "conf",
                                           "Selection bias" = "sel"),
-                              selected = "exp",
+                              selected = "none",
                               color = "#ff5131"
                           ),
                           div(id = "parms-table",
@@ -321,7 +322,9 @@ mod_analysis_server <- function(input, output, session) {
                   })
 
     DF_parms = reactive({
-                            if (input$multidim_type %in% c("exp", "out")) {
+                            if (input$multidim_type == "none") {
+                                data.frame('Waiting...' = "Make a choice!")
+                            } else if (input$multidim_type %in% c("exp", "out")) {
                                 data.frame(Se = c(1, 1, 1, .9, .9, .9, .8, .8, .8),
                                            Sp = c(1, .9, .8, 1, .9, .8, 1, .9, .8))
                             } else if (input$multidim_type == "conf") {
@@ -344,7 +347,7 @@ mod_analysis_server <- function(input, output, session) {
                                                                input$reset_table_parms
                                                                rhandsontable::rhandsontable(DF_parms(),
                                                                                             stretchH = "all")
-                                                           })
+                                                          })
 
     episensrout = reactive({
                                mat <- as.matrix(rhandsontable::hot_to_r(req({input$two_by_two})))
