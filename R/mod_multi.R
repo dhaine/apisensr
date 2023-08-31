@@ -106,11 +106,11 @@ mod_multi_server <- function(input, output, session) {
 
     output$two_by_twoA = rhandsontable::renderRHandsontable({
                                                                 input$reset_table
-                                                                rhandsontable::rhandsontable(DF()[['df2']], rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                                rhandsontable::rhandsontable(DF()[['df2']], stretchH = "all")
                                             })
     output$two_by_twoB = rhandsontable::renderRHandsontable({
                                                                 input$reset_table
-                                                               rhandsontable::rhandsontable(DF()[['df3']], rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                               rhandsontable::rhandsontable(DF()[['df3']], stretchH = "all")
                                             })
 
     episensrout = reactive({

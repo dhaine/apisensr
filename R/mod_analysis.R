@@ -336,12 +336,14 @@ mod_analysis_server <- function(input, output, session) {
 
     output$two_by_two = rhandsontable::renderRHandsontable({
                                                                input$reset_table # trigger rendering on reset
-                                                               rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                               rhandsontable::rhandsontable(DF(),
+                                                                                            stretchH = "all")
                                                            })
 
     output$parms_tab = rhandsontable::renderRHandsontable({
                                                                input$reset_table_parms
-                                                               rhandsontable::rhandsontable(DF_parms(), rowHeaderWidth = 100, width = 500, stretchH = "all")
+                                                               rhandsontable::rhandsontable(DF_parms(),
+                                                                                            stretchH = "all")
                                                            })
 
     episensrout = reactive({

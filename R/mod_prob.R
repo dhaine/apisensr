@@ -1054,7 +1054,7 @@ mod_prob_server <- function(input, output, session) {
 
     output$two_by_two_prob = rhandsontable::renderRHandsontable({
                                                                     input$reset_table # trigger rendering on reset
-                                                                    rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                                    rhandsontable::rhandsontable(DF(), stretchH = "all")
                                                  })
 
     episensrout = reactive({
