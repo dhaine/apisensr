@@ -342,7 +342,7 @@ mod_analysis_server <- function(input, output, session) {
     output$two_by_two = rhandsontable::renderRHandsontable({
                                                                input$reset_table # trigger rendering on reset
                                                                rhandsontable::rhandsontable(DF(),
-                                                                                            stretchH = "all")
+                                                                                            stretchH = "all", rowHeaderWidth = 75)
                                                            })
 
     output$parms_tab = rhandsontable::renderRHandsontable({

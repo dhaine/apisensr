@@ -1085,16 +1085,16 @@ mod_prob_server <- function(input, output, session) {
                                      row.names = c("Cases", "Noncases"))
                       } else if (input$prob_type == "probsens_sel") {
                           data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
-                                     row.names = c("Cases", "Non-cases"))
+                                     row.names = c("Cases", "Noncases"))
                       } else if (input$prob_type == "probsens_conf") {
                           data.frame(Exposed = c(105, 527), Unexposed = c(85, 93),
-                                     row.names = c("Cases", "Non-cases"))
+                                     row.names = c("Cases", "Noncases"))
                       }
                   })
 
     output$two_by_two_prob = rhandsontable::renderRHandsontable({
                                                                     input$reset_table # trigger rendering on reset
-                                                                    rhandsontable::rhandsontable(DF(), stretchH = "all")
+                                                                    rhandsontable::rhandsontable(DF(), stretchH = "all", rowHeaderWidth = 75)
                                                  })
 
     episensrout = reactive({
