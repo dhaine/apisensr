@@ -63,7 +63,7 @@ mod_prob_ui <- function(id, label = "tab_prob") {
                           br(),
                           material_number_box(
                               input_id = ns("chosen_seed"),
-                              label = "Please select a seed",
+                              label = "Please select a seed:",
                               min_value = 1,
                               max_value = 1000000,
                               initial_value = 1,
@@ -135,6 +135,14 @@ mod_prob_ui <- function(id, label = "tab_prob") {
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_sel"',
                           ns = ns,
+                          material_number_box(
+                              input_id = ns("chosen_seed_sel"),
+                              label = "Please select a seed:",
+                              min_value = 1,
+                              max_value = 1000000,
+                              initial_value = 1,
+                              color = "#ff5131"
+                          ),
                           material_slider(
                               input_id = ns("reps_sel"),
                               label = "Number of replications to run:",
@@ -168,6 +176,14 @@ mod_prob_ui <- function(id, label = "tab_prob") {
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_conf"',
                           ns = ns,
+                          material_number_box(
+                              input_id = ns("chosen_seed_conf"),
+                              label = "Please select a seed:",
+                              min_value = 1,
+                              max_value = 1000000,
+                              initial_value = 1,
+                              color = "#ff5131"
+                          ),
                           material_slider(
                               input_id = ns("reps_conf"),
                               label = "Number of replications to run:",
@@ -1048,11 +1064,19 @@ mod_prob_ui <- function(id, label = "tab_prob") {
 mod_prob_server <- function(input, output, session) {
     ns <- session$ns
 
-    global_seed = reactive(input$chosen_seed)
+    misclass_seed = reactive(input$chosen_seed)
     ## reactives can only be in observers or other reactives.
     ## setting priority to 5 helps set seed before `renderPrint` is executed
     observe({
-                set.seed(global_seed())
+                set.seed(misclass_seed())
+            }, priority = 5)
+    sel_seed = reactive(input$chosen_seed_sel)
+    observe({
+                set.seed(sel_seed())
+            }, priority = 5)
+    conf_seed = reactive(input$chosen_seed_conf)
+    observe({
+                set.seed(conf_seed())
             }, priority = 5)
 
     DF = reactive({
@@ -1570,8 +1594,7 @@ mod_prob_server <- function(input, output, session) {
                                } else throw_away_conf <- TRUE
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
-#                                   set.seed(global_seed())
-                                   input$chosen_seed
+                                   set.seed(misclass_seed())
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1582,6 +1605,7 @@ mod_prob_server <- function(input, output, session) {
                                                       discard = throw_away,
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
+                                   set.seed(misclass_seed())
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1599,6 +1623,7 @@ mod_prob_server <- function(input, output, session) {
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 0) {
+                                   set.seed(sel_seed())
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           or.parms = list(input$or_parms,
@@ -1606,6 +1631,7 @@ mod_prob_server <- function(input, output, session) {
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 1) {
+                                   set.seed(sel_seed())
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           case.exp = list(input$cexp_parms,
@@ -1618,6 +1644,7 @@ mod_prob_server <- function(input, output, session) {
                                                                             dist_ncnexp),
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_conf") {
+                                   set.seed(conf_seed())
                                    episensr::probsens.conf(mat,
                                                            reps = input$reps_conf,
                                                            prev.exp = list(input$prevexp_parms,
