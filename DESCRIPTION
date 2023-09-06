@@ -1,6 +1,6 @@
 Package: apisensr
 Title: Interface to 'episensr' for Sensitivity Analysis of Epidemiological Results
-Version: 0.4.0
+Version: 1.0.0
 Authors@R:
         person(given = "Denis",
         family = "Haine",
