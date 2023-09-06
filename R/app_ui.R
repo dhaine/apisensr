@@ -1,4 +1,5 @@
 #' @import shinymaterial
+#' @import markdown
 #' @importFrom rmarkdown run
 #' @importFrom shinyjs useShinyjs
 
