@@ -1,12 +1,12 @@
 ## Test environments
 * Local machine
-  * Running under: Ubuntu 20.04.3 LTS
+  * Running under: Ubuntu 22.04.2 LTS
   * Platform: x86_64-pc-linux-gnu (64-bit)
-  * R version 4.1.1 (2021-08-10)
+  * R version 4.3.1 (2023-06-16)
 * Github Actions:
   * Windows-latest (R release)
   * MacOS-latest (R release)
-  * Ubuntu 20.04 (R release, devel)
+  * Ubuntu latest (R release, devel, oldrel-1)
 * win-builder (devel and release)
 
 ## R CMD check results

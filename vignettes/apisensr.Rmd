@@ -37,13 +37,13 @@ to `episensr` for more details about these functions.
 | confounders.poly        | x          | x              |
 | confounders.emm         | x          | x              |
 | confounders.limit       | x          | x              |
-| confounders.array       | x          |                |
-| confounders.ext         | x          |                |
+| confounders.array       | x          | x              |
+| confounders.ext         | x          | x              |
 | confounders.evalue      | x          |                |
 | misclassification       | x          | x              |
-| misclassification_cov   | x          |                |
+| misclassification_cov   | x          | x              |
 | bootstrap               | x          |                |
-| multidimBias            | x          |                |
+| multidimBias            | x          | x              |
 | probsens.sel            | x          | x              |
 | probsens.conf           | x          | x              |
 | probsens                | x          | x              |

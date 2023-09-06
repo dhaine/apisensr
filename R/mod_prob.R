@@ -19,7 +19,7 @@
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 #' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
-mod_prob_ui <- function(id, label = "tab_prob"){
+mod_prob_ui <- function(id, label = "tab_prob") {
   ns <- NS(id)
 
   material_tab_content(
@@ -60,6 +60,15 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               choices = c("exposure", "outcome"),
                               selected = "exposure",
                               color = "#ff5131"),
+                          br(),
+                          material_number_box(
+                              input_id = ns("chosen_seed"),
+                              label = "Please select a seed:",
+                              min_value = 1,
+                              max_value = 1000000,
+                              initial_value = 1,
+                              color = "#ff5131"
+                          ),
                           material_slider(
                               input_id = ns("reps"),
                               label = "Number of replications to run:",
@@ -126,6 +135,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_sel"',
                           ns = ns,
+                          material_number_box(
+                              input_id = ns("chosen_seed_sel"),
+                              label = "Please select a seed:",
+                              min_value = 1,
+                              max_value = 1000000,
+                              initial_value = 1,
+                              color = "#ff5131"
+                          ),
                           material_slider(
                               input_id = ns("reps_sel"),
                               label = "Number of replications to run:",
@@ -159,6 +176,14 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                       conditionalPanel(
                           condition = 'input.prob_type == "probsens_conf"',
                           ns = ns,
+                          material_number_box(
+                              input_id = ns("chosen_seed_conf"),
+                              label = "Please select a seed:",
+                              min_value = 1,
+                              max_value = 1000000,
+                              initial_value = 1,
+                              color = "#ff5131"
+                          ),
                           material_slider(
                               input_id = ns("reps_conf"),
                               label = "Number of replications to run:",
@@ -364,8 +389,8 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                               "Uniform" = "uniform",
                               "Triangular" = "triangular",
                               "Trapezoidal" = "trapezoidal",
-                              "Logit-logistic" = "logit-logistic",
-                              "Logit-normal" = "logit-normal"
+                              "Log-logistic" = "log-logistic",
+                              "Log-normal" = "log-normal"
                           ),
                           selected = "triangular",
                           color = "#ff5131"),
@@ -396,20 +421,16 @@ mod_prob_ui <- function(id, label = "tab_prob"){
                                           "Lower and upper mode:", 0.4, 1, 0.01)
                       ),
                       conditionalPanel(
-                          condition = 'input.or_parms == "logit-logistic"',
+                          condition = 'input.or_parms == "log-logistic"',
                           ns = ns,
-                          mod_parms2a_ui(ns("parms_or_Ll1"), "Location:", 0, -5, 5),
-                          mod_parms2a_ui(ns("parms_or_Ll2"), "Scale:", 0.8, -10, 10),
-                          mod_parmsrge_ui(ns("parms_or_Ll3"),
-                                          "Lower and upper bound shift:", 0.5, 0.9)
+                          mod_parms2b_ui(ns("parms_or_Ll1"), "Shape:", 4),
+                          mod_parms2b_ui(ns("parms_or_Ll2"), "Rate:", 0.5)
                       ),
                       conditionalPanel(
-                          condition = 'input.or_parms == "logit-normal"',
+                          condition = 'input.or_parms == "log-normal"',
                           ns = ns,
-                          mod_parms2a_ui(ns("parms_or_Ln1"), "Location:", 0, -5, 5),
-                          mod_parms2a_ui(ns("parms_or_Ln2"), "Scale:", 0.8, -10, 10),
-                          mod_parmsrge_ui(ns("parms_or_Ln3"),
-                                          "Lower and upper bound shift:", 0.5, 0.9)
+                          mod_parms2c_ui(ns("parms_or_Ln1"), "Mean log:", 0),
+                          mod_parms2c_ui(ns("parms_or_Ln2"), "SD log:", 0.5)
                       )
                   ),
                   conditionalPanel(
@@ -1040,8 +1061,23 @@ mod_prob_ui <- function(id, label = "tab_prob"){
 #' @noRd
 #' @keywords internal
 
-mod_prob_server <- function(input, output, session){
+mod_prob_server <- function(input, output, session) {
     ns <- session$ns
+
+    misclass_seed = reactive(input$chosen_seed)
+    ## reactives can only be in observers or other reactives.
+    ## setting priority to 5 helps set seed before `renderPrint` is executed
+    observe({
+                set.seed(misclass_seed())
+            }, priority = 5)
+    sel_seed = reactive(input$chosen_seed_sel)
+    observe({
+                set.seed(sel_seed())
+            }, priority = 5)
+    conf_seed = reactive(input$chosen_seed_conf)
+    observe({
+                set.seed(conf_seed())
+            }, priority = 5)
 
     DF = reactive({
                       if (input$prob_type == "probsens") {
@@ -1049,16 +1085,16 @@ mod_prob_server <- function(input, output, session){
                                      row.names = c("Cases", "Noncases"))
                       } else if (input$prob_type == "probsens_sel") {
                           data.frame(Exposed = c(136, 297), Unexposed = c(107, 165),
-                                     row.names = c("Cases", "Non-cases"))
+                                     row.names = c("Cases", "Noncases"))
                       } else if (input$prob_type == "probsens_conf") {
                           data.frame(Exposed = c(105, 527), Unexposed = c(85, 93),
-                                     row.names = c("Cases", "Non-cases"))
+                                     row.names = c("Cases", "Noncases"))
                       }
                   })
 
     output$two_by_two_prob = rhandsontable::renderRHandsontable({
                                                                     input$reset_table # trigger rendering on reset
-                                                                    rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
+                                                                    rhandsontable::rhandsontable(DF(), stretchH = "all", rowHeaderWidth = 75)
                                                  })
 
     episensrout = reactive({
@@ -1247,24 +1283,16 @@ mod_prob_server <- function(input, output, session){
                                                              "parms_or_Tz2")[2],
                                                   callModule(mod_parmsrge2_server,
                                                              "parms_or_Tz1")[2])
-                               } else if (input$or_parms == "logit-logistic") {
-                                   dist_orparms <- c(callModule(mod_parms2a_server,
+                               } else if (input$or_parms == "log-logistic") {
+                                   dist_orparms <- c(callModule(mod_parms2_server,
                                                                 "parms_or_Ll1"),
-                                                  callModule(mod_parms2a_server,
-                                                             "parms_or_Ll2"),
-                                                  callModule(mod_parmsrge_server,
-                                                             "parms_or_Ll3")[1],
-                                                  callModule(mod_parmsrge_server,
-                                                             "parms_or_Ll3")[2])
-                               } else if (input$or_parms == "logit-normal") {
-                                   dist_orparms <- c(callModule(mod_parms2a_server,
+                                                     callModule(mod_parms2_server,
+                                                                "parms_or_Ll2"))
+                               } else if (input$or_parms == "log-normal") {
+                                   dist_orparms <- c(callModule(mod_parms2c_server,
                                                                 "parms_or_Ln1"),
-                                                     callModule(mod_parms2a_server,
-                                                                "parms_or_Ln2"),
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ln3")[1],
-                                                     callModule(mod_parmsrge_server,
-                                                                "parms_or_Ln3")[2])
+                                                     callModule(mod_parms2c_server,
+                                                                "parms_or_Ln2"))
                                }
                                if (input$cexp_parms == "constant") {
                                    dist_cexp <- callModule(mod_parms_server,
@@ -1566,6 +1594,7 @@ mod_prob_server <- function(input, output, session){
                                } else throw_away_conf <- TRUE
 
                                if (input$prob_type == "probsens" & input$diff == 0) {
+                                   set.seed(misclass_seed())
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1576,6 +1605,7 @@ mod_prob_server <- function(input, output, session){
                                                       discard = throw_away,
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens" & input$diff == 1) {
+                                   set.seed(misclass_seed())
                                    episensr::probsens(mat,
                                                       type = input$misclassProb_type,
                                                       reps = input$reps,
@@ -1593,6 +1623,7 @@ mod_prob_server <- function(input, output, session){
                                                       alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 0) {
+                                   set.seed(sel_seed())
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           or.parms = list(input$or_parms,
@@ -1600,6 +1631,7 @@ mod_prob_server <- function(input, output, session){
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_sel" &
                                           input$or_case == 1) {
+                                   set.seed(sel_seed())
                                    episensr::probsens.sel(mat,
                                                           reps = input$reps_sel,
                                                           case.exp = list(input$cexp_parms,
@@ -1612,6 +1644,7 @@ mod_prob_server <- function(input, output, session){
                                                                             dist_ncnexp),
                                                           alpha = input$alpha)
                                } else if (input$prob_type == "probsens_conf") {
+                                   set.seed(conf_seed())
                                    episensr::probsens.conf(mat,
                                                            reps = input$reps_conf,
                                                            prev.exp = list(input$prevexp_parms,
