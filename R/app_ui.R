@@ -1,6 +1,5 @@
-#' @import shiny
 #' @import shinymaterial
-#' @import rmarkdown
+#' @importFrom rmarkdown run
 #' @importFrom shinyjs useShinyjs
 
 app_ui <- function() {
