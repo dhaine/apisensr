@@ -41,6 +41,24 @@ mod_parms2a_ui <- function(id, label_parms, value, min, max){
   )
 }
 
+mod_parms2b_ui <- function(id, label_parms, value) {
+  ns <- NS(id)
+  tagList(
+      sliderInput(ns("bias_parms"), label_parms,
+                  value = value, min = 0.1, max = 5, step = 0.1,
+                  width = "600px")
+  )
+}
+
+mod_parms2c_ui <- function(id, label_parms, value) {
+  ns <- NS(id)
+  tagList(
+      sliderInput(ns("bias_parms"), label_parms,
+                  value = value, min = 0, max = 3, step = 0.1,
+                  width = "600px")
+  )
+}
+
 mod_parms3_ui <- function(id, label_parms, value) {
     ns <- NS(id)
     tagList(
@@ -64,6 +82,15 @@ mod_parms3b_ui <- function(id, label_parms, value) {
     tagList(
         numericInput(ns("bias_parms"), label_parms,
                      value = value, min = 0, max = 20, step = 0.01,
+                     width = "100%")
+    )
+}
+
+mod_parms3c_ui <- function(id, label_parms, value) {
+    ns <- NS(id)
+    tagList(
+        numericInput(ns("bias_parms"), label_parms,
+                     value = value, min = 0, max = 30, step = 0.01,
                      width = "100%")
     )
 }
@@ -107,6 +134,16 @@ mod_parms2a_server <- function(input, output, session) {
     input$bias_parms
 }
 
+mod_parms2b_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms2c_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
 mod_parms3_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
@@ -118,6 +155,11 @@ mod_parms3a_server <- function(input, output, session) {
 }
 
 mod_parms3b_server <- function(input, output, session) {
+    ns <- session$ns
+    input$bias_parms
+}
+
+mod_parms3c_server <- function(input, output, session) {
     ns <- session$ns
     input$bias_parms
 }

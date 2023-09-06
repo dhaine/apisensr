@@ -12,3 +12,9 @@ $run_dev.*
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^rsconnect$
+<<<<<<< HEAD
+=======
+^\.github$
+^doc$
+^Meta$
+>>>>>>> develop

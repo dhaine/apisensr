@@ -5,8 +5,8 @@
 #' analyses not requiring a 2-by-2 table as input (selection bias analysis `selection`,
 #' bias analysis for unmeasured confounder `confounders`, bias analysis for unmeasured
 #' 3-level confounder `confounders.poly`, bias analysis for unmeasured confounder with
-#' effect modification `confounders.emm`, and misclassification bias analysis
-#' `misclassification`).
+#' effect modification `confounders.emm`, misclassification bias analysis `misclassification`,
+#' and multidimensional sensitivity analysis `multidimBias`).
 #'
 #' @param id shiny id
 #' @param input internal
@@ -21,7 +21,7 @@
 #' @importFrom shiny NS tagList
 #' @importFrom shinyjs runjs
 #' @importFrom rhandsontable hot_to_r rHandsontableOutput renderRHandsontable rhandsontable
-mod_analysis_ui <- function(id, label = "tab_analysis"){
+mod_analysis_ui <- function(id, label = "tab_analysis") {
   ns <- NS(id)
 
   material_tab_content(
@@ -38,7 +38,8 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           "Unmeasured confounder" = "confounder",
                           "Unmeasured 3-level confounder" = "confounder_3",
                           "Unmeasured confounder with effect modification" = "confounder_emm",
-                          "Misclassification bias" = "misclass"
+                          "Misclassification bias" = "misclass",
+                          "Multidimensional bias" = "multidim"
                       ),
                       color = "#d50000"
                   ),
@@ -216,19 +217,51 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
                           material_radio_button(
                               input_id = ns("misclass_type"),
                               label = "Misclassification of:",
-                              choices = c("exposure", "outcome"),
+                              choices = c("Exposure (Se/Sp)" = "exposure",
+                                          "Exposure (PPV/NPV)" = "exposure_pv",
+                                          "Outcome" = "outcome"),
                               selected = "exposure",
                               color = "#ff1744"),
                           mod_parms_ui(ns("parms_mis1"),
-                                       "Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.78),
+                                       HTML("Sensitivity of exposure (or outcome) classification among those with the outcome (or exposure), or<br/>Positive predictive value among those with the outcome:"), 0.78),
                           mod_parms_ui(ns("parms_mis2"),
-                                       "Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.78),
+                                       HTML("Sensitivity of exposure (or outcome) classification among those without the outcome (or exposure), or</br>Positive predictive value among those without the outcome"), 0.78),
                           mod_parms_ui(ns("parms_mis3"),
-                                       "Specificity of exposure (or outcome) classification among those with the outcome (or exposure):", 0.99),
+                                       HTML("Specificity of exposure (or outcome) classification among those with the outcome (or exposure), or</br>Negative predictive value among those with the outcome"), 0.99),
                           mod_parms_ui(ns("parms_mis4"),
-                                       "Specificity of exposure (or outcome) classification among those without the outcome (or exposure):", 0.99),
+                                       HTML("Specificity of exposure (or outcome) classification among those without the outcome (or exposure), or</br>Negative predictive value among those without the outcome"), 0.99),
                           material_button(
                               input_id = "help_misclass",
+                              label = "Help",
+                              icon = "help",
+                              color = "orange"
+                          )
+                      ),
+                      conditionalPanel(
+                          condition = 'input.type == "multidim"',
+                          ns = ns,
+                          material_radio_button(
+                              input_id = ns("multidim_type"),
+                              label = "Type of implementation",
+                              choices = c("None selected" = "none",
+                                          "Exposure misclassification" = "exp",
+                                          "Outcome misclassification" = "out",
+                                          "Uncontrolled confounder" = "conf",
+                                          "Selection bias" = "sel"),
+                              selected = "none",
+                              color = "#ff5131"
+                          ),
+                          div(id = "parms-table",
+                              rhandsontable::rHandsontableOutput(ns('parms_tab')),
+                              material_button(
+                                  input_id = ns("reset_table_parms"),
+                                  label = "Table back to example",
+                                  icon = "restore",
+                                  color = "red accent-4"
+                              )
+                          ),
+                          material_button(
+                              input_id = "help_multidim",
                               label = "Help",
                               icon = "help",
                               color = "orange"
@@ -269,7 +302,7 @@ mod_analysis_ui <- function(id, label = "tab_analysis"){
 #' @noRd
 #' @keywords internal
 
-mod_analysis_server <- function(input, output, session){
+mod_analysis_server <- function(input, output, session) {
     ns <- session$ns
 
     DF = reactive({
@@ -284,16 +317,43 @@ mod_analysis_server <- function(input, output, session){
                       } else if (input$type == "misclass") {
                           data.frame(Exposed = c(215, 668), Unexposed = c(1449, 4296),
                                      row.names = c("Cases", "Noncases"))
+                      } else if (input$type == "multidim") {
+                          data.frame(Exposed = c(45, 257), Unexposed = c(94, 945),
+                                     row.names = c("Cases", "Noncases"))
                       }
                   })
 
+    DF_parms = reactive({
+                            if (input$multidim_type == "none") {
+                                data.frame('Waiting...' = "Make a choice!")
+                            } else if (input$multidim_type %in% c("exp", "out")) {
+                                data.frame(Se = c(1, 1, 1, .9, .9, .9, .8, .8, .8),
+                                           Sp = c(1, .9, .8, 1, .9, .8, 1, .9, .8))
+                            } else if (input$multidim_type == "conf") {
+                                data.frame('p(Conf+|Exp+)' = seq(.72, .92, by = .02),
+                                           'p(Conf+|Exp-)' = seq(.01, .11, by = .01),
+                                           'RR(Conf-Outcome)' = seq(.13, 1.13, by = .1),
+                                           check.names = FALSE)
+                            } else if (input$multidim_type == "sel") {
+                                data.frame(OR_selection = seq(1.5, 6.5, by = .5))
+                            }
+                        })
+
     output$two_by_two = rhandsontable::renderRHandsontable({
                                                                input$reset_table # trigger rendering on reset
-                                                               rhandsontable::rhandsontable(DF(), rowHeaderWidth = 200, width = 500, stretchH = "all")
-                                            })
+                                                               rhandsontable::rhandsontable(DF(),
+                                                                                            stretchH = "all", rowHeaderWidth = 75)
+                                                           })
+
+    output$parms_tab = rhandsontable::renderRHandsontable({
+                                                               input$reset_table_parms
+                                                               rhandsontable::rhandsontable(DF_parms(),
+                                                                                            stretchH = "all")
+                                                          })
 
     episensrout = reactive({
                                mat <- as.matrix(rhandsontable::hot_to_r(req({input$two_by_two})))
+                               mat_parms <- as.matrix(rhandsontable::hot_to_r(req({input$parms_tab})))
                                if (input$type == "selection") {
                                   episensr::selection(mat,
                                                       bias_parms = if (input$parms_controller == 0) {
@@ -348,6 +408,27 @@ mod_analysis_server <- function(input, output, session){
                                                                               callModule(mod_parms_server, "parms_mis3"),
                                                                               callModule(mod_parms_server, "parms_mis4")),
                                                                alpha = input$alpha)
+                               } else if (input$type == "multidim" &
+                                          input$multidim_type %in% c("exp", "out")) {
+                                   episensr::multidimBias(mat,
+                                                          type = input$multidim_type,
+                                                          se = mat_parms[, 1],
+                                                          sp = mat_parms[, 2],
+                                                          alpha = input$alpha)
+                               } else if (input$type == "multidim" &
+                                          input$multidim_type == "conf") {
+                                   episensr::multidimBias(mat,
+                                                          type = "confounder",
+                                                          bias_parms = list(c(mat_parms[, 1]),
+                                                                            c(mat_parms[, 2]),
+                                                                            c(mat_parms[, 3])),
+                                                          alpha = input$alpha)
+                               } else if (input$type == "multidim" &
+                                          input$multidim_type == "sel") {
+                                   episensr::multidimBias(mat,
+                                                          type = "selection",
+                                                          OR_sel = c(mat_parms),
+                                                          alpha = input$alpha)
                                }
                            })
 
@@ -379,7 +460,12 @@ mod_analysis_server <- function(input, output, session){
     shinyjs::runjs("document.getElementById('help_misclass').onclick = function() {
            window.open('https://dhaine.github.io/episensr/reference/misclassification.html', '_blank');
          };"
-  )
+         )
+
+        shinyjs::runjs("document.getElementById('help_multidim').onclick = function() {
+           window.open('https://dhaine.github.io/episensr/reference/multidimBias.html', '_blank');
+         };"
+         )
 }
 
 ## To be copied in the UI

@@ -1,6 +1,5 @@
-#' @import shiny
 #' @import shinymaterial
-#' @import rmarkdown
+#' @importFrom rmarkdown run
 #' @importFrom shinyjs useShinyjs
 
 app_ui <- function() {
@@ -21,6 +20,7 @@ app_ui <- function() {
         material_tabs(
             tabs = c(
                 "Simple analysis with 2-by-2 table" = "tab_analysis",
+                "Simple analysis with multiple tables" = "tab_multi",
                 "Simple analysis, no 2-by-2 table" = "tab_notable",
                 "Probabilistic analysis" = "tab_prob",
                 "About" = "tab_about"
@@ -29,6 +29,8 @@ app_ui <- function() {
         ),
 
         mod_analysis_ui("tab_analysis"),
+
+        mod_multi_ui("tab_multi"),
 
         mod_notable_ui("tab_notable"),
 
@@ -40,7 +42,7 @@ app_ui <- function() {
 }
 
 #' @import shiny
-golem_add_external_resources <- function(){
+golem_add_external_resources <- function() {
 
   addResourcePath(
     'www', system.file('app/www', package = 'apisensr')

@@ -1,0 +1,52 @@
+---
+title: "apisensr"
+author: "Denis Haine"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    fig_cation: yes
+vignette: >
+  %\VignetteIndexEntry{apisensr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The package `apisensr` provides a graphical interface to the package `episensr`.
+To run `apisensr`:
+
+```{r eval=FALSE}
+library(apisensr)
+run_app()
+```
+
+The following functions are available in `episensr` and `apisensr`. Please refer
+to `episensr` for more details about these functions.
+
+| Functions available in: | `episensr` | `apisensr app` |
+|-------------------------|:----------:|:--------------:|
+| selection               | x          | x              |
+| mbias                   | x          | x              |
+| confounders             | x          | x              |
+| confounders.poly        | x          | x              |
+| confounders.emm         | x          | x              |
+| confounders.limit       | x          | x              |
+| confounders.array       | x          | x              |
+| confounders.ext         | x          | x              |
+| confounders.evalue      | x          |                |
+| misclassification       | x          | x              |
+| misclassification_cov   | x          | x              |
+| bootstrap               | x          |                |
+| multidimBias            | x          | x              |
+| probsens.sel            | x          | x              |
+| probsens.conf           | x          | x              |
+| probsens                | x          | x              |
+| probsens.irr.conf       | x          |                |
+| probsens.irr            | x          |                |
+| multiple bias           | x          |                |

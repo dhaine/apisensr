@@ -5,13 +5,14 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.org/dhaine/apisensr.svg?branch=master)](https://travis-ci.org/dhaine/apisensr)
+[![R-CMD-check](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
-[![DOI](https://zenodo.org/badge/243598636.svg)](https://zenodo.org/badge/latestdoi/243598636)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4579968.svg)](https://doi.org/10.5281/zenodo.4579968)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Total CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/apisensr)](https://cran.r-project.org/package=apisensr)
 
 <!-- badges: end -->
 
@@ -33,30 +34,34 @@ To cite **apisensr**, please use:
 
 ``` r
 citation("apisensr")
-#> 
 #> To cite apisensr in publications use:
 #> 
-#>   Haine, Denis (2021). The apisensr Shiny app package: interface to
-#>   episensr for sensitivity analysis of epidemiological results. R
-#>   package version 0.2.0. https://github.com/dhaine/apisensr/. doi:
-#>   10.5281/zenodo.4592620.
+#>   Haine, Denis (2023). The apisensr Shiny app package: interface to episensr for
+#>   sensitivity analysis of epidemiological results. R package version 1.0.0.
+#>   https://github.com/dhaine/apisensr/. doi: 10.5281/zenodo.4579968.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Misc{,
 #>     title = {The apisensr Shiny app package: interface to episensr for sensitivity analysis of epidemiological results},
 #>     author = {Denis Haine},
-#>     year = {2021},
-#>     note = {R package version 0.2.0},
-#>     doi = {10.5281/zenodo.4592620},
+#>     year = {2023},
+#>     note = {R package version 1.0.0},
+#>     doi = {10.5281/zenodo.4579968},
 #>     url = {https://github.com/dhaine/apisensr/},
 #>   }
 ```
 
 ## Installation
 
-You can install the master version from CRAN or the development version
-from [GitHub](https://github.com/dhaine/apisensr) with:
+You can get the latest release from **CRAN**:
+
+``` r
+install.packages('apisensr')
+```
+
+Or install the development version from **GitHub** with **remotes**
+package:
 
 ``` r
 #install.packages("remotes")
