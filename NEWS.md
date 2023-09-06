@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 # apisensr 1.0.0
 * Update to use minimally episensr 1.3.0.
 * Additional functions from episensr (counfounders.array, confounders.ext, misclassification.cov, multidimBias, misclassification using predictive values).
@@ -12,7 +10,6 @@
 * Add a vignette to get started with apisensr.
 * Fix NOTE (CRAN Package check) about LazyData.
 
->>>>>>> develop
 # apisensr 0.3.0
 
 * Fix path to functions.md to allow rendering of the app.

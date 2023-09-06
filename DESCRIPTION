@@ -1,10 +1,6 @@
 Package: apisensr
 Title: Interface to 'episensr' for Sensitivity Analysis of Epidemiological Results
-<<<<<<< HEAD
-Version: 0.3.0
-=======
 Version: 1.0.0
->>>>>>> develop
 Authors@R:
         person(given = "Denis",
         family = "Haine",
@@ -18,10 +14,7 @@ Imports:
     shiny,
     golem,
     config,
-<<<<<<< HEAD
-=======
     attempt,
->>>>>>> develop
     glue,
     htmltools,
     shinymaterial,
