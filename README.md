@@ -8,9 +8,7 @@
 [![R-CMD-check](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/dhaine/apisensr/actions/workflows/check-standard.yaml)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/apisensr)](https://cran.r-project.org/package=apisensr)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4592620.svg)](https://doi.org/10.5281/zenodo.4592620)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Project Status: Moved to http://codeberg.org/dhaine/apisensr – The project has been moved to a new location, and the version at that location should be considered authoritative.](https://www.repostatus.org/badges/latest/moved.svg)](https://www.repostatus.org/#moved) to [http://codeberg.org/dhaine/apisensr](http://codeberg.org/dhaine/apisensr)
 [![Total CRAN
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/apisensr)](https://cran.r-project.org/package=apisensr)
 
